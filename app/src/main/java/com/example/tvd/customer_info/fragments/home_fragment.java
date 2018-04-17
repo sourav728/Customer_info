@@ -22,7 +22,6 @@ public class home_fragment extends Fragment {
     public home_fragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

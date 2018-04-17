@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         session = new UserSession(getApplicationContext());
         Toast.makeText(this, "UserLoginStatus"+session.isUserLoggedIn(), Toast.LENGTH_SHORT).show();
 
+
         sharedPreferences = getSharedPreferences(PREFER_NAME, Context.MODE_PRIVATE);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
