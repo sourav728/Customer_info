@@ -14,8 +14,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="4"
-            android:alpha="0.2"
-            android:background="@drawable/city"
+            android:alpha="0.4"
+            android:background="@drawable/sign_up_image"
             android:padding="10dp"
             android:scaleType="centerCrop" />
         <LinearLayout
