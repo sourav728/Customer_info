@@ -15,7 +15,6 @@ import com.example.tvd.customer_info.R;
 
 public class Account_fragment extends Fragment {
 
-
     public Account_fragment() {
     }
 
@@ -28,7 +27,6 @@ public class Account_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account_fragment, container, false);
         return view;
     }
