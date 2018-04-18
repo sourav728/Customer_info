@@ -94,6 +94,7 @@
                 android:singleLine="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:inputType="number"
                 android:background="@drawable/rectangle_edittext"
                 android:drawableRight="@drawable/tick"
                 android:padding="7dp" />
