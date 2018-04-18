@@ -59,9 +59,9 @@ public class NotificationActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
+                        shuffleItems();
                     }
-                }, 4000L);
-                shuffleItems();
+                }, 3000L);
             }
         });
     }
