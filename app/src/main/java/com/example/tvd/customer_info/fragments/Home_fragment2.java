@@ -2,10 +2,10 @@ package com.example.tvd.customer_info.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +30,8 @@ public class Home_fragment2 extends Fragment {
     TextView textcartitemcount;
     int mCartItemCount = 10;
     LinearLayout add_consumer;
+    TextView txt_add_consumer;
+    Typeface typeface;
     public Home_fragment2() {
     }
 
@@ -43,7 +45,7 @@ public class Home_fragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_fragment2, container, false);
-
+        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"timesnewroman.ttf");
         carouselView = (CarouselView) view.findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
         add_consumer = (LinearLayout) view.findViewById(R.id.lin_add_consumer);
@@ -55,6 +57,8 @@ public class Home_fragment2 extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+        txt_add_consumer = (TextView) view.findViewById(R.id.txt_add_consumer);
+        txt_add_consumer.setTypeface(typeface);
         return view;
     }
 

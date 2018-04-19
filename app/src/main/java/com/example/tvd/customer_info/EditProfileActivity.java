@@ -12,9 +12,10 @@ import android.widget.LinearLayout;
 
 
 public class EditProfileActivity extends AppCompatActivity {
-    LinearLayout email_hide,mobile_hide,show_email,show_mobile;
+    LinearLayout email_hide, mobile_hide, show_email, show_mobile;
     ImageView img_mail, img_mobile;
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }

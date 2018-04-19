@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#aa0023</color>
     <color name="colorPrimaryDark">#88001c</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#212121</color>
 
     <color name="colorTextPrimary">#FFFFFF</color>
     <color name="colorTextDisable">#FFFFFF</color>
@@ -13,4 +13,5 @@
     <color name="pink">#FF4081</color>
     <color name="indigo">#3F51B5</color>
     <color name="lime">#CDDC39</color>
+    <color name="textcolor">#42A5F5</color>
 </resources>

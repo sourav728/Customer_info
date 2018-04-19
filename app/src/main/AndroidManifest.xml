@@ -29,7 +29,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".EditProfileActivity" />
-        <activity android:name=".AccountRegistrationActivity"></activity>
+        <activity android:name=".AccountRegistrationActivity" />
+        <activity android:name=".ViewBillActivity"></activity>
     </application>
 
 </manifest>
