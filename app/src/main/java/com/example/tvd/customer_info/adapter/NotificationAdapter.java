@@ -1,6 +1,7 @@
 package com.example.tvd.customer_info.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     ArrayList personNames;
     ArrayList personImages;
     Context context;
-    public NotificationAdapter(Context context,ArrayList personNames, ArrayList personImages)
+    Typeface typeface;
+    public NotificationAdapter(Context context, ArrayList personNames, ArrayList personImages, Typeface typeface)
     {
         this.context = context;
         this.personNames = personNames;
         this.personImages = personImages;
+        this.typeface = typeface;
     }
     @Override
     public NotificationAdapter.DetailsHoldewr onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,6 +37,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(NotificationAdapter.DetailsHoldewr holder, int position) {
+        holder.textView.setTypeface(typeface);
         holder.textView.setText(personNames.get(position)+"");
     }
 

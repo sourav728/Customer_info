@@ -1,6 +1,7 @@
 package com.example.tvd.customer_info;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import java.util.Random;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 public class NotificationActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
@@ -24,12 +26,13 @@ public class NotificationActivity extends AppCompatActivity {
     // ArrayList for person names
     ArrayList personNames = new ArrayList<>(Arrays.asList("Notification 1", "Notification 2", "Notification 3"));
     ArrayList personImages = new ArrayList<>(Arrays.asList(R.drawable.image1, R.drawable.image2,R.drawable.image3));
+    TextView font_toolbar_title;
+    Typeface typeface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setTitle("Notifications");
+        initialization();
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +50,7 @@ public class NotificationActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         // call the constructor of CustomAdapter to send the reference and data to Adapter
-        NotificationAdapter customAdapter = new NotificationAdapter(NotificationActivity.this, personNames, personImages);
+        NotificationAdapter customAdapter = new NotificationAdapter(NotificationActivity.this, personNames, personImages,typeface);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
         // implement setOnRefreshListener event on SwipeRefreshLayout
 
@@ -72,9 +75,16 @@ public class NotificationActivity extends AppCompatActivity {
         Collections.shuffle(personNames, new Random(System.currentTimeMillis()));
         Collections.shuffle(personImages, new Random(System.currentTimeMillis()));
         // call the constructor of CustomAdapter to send the reference and data to Adapter
-        NotificationAdapter customAdapter = new NotificationAdapter(NotificationActivity.this, personNames, personImages);
+        NotificationAdapter customAdapter = new NotificationAdapter(NotificationActivity.this, personNames, personImages,typeface);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
     }
-
+    public void initialization()
+    {
+        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        font_toolbar_title.setText("Notifications");
+        font_toolbar_title.setTypeface(typeface);
     }
+}
 

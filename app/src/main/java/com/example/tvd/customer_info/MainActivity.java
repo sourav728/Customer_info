@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,24 +39,18 @@ public class MainActivity extends AppCompatActivity
     private static AppCompatActivity thisActivity;
     TextView name,email;
     private SharedPreferences sharedPreferences;
+    TextView font_toolbar_title;
+    Typeface typeface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //getting shared prefrence value from more fragment
-      /*  final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String value=(mSharedPreference.getString("NameOfShared", "Default_Value"));
-        if (!value.equals(""))
-        {
-            Toast.makeText(thisActivity, "Value is"+value, Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(thisActivity, "No value found!!", Toast.LENGTH_SHORT).show();
-        }*/
-
+        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
         thisActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        font_toolbar_title.setTypeface(typeface);
+        font_toolbar_title.setText("CustomerInfo");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

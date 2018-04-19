@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.tvd.customer_info.EditProfileActivity;
 import com.example.tvd.customer_info.R;
+import com.example.tvd.customer_info.ViewBillActivity;
 
 public class Account_fragment extends Fragment {
     TextView edit_profile;
@@ -40,6 +41,13 @@ public class Account_fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+        font_viewbill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ViewBillActivity.class);
                 getActivity().startActivity(intent);
             }
         });
