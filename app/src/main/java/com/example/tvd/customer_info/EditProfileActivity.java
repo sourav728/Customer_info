@@ -1,11 +1,15 @@
 package com.example.tvd.customer_info;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 
 public class EditProfileActivity extends AppCompatActivity {
     LinearLayout email_hide,mobile_hide,show_email,show_mobile;
@@ -48,4 +52,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 }

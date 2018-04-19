@@ -1,8 +1,11 @@
 package com.example.tvd.customer_info.fragments;
 
 
+
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -17,9 +20,10 @@ import android.widget.Toast;
 import com.example.tvd.customer_info.R;
 
 public class More_fragment extends Fragment {
+
     RelativeLayout language;
     AlertDialog alertDialog1;
-    CharSequence[] values = {"English","Kanada"};
+    CharSequence[] values = {"English","Kannada"};
     public More_fragment() {
     }
 
@@ -62,11 +66,10 @@ public class More_fragment extends Fragment {
                 switch(item)
                 {
                     case 0:
-                        Toast.makeText(getActivity(), "First Item Clicked", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "English Clicked", Toast.LENGTH_LONG).show();
                         break;
                     case 1:
-
-                        Toast.makeText(getActivity(), "Second Item Clicked", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Kannada Clicked", Toast.LENGTH_LONG).show();
                         break;
                 }
                 alertDialog1.dismiss();

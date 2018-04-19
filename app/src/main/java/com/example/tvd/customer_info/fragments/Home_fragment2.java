@@ -14,8 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.tvd.customer_info.AccountRegistrationActivity;
 import com.example.tvd.customer_info.NotificationActivity;
 import com.example.tvd.customer_info.R;
 import com.synnapps.carouselview.CarouselView;
@@ -27,7 +29,7 @@ public class Home_fragment2 extends Fragment {
     int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3};
     TextView textcartitemcount;
     int mCartItemCount = 10;
-
+    LinearLayout add_consumer;
     public Home_fragment2() {
     }
 
@@ -44,9 +46,15 @@ public class Home_fragment2 extends Fragment {
 
         carouselView = (CarouselView) view.findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
-
+        add_consumer = (LinearLayout) view.findViewById(R.id.lin_add_consumer);
         carouselView.setImageListener(imageListener);
-
+        add_consumer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AccountRegistrationActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
         return view;
     }
 

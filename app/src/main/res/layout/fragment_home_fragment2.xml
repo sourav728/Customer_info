@@ -20,7 +20,7 @@
             app:strokeColor="#FF777777"
             app:strokeWidth="1dp"/>
         <LinearLayout
-            android:id="@+id/addfuels_btn"
+            android:id="@+id/lin_add_consumer"
             style="?android:attr/buttonStyle"
             android:layout_width="match_parent"
             android:layout_height="30dp"
