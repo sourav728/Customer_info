@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void checkPermissionAbove()
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)

@@ -12,14 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.tvd.customer_info.invoke.SendingData;
+
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
     Button signup;
     TextView signup_text,login_text;
     EditText name,email,phonenumber,password;
-
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-
+    SendingData sendingData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         phonenumber = (EditText) findViewById(R.id.edit_phonenumber);
         password = (EditText) findViewById(R.id.edit_password);
 
+        sendingData = new SendingData();
         sharedPreferences = getApplicationContext().getSharedPreferences("Reg",0);
         editor = sharedPreferences.edit();
 
@@ -87,11 +89,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         else
         {
+            /******Here i have to call Customer_info login service*********/
+           /* SendingData.Customer_Registration customer_registration = sendingData.new Customer_Registration();
+            customer_registration.execute(cust_name,cust_email,cust_phone,cust_pass);*/
+
             editor.putString("Name",cust_name);
             editor.putString("Email",cust_email);
             editor.putString("Phone",cust_phone);
             editor.putString("Password",cust_pass);
             editor.commit();
+
             Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
             startActivity(intent);
         }
