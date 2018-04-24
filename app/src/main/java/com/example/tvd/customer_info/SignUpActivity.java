@@ -1,8 +1,10 @@
 package com.example.tvd.customer_info;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,16 +13,50 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tvd.customer_info.invoke.SendingData;
+import com.example.tvd.customer_info.values.FunctionCall;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
+import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_SUCCESS;
+
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     Button signup;
-    TextView signup_text,login_text;
-    EditText name,email,phonenumber,password;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    TextView signup_text, login_text;
+    EditText name, email, phonenumber, password;
     SendingData sendingData;
+    String TokenId = "", cust_name = "", cust_email = "", cust_phone = "", cust_pass = "";
+    ProgressDialog progressdialog;
+    FunctionCall fcall;
+    private final Handler mHandler;
+
+    {
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case REGISTRATION_SUCCESS:
+                        progressdialog.dismiss();
+                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    case REGISTRATION_FAILURE:
+                        progressdialog.dismiss();
+                        Toast.makeText(SignUpActivity.this, "Please Check the Registration details..", Toast.LENGTH_SHORT).show();
+                        name.setText("");
+                        email.setText("");
+                        phonenumber.setText("");
+                        password.setText("");
+                        name.requestFocus();
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,67 +76,50 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         password = (EditText) findViewById(R.id.edit_password);
 
         sendingData = new SendingData();
-        sharedPreferences = getApplicationContext().getSharedPreferences("Reg",0);
-        editor = sharedPreferences.edit();
-
+        fcall = new FunctionCall();
         signup.setOnClickListener(this);
         signup_text.setOnClickListener(this);
         login_text.setOnClickListener(this);
+        TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.signup_btn:
-               /* Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
-                startActivity(intent);*/
-                 register_user();
+                if (fcall.isInternetOn(SignUpActivity.this))
+                    register_user();
+                else
+                    Toast.makeText(this, "Please connect to internet..", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.signup:
                 break;
             case R.id.login:
                 Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
     }
-    public void register_user()
-    {
-        String cust_name = name.getText().toString();
-        String cust_email = email.getText().toString();
-        String cust_phone = phonenumber.getText().toString();
-        String cust_pass = password.getText().toString();
-        if (name.getText().length()<=0)
-        {
+
+    public void register_user() {
+        cust_name = name.getText().toString();
+        cust_email = email.getText().toString();
+        cust_phone = phonenumber.getText().toString();
+        cust_pass = password.getText().toString();
+        if (name.getText().length() <= 0) {
             name.setError("Enter Name");
-        }
-        else if (email.getText().length()<=0)
-        {
+        } else if (email.getText().length() <= 0) {
             email.setError("Enter Email");
-        }
-        else if (phonenumber.getText().length()<=0)
-        {
+        } else if (phonenumber.getText().length() <= 0) {
             phonenumber.setError("Enter phone");
-        }
-        else if (password.getText().length()<=0)
-        {
+        } else if (password.getText().length() <= 0) {
             password.setError("Enter password");
-        }
-        else
-        {
-            /******Here i have to call Customer_info login service*********/
-           /* SendingData.Customer_Registration customer_registration = sendingData.new Customer_Registration();
-            customer_registration.execute(cust_name,cust_email,cust_phone,cust_pass);*/
-
-            editor.putString("Name",cust_name);
-            editor.putString("Email",cust_email);
-            editor.putString("Phone",cust_phone);
-            editor.putString("Password",cust_pass);
-            editor.commit();
-
-            Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
-            startActivity(intent);
+        } else {
+            progressdialog = ProgressDialog.show(SignUpActivity.this, "Registration",
+                    "Fetching details please wait..", true);
+            SendingData.Sign_UP signup = sendingData.new Sign_UP(mHandler);
+            signup.execute(cust_name, cust_email, cust_phone, cust_pass, TokenId);
         }
     }
 }

@@ -1,7 +1,17 @@
 package com.example.tvd.customer_info.invoke;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.tvd.customer_info.LoginActivity;
+import com.example.tvd.customer_info.MainActivity;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -66,40 +76,26 @@ public class SendingData {
         return result.toString();
     }
 
-    private String UrlGetConnection(String Get_Url) throws IOException {
+    //For Registration
+    public class Sign_UP extends AsyncTask<String, String, String> {
         String response = "";
-        URL url = new URL(Get_Url);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(15000);
-        conn.setConnectTimeout(15000);
-        int responseCode = conn.getResponseCode();
-        if (responseCode == HttpsURLConnection.HTTP_OK) {
-            String line;
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            while ((line = br.readLine()) != null) {
-                response += line;
-            }
-        } else {
-            response = "";
-        }
-        return response;
-    }
+        Handler handler;
 
-    public class Customer_Registration extends AsyncTask<String, String, String> {
-        String response = "";
+        public Sign_UP(Handler handler)
+        {
+            this.handler = handler;
+        }
         @Override
         protected String doInBackground(String... params) {
             HashMap<String, String> datamap = new HashMap<>();
-            datamap.put("", params[0]);
-            datamap.put("", params[1]);
-            Log.d("Debug", "Name" + params[0]);
-            Log.d("Debug", "Email" + params[1]);
-            Log.d("Debug", "Phone" + params[2]);
-            Log.d("Debug", "Password" + params[3]);
-
+            datamap.put("Name",params[0]);
+            datamap.put("Email",params[1]);
+            datamap.put("PhoneNo",params[2]);
+            datamap.put("Password",params[3]);
+            datamap.put("TokenId",params[4]);
             try {
-                response = UrlPostConnection("", datamap);
-            } catch (IOException e) {
+                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerRegistration", datamap);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return response;
@@ -107,8 +103,37 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            receivingData.getRegistration_Details(result);
+           super.onPostExecute(result);
+           receivingData.get_Registration_Status(result, handler);
         }
     }
+
+    //For Login
+    public class Login extends AsyncTask<String, String, String> {
+        String response = "";
+        Handler handler;
+        public Login(Handler handler)
+        {
+            this.handler = handler;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("Email", params[0]);
+            datamap.put("UserPassword", params[1]);
+            datamap.put("TokenId", params[2]);
+            try {
+                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerLogin", datamap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_Login_Status(result, handler);
+        }
+    }
+
 }

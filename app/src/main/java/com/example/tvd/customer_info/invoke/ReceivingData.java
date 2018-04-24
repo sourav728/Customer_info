@@ -1,11 +1,15 @@
 package com.example.tvd.customer_info.invoke;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tvd.customer_info.LoginActivity;
+import com.example.tvd.customer_info.MainActivity;
+import com.example.tvd.customer_info.values.FunctionCall;
+
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -13,14 +17,15 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by TVD on 4/23/2018.
- */
+import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_SUCCESS;
 
 public class ReceivingData {
+    private FunctionCall functionCall = new FunctionCall();
     private String parseServerXML(String result) {
         String value="";
         XmlPullParserFactory pullParserFactory;
@@ -57,27 +62,45 @@ public class ReceivingData {
         }
         return value;
     }
- public void getRegistration_Details(String result)
- {
-     result = parseServerXML(result);
-     JSONArray jsonArray;
-     try {
-         jsonArray = new JSONArray(result);
-         for (int i=0;i<jsonArray.length();i++)
-         {
-             JSONObject jsonObject = jsonArray.getJSONObject(i);
-             String message = jsonObject.getString("message");
-             if (StringUtils.startsWithIgnoreCase(message,"Success"))
-             {
-                Log.d("Debugg","Login Success");
-             }
-             else
-             {
-                 Log.d("Debugg","Login Failure");
-             }
-         }
-     } catch (JSONException e) {
-         e.printStackTrace();
-     }
- }
+    //For Registration
+    public void get_Registration_Status(String result, Handler handler)
+    {
+        String res = parseServerXML(result);
+        Log.d("Debug","Result is"+result);
+        JSONObject jsonObject;
+        try
+        {
+            jsonObject = new JSONObject(res);
+            String message = jsonObject.getString("message");
+            if (StringUtils.startsWithIgnoreCase(message,"success"))
+                handler.sendEmptyMessage(REGISTRATION_SUCCESS);
+            else
+                handler.sendEmptyMessage(REGISTRATION_FAILURE);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(REGISTRATION_FAILURE);
+        }
+    }
+    //For Login
+    public void get_Login_Status(String result, Handler handler)
+    {
+        String res = parseServerXML(result);
+        Log.d("Debug", "Result is" + result);
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(res);
+            String message = jsonObject.getString("message");
+
+            if (StringUtils.startsWithIgnoreCase(message, "success"))
+                    handler.sendEmptyMessage(LOGIN_SUCCESS);
+                else
+                    handler.sendEmptyMessage(LOGIN_FAILURE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+        }
+    }
 }
