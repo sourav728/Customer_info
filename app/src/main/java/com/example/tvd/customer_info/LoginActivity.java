@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (password.getText().length() <= 0) {
                         password.setError("Please Enter Password!!");
                     } else {
-
                         progressdialog = ProgressDialog.show(LoginActivity.this, "Login",
                                 "Fetching details please wait..", true);
                         SendingData.Login login = sendingdata.new Login(mHandler);

@@ -28,7 +28,7 @@
             android:layout_toLeftOf="@+id/iv_fab"
             android:text="Details"
             android:textColor="#0A0909"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/iv_fab"
@@ -70,8 +70,10 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:gravity="center"
+                    android:textColor="@color/textcolor"
                     android:text="Source"/>
                <TextView
+                   android:id="@+id/txt_source_address"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:gravity="center"
@@ -94,9 +96,11 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:gravity="center"
+                    android:textColor="@color/textcolor"
                     android:text="Destination"/>
 
                 <TextView
+                    android:id="@+id/txt_destination_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Destination Address"
@@ -133,8 +137,10 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:gravity="center"
+                    android:textColor="@color/textcolor"
                     android:text="Distance"/>
                 <TextView
+                    android:id="@+id/txt_distance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -156,10 +162,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:textColor="@color/textcolor"
                     android:gravity="center"
                     android:text="Duration"/>
 
                 <TextView
+                    android:id="@+id/txt_duration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="1 hr"

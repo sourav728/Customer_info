@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Criteria;
-import android.location.LocationListener;
+import com.google.android.gms.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akexorcist.googledirection.model.Direction;
@@ -61,14 +62,13 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
         LocationListener,GoogleMap.OnMarkerClickListener,DirectionCallback{
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     private GoogleMap mMap;
-    BottomSheetDialog dialog;
     CoordinatorLayout coordinatorLayout;
     ImageView iv_trigger;
     GetSetValues getsetvalues;
     private ArrayList<GetSetValues> arrayList = new ArrayList<>();
     GoogleApiClient mGoogleApiClient;
     android.location.Location mLastLocation;
-    String lati = "", longi = "";
+    String lati = "", longi = "", csd_name="";
     Double double_lati, double_longi;
     ArrayList<Polyline> polylines;
     Polyline line;
@@ -77,6 +77,7 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     private LatLng origin,destination;
+    TextView distance_text,duration_text,source_address,destination_address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,9 +90,9 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
         init_persistent_bottomsheet();
 
         Bundle bundle = getIntent().getExtras();
-        arrayList = (ArrayList<GetSetValues>) bundle.get("list");
-        Log.d("Debugg","ArrayListSize"+arrayList);
-
+         lati = bundle.getString("LATITUDE");
+         longi = bundle.getString("LONGITUDE");
+         csd_name = bundle.getString("CSDNAME");
         getsetvalues = new GetSetValues();
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -138,9 +139,12 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
     public void init_persistent_bottomsheet() {
         View persistentbottomSheet = coordinatorLayout.findViewById(R.id.bottomsheet);
         iv_trigger = (ImageView) persistentbottomSheet.findViewById(R.id.iv_fab);
+        distance_text = (TextView) persistentbottomSheet.findViewById(R.id.txt_distance);
+        duration_text = (TextView) persistentbottomSheet.findViewById(R.id.txt_duration);
+        source_address = (TextView) persistentbottomSheet.findViewById(R.id.txt_source_address);
+        destination_address = (TextView) persistentbottomSheet.findViewById(R.id.txt_destination_address);
+
         final BottomSheetBehavior behavior = BottomSheetBehavior.from(persistentbottomSheet);
-
-
         iv_trigger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -212,8 +216,20 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
         //mMap.addMarker(markerOptions).setTitle("" + latLng + "," + subLocality + "," + state + "," + country);
         // mMap.addMarker(new MarkerOptions().title(mrname).snippet("Mrcode:   " + mrcode).position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
+        try {
+            double_lati = Double.parseDouble(lati);
+            Log.d("Debugg","Latitude"+double_lati);
+            double_longi = Double.parseDouble(longi);
+            Log.d("Debugg","Longitude"+double_longi);
+            mMap.addMarker(new MarkerOptions().title(csd_name).position(new LatLng(double_lati, double_longi)));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         /*********FOR DISPLAYING MULTIPLE MARKER ON MAPS***************/
-        for (int i=0;i<arrayList.size();i++)
+        /*for (int i=0;i<arrayList.size();i++)
         {
             GetSetValues getsetvalues = arrayList.get(i);
             lati = getsetvalues.getLatitude();
@@ -225,14 +241,14 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
                     Log.d("Debugg","Latitude"+double_lati);
                     double_longi = Double.parseDouble(longi);
                     Log.d("Debugg","Longitude"+double_longi);
-
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(double_lati, double_longi)));
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
 
         /********************END OF MULTIPLE MARKER SHOWN CODE**********************/
 
@@ -253,7 +269,6 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
                 // Start downloading json data from Google Directions API
                 FetchUrl.execute(url);
                 //move map camera
-
                 return false;
             }
         });
@@ -426,9 +441,11 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
 
             //Now you can get these values from anywhere like this way:
             startAddress = DataParser.mMyAppsBundle.getString("startAddress");
-            Toast.makeText(Location.this, "Start Address.."+startAddress, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(Location.this, "Start Address.."+startAddress, Toast.LENGTH_SHORT).show();
+            source_address.setText(startAddress);
             endAddress = DataParser.mMyAppsBundle.getString("endAddress");
-            Toast.makeText(Location.this, "End Address.."+endAddress, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Location.this, "End Address.."+endAddress, Toast.LENGTH_SHORT).show();
+            destination_address.setText(endAddress);
             //mode = DataParser.mMyAppsBundle.getString("travel_mode");
 
            /* distance_text.setVisibility(View.VISIBLE);
@@ -437,8 +454,9 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
             //travelmode_text.setVisibility(View.VISIBLE);
             //empty_text.setVisibility(View.VISIBLE);
             /***********Start and End address needs to be set************/
-           /* distance_text.setText(distance);
-            duration_text.setText(duration);*/
+
+            distance_text.setText(distance);
+            duration_text.setText(duration);
 
             // travelmode_text.setText(mode+" "+"Mode");
 
@@ -451,20 +469,6 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {

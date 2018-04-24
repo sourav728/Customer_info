@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -54,8 +55,10 @@ public class More_fragment extends Fragment {
     AlertDialog alertDialog1;
     GetSetValues getSetValues;
     CharSequence[] values = {"English", "Kannada"};
-    String LONGITUDE = "", LATITUDE = "";
+    String LONGITUDE = "", LATITUDE = "",CSDNAME="";
     ArrayList<GetSetValues> arrayList;
+    String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
+
     public More_fragment() {
     }
 
@@ -72,8 +75,7 @@ public class More_fragment extends Fragment {
         language = (RelativeLayout) view.findViewById(R.id.relative_language);
         location = (RelativeLayout) view.findViewById(R.id.relative_location);
         arrayList = new ArrayList<>();
-        ConnectURL connectURL = new ConnectURL();
-        connectURL.execute();
+
 
         language.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,15 +83,13 @@ public class More_fragment extends Fragment {
                 CreateAlertDialogWithRadioButtonGroup();
             }
         });
-       /* location.setOnClickListener(new View.OnClickListener() {
+        location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Location.class);
-                intent.putExtra("list",arrayList);
-                intent.putExtra(GETSET, String.valueOf(getSetValues));
-                startActivity(intent);
+                ConnectURL connectURL = new ConnectURL();
+                connectURL.execute();
             }
-        });*/
+        });
         return view;
     }
 
@@ -131,9 +131,10 @@ public class More_fragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             HashMap<String, String> datamap = new HashMap<>();
-            datamap.put("SubDivCode", "540038");
+            datamap.put("subdivisioncode", "540038");
+            datamap.put("TokenId", TokenId);
             try {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/Service.asmx/LGLTMRDETAILS", datamap);
+                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/SubdivisionLocation", datamap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -149,25 +150,19 @@ public class More_fragment extends Fragment {
                 if (jsonarray.length() > 0) {
                     for (int i = 0; i < jsonarray.length(); i++) {
                         JSONObject jsonObject = jsonarray.getJSONObject(i);
-                        getSetValues = new GetSetValues();
-                        LONGITUDE = jsonObject.getString("LONGITUDE");
                         LATITUDE = jsonObject.getString("LATITUDE");
-
-                        Log.d("Debugg", "LONGITUDE" + LONGITUDE);
+                        LONGITUDE = jsonObject.getString("LONGITUDE");
+                        CSDNAME = jsonObject.getString("CSDNAME");
                         Log.d("Debugg", "LATITUDE" + LATITUDE);
-
-                        if (!LONGITUDE.equals(""))
-                            getSetValues.setLongitude(LONGITUDE);
-                        else getSetValues.setLongitude("NA");
-                        if (!LATITUDE.equals(""))
-                            getSetValues.setLatitude(LATITUDE);
-                        else getSetValues.setLatitude("NA");
-
+                        Log.d("Debugg", "LONGITUDE" + LONGITUDE);
+                        Log.d("Debug", "CSDNAME"+ CSDNAME);
                     }
+                    Intent intent = new Intent(getActivity(), Location.class);
+                    intent.putExtra("LATITUDE", LATITUDE);
+                    intent.putExtra("LONGITUDE", LONGITUDE);
+                    intent.putExtra("CSDNAME", CSDNAME);
+                    startActivity(intent);
                     Toast.makeText(getActivity(), "Success..", Toast.LENGTH_SHORT).show();
-
-                    /*******Need to changes the following listview string values*************/
-
                 }
             } catch (Exception e) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();

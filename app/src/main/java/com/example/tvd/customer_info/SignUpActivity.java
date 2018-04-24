@@ -1,6 +1,7 @@
 package com.example.tvd.customer_info;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
@@ -116,10 +117,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         } else if (password.getText().length() <= 0) {
             password.setError("Enter password");
         } else {
-            progressdialog = ProgressDialog.show(SignUpActivity.this, "Registration",
-                    "Fetching details please wait..", true);
-            SendingData.Sign_UP signup = sendingData.new Sign_UP(mHandler);
-            signup.execute(cust_name, cust_email, cust_phone, cust_pass, TokenId);
+            //Below code for email and mobile no validation
+            if (android.util.Patterns.EMAIL_ADDRESS.matcher(cust_email).matches()) {
+                if (android.util.Patterns.PHONE.matcher(cust_phone).matches()) {
+                    progressdialog = ProgressDialog.show(SignUpActivity.this, "Registration",
+                            "Fetching details please wait..", true);
+                    SendingData.Sign_UP signup = sendingData.new Sign_UP(mHandler);
+                    signup.execute(cust_name, cust_email, cust_phone, cust_pass, TokenId);
+                }else Toast.makeText(this, "Phone number is not valid!!", Toast.LENGTH_SHORT).show();
+            }else Toast.makeText(this, "Email is not valid!!", Toast.LENGTH_SHORT).show();
         }
     }
 }
