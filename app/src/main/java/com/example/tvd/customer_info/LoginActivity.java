@@ -7,11 +7,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tvd.customer_info.invoke.SendingData;
@@ -28,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog progressdialog;
     SendingData sendingdata;
     FunctionCall fcall;
+    LayoutInflater inflater;
+    View layout;
     private final Handler mHandler;
 
     {
@@ -39,11 +46,40 @@ public class LoginActivity extends AppCompatActivity {
                         progressdialog.dismiss();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+                        //Below code is for custom toast message
+                        inflater = getLayoutInflater();
+                        layout = inflater.inflate(R.layout.toast,
+                                (ViewGroup) findViewById(R.id.toast_layout));
+                        ImageView imageView = (ImageView) layout.findViewById(R.id.image);
+                        imageView.setImageResource(R.drawable.tick);
+                        TextView textView = (TextView) layout.findViewById(R.id.text);
+                        textView.setText("Success");
+                        textView.setTextSize(20);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setGravity(Gravity.BOTTOM, 0, 0);
+                        toast.setDuration(Toast.LENGTH_SHORT);
+                        toast.setView(layout);
+                        toast.show();
+                        //end of custom toast coding
                         finish();
                         break;
                     case LOGIN_FAILURE:
                         progressdialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Please Check the login details..", Toast.LENGTH_SHORT).show();
+                        //below code is for custom toast
+                         inflater = getLayoutInflater();
+                         layout = inflater.inflate(R.layout.toast,
+                                (ViewGroup) findViewById(R.id.toast_layout));
+                        ImageView imageView1 = (ImageView) layout.findViewById(R.id.image);
+                        imageView1.setImageResource(R.drawable.invalid);
+                        TextView textView1 = (TextView) layout.findViewById(R.id.text);
+                        textView1.setText("Invalid Credentials!!");
+                        textView1.setTextSize(20);
+                        Toast toast1 = new Toast(getApplicationContext());
+                        toast1.setGravity(Gravity.BOTTOM, 0, 0);
+                        toast1.setDuration(Toast.LENGTH_SHORT);
+                        toast1.setView(layout);
+                        toast1.show();
+                        //end of custom toast code
                         email.setText("");
                         password.setText("");
                         email.requestFocus();

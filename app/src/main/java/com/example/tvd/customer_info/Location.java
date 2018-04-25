@@ -12,7 +12,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
+
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -121,10 +121,6 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
         }
 
-       /* mMap = googleMap;
-        LatLng sydney = new LatLng(12.971599,77.594563);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Bangalore"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -178,7 +174,6 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
                 @Override
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                     // React to dragging events
-
                 }
             });
 
