@@ -2,6 +2,7 @@ package com.example.tvd.customer_info;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.tvd.customer_info.invoke.SendingData;
 import com.example.tvd.customer_info.values.FunctionCall;
+import com.example.tvd.customer_info.values.GetSetValues;
 
 
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     FunctionCall fcall;
     LayoutInflater inflater;
     View layout;
+    GetSetValues getSetValues;
     private final Handler mHandler;
 
     {
@@ -43,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case LOGIN_SUCCESS:
+                        SavePreferences("EMAIL",get_email);
+                        SavePreferences("ID",getSetValues.getLogin_id());
                         progressdialog.dismiss();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -94,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSetValues = new GetSetValues();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -104,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.edit_email);
         password = (EditText) findViewById(R.id.edit_password);
         TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,12 +124,19 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         progressdialog = ProgressDialog.show(LoginActivity.this, "Login",
                                 "Fetching details please wait..", true);
-                        SendingData.Login login = sendingdata.new Login(mHandler);
+                        SendingData.Login login = sendingdata.new Login(mHandler,getSetValues);
                         login.execute(get_email, get_password, TokenId);
                     }
                 } else
                     Toast.makeText(LoginActivity.this, "Please connect to internet..", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void SavePreferences(String key, String value){
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
     }
 }

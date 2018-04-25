@@ -1,17 +1,11 @@
 package com.example.tvd.customer_info.invoke;
 
-import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.tvd.customer_info.LoginActivity;
-import com.example.tvd.customer_info.MainActivity;
 
-import org.apache.commons.lang3.StringUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.tvd.customer_info.values.GetSetValues;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -81,18 +75,18 @@ public class SendingData {
         String response = "";
         Handler handler;
 
-        public Sign_UP(Handler handler)
-        {
+        public Sign_UP(Handler handler) {
             this.handler = handler;
         }
+
         @Override
         protected String doInBackground(String... params) {
             HashMap<String, String> datamap = new HashMap<>();
-            datamap.put("Name",params[0]);
-            datamap.put("Email",params[1]);
-            datamap.put("PhoneNo",params[2]);
-            datamap.put("Password",params[3]);
-            datamap.put("TokenId",params[4]);
+            datamap.put("Name", params[0]);
+            datamap.put("Email", params[1]);
+            datamap.put("PhoneNo", params[2]);
+            datamap.put("Password", params[3]);
+            datamap.put("TokenId", params[4]);
             try {
                 response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerRegistration", datamap);
             } catch (Exception e) {
@@ -103,8 +97,8 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-           super.onPostExecute(result);
-           receivingData.get_Registration_Status(result, handler);
+            super.onPostExecute(result);
+            receivingData.get_Registration_Status(result, handler);
         }
     }
 
@@ -112,10 +106,13 @@ public class SendingData {
     public class Login extends AsyncTask<String, String, String> {
         String response = "";
         Handler handler;
-        public Login(Handler handler)
-        {
+        GetSetValues getSetValues;
+
+        public Login(Handler handler, GetSetValues getSetValues) {
             this.handler = handler;
+            this.getSetValues = getSetValues;
         }
+
         @Override
         protected String doInBackground(String... params) {
             HashMap<String, String> datamap = new HashMap<>();
@@ -132,8 +129,68 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.get_Login_Status(result, handler);
+            receivingData.get_Login_Status(result, handler, getSetValues);
         }
     }
+
+    //For customer search
+    public class Customer_Search extends AsyncTask<String, String, String> {
+        String response = "";
+        Handler handler;
+
+        public Customer_Search(Handler handler) {
+            this.handler = handler;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("AccountId", params[0]);
+            datamap.put("RRNO", params[1]);
+            datamap.put("TokenId", params[2]);
+            try {
+                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerSearch", datamap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_customersearch_info(result, handler);
+        }
+    }
+
+    public class Customer_Data_Insert extends AsyncTask<String, String, String> {
+        String response = "";
+        Handler handler;
+
+        public Customer_Data_Insert(Handler handler) {
+            this.handler = handler;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("Userid", params[0]);
+            datamap.put("AccountId", params[1]);
+            datamap.put("RRNO", params[2]);
+            datamap.put("Relationship", params[3]);
+            datamap.put("TokenId", params[4]);
+            try {
+                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDataInsert", datamap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_consumerinsert_info(result, handler);
+        }
+    }
+
 
 }

@@ -38,13 +38,14 @@ public class MainActivity extends AppCompatActivity
     private boolean doubleBackToExitPressedOnce = true;
     private static AppCompatActivity thisActivity;
     TextView name,email;
-    private SharedPreferences sharedPreferences;
     TextView font_toolbar_title;
     Typeface typeface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF",MODE_PRIVATE);
+        String useremail = sharedPreferences.getString("EMAIL","");
         typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
         thisActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -58,14 +59,12 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        sharedPreferences = getSharedPreferences(PREFER_NAME, Context.MODE_PRIVATE);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View view = navigationView.getHeaderView(0);
-        name = (TextView) view.findViewById(R.id.nav_name);
         email = (TextView) view.findViewById(R.id.nav_email);
-        name.setText(sharedPreferences.getString("Name",""));
-        email.setText(sharedPreferences.getString("Email",""));
+        email.setText(useremail);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
