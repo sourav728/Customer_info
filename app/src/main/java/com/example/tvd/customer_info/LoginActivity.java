@@ -25,6 +25,7 @@ import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
 
 
+import static com.example.tvd.customer_info.values.ConstantValues.CONNECTION_TIME_OUT;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_SUCCESS;
 
@@ -88,6 +89,10 @@ public class LoginActivity extends AppCompatActivity {
                         email.setText("");
                         password.setText("");
                         email.requestFocus();
+                        break;
+                    case CONNECTION_TIME_OUT:
+                        progressdialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "Connection Time out!!", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 super.handleMessage(msg);

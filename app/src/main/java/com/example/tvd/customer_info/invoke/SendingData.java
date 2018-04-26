@@ -3,9 +3,13 @@ package com.example.tvd.customer_info.invoke;
 
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.Log;
 
 
+import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
+
+import org.apache.http.conn.ConnectTimeoutException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,6 +28,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class SendingData {
     private ReceivingData receivingData = new ReceivingData();
+    private FunctionCall fcall = new FunctionCall();
 
     private String UrlPostConnection(String Post_Url, HashMap<String, String> datamap) throws IOException {
         String response = "";
@@ -91,6 +96,7 @@ public class SendingData {
                 response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerRegistration", datamap);
             } catch (Exception e) {
                 e.printStackTrace();
+
             }
             return response;
         }

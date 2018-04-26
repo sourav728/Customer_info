@@ -9,4 +9,5 @@ public class ConstantValues {
     public static final int SEARCH_NOT_FOUND = 6;
     public static final int INSERTION_SUCCESSFULL = 7;
     public static final int INSERTION_FAILURE = 8;
+    public static final int CONNECTION_TIME_OUT = 9;
 }

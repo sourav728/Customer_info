@@ -18,6 +18,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import static com.example.tvd.customer_info.values.ConstantValues.CONNECTION_TIME_OUT;
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_SUCCESSFULL;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
@@ -105,6 +106,7 @@ public class ReceivingData {
         } catch (JSONException e) {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(CONNECTION_TIME_OUT);
         }
     }
 

@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"
         android:layout_height="?attr/actionBarSize"
-        style="@style/HeaderBar"
+        android:background="@drawable/myactionbar"
         android:elevation="4dp">
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Toolbar Title"
-            android:textColor="#FAFAFA"
+            android:textColor="@color/black2"
             android:textSize="18sp"
             android:layout_gravity="center" />
     </android.support.v7.widget.Toolbar>
