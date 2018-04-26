@@ -38,5 +38,7 @@ public class ViewBillActivity extends AppCompatActivity {
         font_personal_details = (TextView) findViewById(R.id.txt_personal_details);
         font_account_details = (TextView) findViewById(R.id.txt_account_details);
         font_connection_details = (TextView) findViewById(R.id.txt_connection_details);
+        font_toolbar_title.setTypeface(typeface);
+        font_toolbar_title.setText("Bill Details");
     }
 }

@@ -3,6 +3,7 @@ package com.example.tvd.customer_info;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -24,12 +25,13 @@ import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_S
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     Button signup;
-    TextView signup_text, login_text;
+    TextView signup_text, login_text,app_name;
     EditText name, email, phonenumber, password;
     SendingData sendingData;
     String TokenId = "", cust_name = "", cust_email = "", cust_phone = "", cust_pass = "";
     ProgressDialog progressdialog;
     FunctionCall fcall;
+    Typeface typeface;
     private final Handler mHandler;
 
     {
@@ -62,28 +64,32 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        initialize();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        signup = (Button) findViewById(R.id.signup_btn);
-        signup_text = (TextView) findViewById(R.id.signup);
-        login_text = (TextView) findViewById(R.id.login);
-
-        name = (EditText) findViewById(R.id.edit_name);
-        email = (EditText) findViewById(R.id.edit_email);
-        phonenumber = (EditText) findViewById(R.id.edit_phonenumber);
-        password = (EditText) findViewById(R.id.edit_password);
-
-        sendingData = new SendingData();
-        fcall = new FunctionCall();
         signup.setOnClickListener(this);
         signup_text.setOnClickListener(this);
         login_text.setOnClickListener(this);
         TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
     }
 
+    public void initialize()
+    {
+        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+        signup = (Button) findViewById(R.id.signup_btn);
+        signup_text = (TextView) findViewById(R.id.signup);
+        login_text = (TextView) findViewById(R.id.login);
+        app_name = (TextView) findViewById(R.id.txt_app_name);
+        name = (EditText) findViewById(R.id.edit_name);
+        email = (EditText) findViewById(R.id.edit_email);
+        phonenumber = (EditText) findViewById(R.id.edit_phonenumber);
+        password = (EditText) findViewById(R.id.edit_password);
+        sendingData = new SendingData();
+        fcall = new FunctionCall();
+        app_name.setTypeface(typeface);
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -120,8 +126,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             //Below code for email and mobile no validation
             if (android.util.Patterns.EMAIL_ADDRESS.matcher(cust_email).matches()) {
                 if (android.util.Patterns.PHONE.matcher(cust_phone).matches()) {
-                    progressdialog = ProgressDialog.show(SignUpActivity.this, "Registration",
-                            "Fetching details please wait..", true);
+                    /*progressdialog = ProgressDialog.show(SignUpActivity.this, "Registration",
+                            "Fetching details please wait..", true);*/
+                    progressdialog = new ProgressDialog(SignUpActivity.this, R.style.MyProgressDialogstyle);
+                    progressdialog.setTitle("Connecting To Server");
+                    progressdialog.setMessage("Please Wait..");
+                    progressdialog.show();
+
                     SendingData.Sign_UP signup = sendingData.new Sign_UP(mHandler);
                     signup.execute(cust_name, cust_email, cust_phone, cust_pass, TokenId);
                 }else Toast.makeText(this, "Phone number is not valid!!", Toast.LENGTH_SHORT).show();

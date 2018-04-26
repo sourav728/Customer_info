@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 
 
+import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
 
@@ -21,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -199,10 +201,37 @@ public class SendingData {
     }
     public class See_consumer_Details extends AsyncTask<String,String,String>
     {
-
+        String response="";
+        Handler handler;
+        GetSetValues getSetValues;
+        ArrayList<GetSetValues>arrayList;
+        ConsumerListAdapter consumerListAdapter;
+        public See_consumer_Details(Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues>arrayList, ConsumerListAdapter consumerListAdapter)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+            this.arrayList = arrayList;
+            this.consumerListAdapter = consumerListAdapter;
+        }
         @Override
         protected String doInBackground(String... params) {
-            return null;
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("Userid",params[0]);
+            datamap.put("TokenId",params[1]);
+            try
+            {
+                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDetails",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_consumer_list(result,handler,getSetValues,arrayList,consumerListAdapter);
         }
     }
 

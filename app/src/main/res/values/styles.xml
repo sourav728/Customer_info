@@ -24,4 +24,9 @@
     <style name="AppBarOverlay" parent="Widget.AppCompat.Light.ActionBar.Solid">
         <item name="elevation">0dp</item>
     </style>
+
+    <!--Style for Progress Dialog-->
+    <style name="MyProgressDialogstyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/yellow</item>
+    </style>
 </resources>

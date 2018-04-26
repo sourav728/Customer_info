@@ -3,6 +3,7 @@ package com.example.tvd.customer_info;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     LayoutInflater inflater;
     View layout;
     GetSetValues getSetValues;
+    Typeface typeface;
+    TextView app_name;
     private final Handler mHandler;
 
     {
@@ -54,11 +57,12 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         //Below code is for custom toast message
                         inflater = getLayoutInflater();
-                        layout = inflater.inflate(R.layout.toast,
+                        layout = inflater.inflate(R.layout.toast1,
                                 (ViewGroup) findViewById(R.id.toast_layout));
                         ImageView imageView = (ImageView) layout.findViewById(R.id.image);
                         imageView.setImageResource(R.drawable.tick);
                         TextView textView = (TextView) layout.findViewById(R.id.text);
+                        textView.setTypeface(typeface);
                         textView.setText("Success");
                         textView.setTextSize(20);
                         Toast toast = new Toast(getApplicationContext());
@@ -78,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         ImageView imageView1 = (ImageView) layout.findViewById(R.id.image);
                         imageView1.setImageResource(R.drawable.invalid);
                         TextView textView1 = (TextView) layout.findViewById(R.id.text);
+                        textView1.setTypeface(typeface);
                         textView1.setText("Invalid Credentials!!");
                         textView1.setTextSize(20);
                         Toast toast1 = new Toast(getApplicationContext());
@@ -104,16 +109,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        initialize();
         getSetValues = new GetSetValues();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        sendingdata = new SendingData();
-        fcall = new FunctionCall();
-        login = (Button) findViewById(R.id.login_btn);
-        email = (EditText) findViewById(R.id.edit_email);
-        password = (EditText) findViewById(R.id.edit_password);
         TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +128,13 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (password.getText().length() <= 0) {
                         password.setError("Please Enter Password!!");
                     } else {
-                        progressdialog = ProgressDialog.show(LoginActivity.this, "Login",
-                                "Fetching details please wait..", true);
+                        /*progressdialog = ProgressDialog.show(LoginActivity.this, "Login",
+                                "Fetching details please wait..", true);*/
+                        progressdialog = new ProgressDialog(LoginActivity.this, R.style.MyProgressDialogstyle);
+                        progressdialog.setTitle("Connecting To Server");
+                        progressdialog.setMessage("Please Wait..");
+                        progressdialog.show();
+
                         SendingData.Login login = sendingdata.new Login(mHandler,getSetValues);
                         login.execute(get_email, get_password, TokenId);
                     }
@@ -138,6 +144,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    public void initialize()
+    {
+        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+        sendingdata = new SendingData();
+        fcall = new FunctionCall();
+        login = (Button) findViewById(R.id.login_btn);
+        app_name = (TextView) findViewById(R.id.txt_app_name);
+        email = (EditText) findViewById(R.id.edit_email);
+        password = (EditText) findViewById(R.id.edit_password);
+        app_name.setTypeface(typeface);
+    }
     private void SavePreferences(String key, String value){
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

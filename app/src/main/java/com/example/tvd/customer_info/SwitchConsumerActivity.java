@@ -1,8 +1,11 @@
 package com.example.tvd.customer_info;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
+import com.example.tvd.customer_info.invoke.SendingData;
 import com.example.tvd.customer_info.values.GetSetValues;
 
 import org.json.JSONArray;
@@ -41,6 +45,9 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_SUCCESS;
+
 public class SwitchConsumerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     RecyclerView recyclerView;
@@ -51,6 +58,30 @@ public class SwitchConsumerActivity extends AppCompatActivity {
     String Consumer_id="",rrno="",relationship="",login_id="";
     TextView font_toolbar_text;
     Typeface typeface;
+    SendingData sendingdata;
+    ProgressDialog progressdialog;
+    private final Handler mHandler;
+    {
+        mHandler = new Handler()
+        {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what)
+                {
+                    case SWITCH_CONSUMER_SUCCESS:
+                        progressdialog.dismiss();
+                        Toast.makeText(SwitchConsumerActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SWITCH_CONSUMER_FAILURE:
+                        progressdialog.dismiss();
+                        Toast.makeText(SwitchConsumerActivity.this, "Failure!!", Toast.LENGTH_SHORT).show();
+                        break;
+
+                }
+                super.handleMessage(msg);
+            }
+        };
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +93,21 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                 finish();
             }
         });
-        Consumer_list consumer_list = new Consumer_list();
-        consumer_list.execute();
+        /*Consumer_list consumer_list = new Consumer_list();
+        consumer_list.execute();*/
+        /*progressdialog = ProgressDialog.show(SwitchConsumerActivity.this, "Connecting TO Server",
+                "Fetching details please wait..", true);*/
+        progressdialog = new ProgressDialog(this, R.style.MyProgressDialogstyle);
+        progressdialog.setTitle("Connecting To Server");
+        progressdialog.setMessage("Please Wait..");
+        progressdialog.show();
+
+        SendingData.See_consumer_Details see_consumer_details = sendingdata.new See_consumer_Details(mHandler,getSetValues,arrayList,consumerListAdapter);
+        see_consumer_details.execute(login_id,TokenId);
     }
     public void initialize()
     {
+        sendingdata = new SendingData();
         typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
@@ -84,152 +125,6 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         login_id = sharedPreferences.getString("ID","");
         font_toolbar_text.setTypeface(typeface);
         font_toolbar_text.setText("ConsumerLists");
-    }
-    public class Consumer_list extends AsyncTask<String,String,String>
-    {
-        String response = "";
-        @Override
-        protected String doInBackground(String... params) {
-            HashMap<String,String>datamap = new HashMap<>();
-            datamap.put("Userid",login_id);
-            datamap.put("TokenId",TokenId);
-            try
-            {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDetails",datamap);
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            String res = parseServerXML(s);
-            JSONArray jsonArray;
-            try {
-                jsonArray = new JSONArray(res);
-                if (jsonArray.length()>0)
-                {
-                    for (int i=0;i<jsonArray.length();i++)
-                    {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        getSetValues = new GetSetValues();
-                        Consumer_id = jsonObject.getString("ACCOUNT_ID");
-                        rrno = jsonObject.getString("RRNO");
-                        relationship = jsonObject.getString("RELATIONSHIP");
-                        Log.d("Debug","CONSUMERID"+Consumer_id);
-                        Log.d("Debug","RRNO"+rrno);
-                        Log.d("Debug","Relationship"+relationship);
-                        if (!Consumer_id.equals(""))
-                            getSetValues.setConsumer_id(Consumer_id);
-                        else getSetValues.setConsumer_id("NA");
-                        if (!rrno.equals(""))
-                            getSetValues.setRrno(rrno);
-                        else getSetValues.setRrno("NA");
-                        if (!relationship.equals(""))
-                            getSetValues.setRelationship(relationship);
-                        else getSetValues.setRelationship("NA");
-                        arrayList.add(getSetValues);
-                        consumerListAdapter.notifyDataSetChanged();
-                    }
-                    Toast.makeText(SwitchConsumerActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                }else
-                {
-                    Toast.makeText(SwitchConsumerActivity.this, "No Data!!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-                Toast.makeText(SwitchConsumerActivity.this, "No Data found!!", Toast.LENGTH_SHORT).show();
-            }
-            super.onPostExecute(s);
-        }
-    }
-
-    private String UrlPostConnection(String Post_Url, HashMap<String, String> datamap) throws IOException {
-        String response = "";
-        URL url = new URL(Post_Url);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(15000);
-        conn.setConnectTimeout(15000);
-        conn.setRequestMethod("POST");
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        OutputStream outputStream = conn.getOutputStream();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-        writer.write(getPostDataString(datamap));
-        writer.flush();
-        writer.close();
-        outputStream.close();
-        int responseCode = conn.getResponseCode();
-        if (responseCode == HttpsURLConnection.HTTP_OK) {
-            String line;
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            while ((line = bufferedReader.readLine()) != null) {
-                response += line;
-            }
-        } else {
-            response = "";
-        }
-        return response;
-    }
-
-    private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            if (first)
-                first = false;
-            else
-                result.append("&");
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-            Log.d("debug", result.toString());
-        }
-        return result.toString();
-    }
-
-    public String parseServerXML(String result) {
-        String value = "";
-        XmlPullParserFactory pullParserFactory;
-        InputStream res;
-        try {
-            res = new ByteArrayInputStream(result.getBytes());
-            pullParserFactory = XmlPullParserFactory.newInstance();
-            pullParserFactory.setNamespaceAware(true);
-            XmlPullParser parser = pullParserFactory.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(res, null);
-            int eventType = parser.getEventType();
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                String name = parser.getName();
-                switch (eventType) {
-                    case XmlPullParser.START_DOCUMENT:
-                        break;
-                    case XmlPullParser.START_TAG:
-                        switch (name) {
-                            case "string":
-                                value = parser.nextText();
-                                break;
-                        }
-                        break;
-                    case XmlPullParser.END_TAG:
-                        break;
-                }
-                eventType = parser.next();
-            }
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return value;
     }
 
 }

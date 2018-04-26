@@ -98,8 +98,13 @@ public class AccountRegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 get_account_id = account_id.getText().toString();
                 get_rrno = rrno.getText().toString();
-                progressDialog = ProgressDialog.show(AccountRegistrationActivity.this, "Searching..",
-                        "Fetching details please wait..", true);
+               /* progressDialog = ProgressDialog.show(AccountRegistrationActivity.this, "Searching..",
+                        "Fetching details please wait..", true);*/
+                progressDialog = new ProgressDialog(AccountRegistrationActivity.this, R.style.MyProgressDialogstyle);
+                progressDialog.setTitle("Connecting To Server");
+                progressDialog.setMessage("Please Wait..");
+                progressDialog.show();
+
                 SendingData.Customer_Search customer_search = sendingData.new Customer_Search(mHandler);
                 customer_search.execute(get_account_id, get_rrno, TokenId);
             }
