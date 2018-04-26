@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.tvd.customer_info.AccountRegistrationActivity;
 import com.example.tvd.customer_info.NotificationActivity;
 import com.example.tvd.customer_info.R;
+import com.example.tvd.customer_info.SwitchConsumerActivity;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -29,9 +30,10 @@ public class Home_fragment2 extends Fragment {
     int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3};
     TextView textcartitemcount;
     int mCartItemCount = 10;
-    LinearLayout add_consumer;
-    TextView txt_add_consumer;
+    LinearLayout add_consumer, switch_consumer;
+    TextView txt_add_consumer, txt_switch_consumer_account;
     Typeface typeface;
+
     public Home_fragment2() {
     }
 
@@ -45,10 +47,11 @@ public class Home_fragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_fragment2, container, false);
-        Typeface typeface=Typeface.createFromAsset(getActivity().getAssets(),"timesnewroman.ttf");
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "timesnewroman.ttf");
         carouselView = (CarouselView) view.findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
         add_consumer = (LinearLayout) view.findViewById(R.id.lin_add_consumer);
+        switch_consumer = (LinearLayout) view.findViewById(R.id.lin_switch_consumer);
         carouselView.setImageListener(imageListener);
         add_consumer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +60,17 @@ public class Home_fragment2 extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+        switch_consumer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SwitchConsumerActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
         txt_add_consumer = (TextView) view.findViewById(R.id.txt_add_consumer);
         txt_add_consumer.setTypeface(typeface);
+        txt_switch_consumer_account = (TextView) view.findViewById(R.id.txt_switch_consumer);
+        txt_switch_consumer_account.setTypeface(typeface);
         return view;
     }
 

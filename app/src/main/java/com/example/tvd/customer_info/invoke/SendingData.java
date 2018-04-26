@@ -167,7 +167,7 @@ public class SendingData {
             receivingData.get_customersearch_info(result, handler);
         }
     }
-
+    //For consumer data insert into web service
     public class Customer_Data_Insert extends AsyncTask<String, String, String> {
         String response = "";
         Handler handler;
@@ -197,6 +197,13 @@ public class SendingData {
             receivingData.get_consumerinsert_info(result, handler);
         }
     }
+    public class See_consumer_Details extends AsyncTask<String,String,String>
+    {
 
+        @Override
+        protected String doInBackground(String... params) {
+            return null;
+        }
+    }
 
 }

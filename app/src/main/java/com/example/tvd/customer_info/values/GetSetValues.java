@@ -5,7 +5,7 @@ package com.example.tvd.customer_info.values;
  */
 
 public class GetSetValues {
-    private String latitude,longitude,login_id;
+    private String latitude,longitude,login_id,consumer_id,rrno,relationship;
 
     public String getLatitude() {
         return latitude;
@@ -17,6 +17,30 @@ public class GetSetValues {
 
     public String getLongitude() {
         return longitude;
+    }
+
+    public String getConsumer_id() {
+        return consumer_id;
+    }
+
+    public void setConsumer_id(String consumer_id) {
+        this.consumer_id = consumer_id;
+    }
+
+    public String getRrno() {
+        return rrno;
+    }
+
+    public void setRrno(String rrno) {
+        this.rrno = rrno;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 
     public String getLogin_id() {
