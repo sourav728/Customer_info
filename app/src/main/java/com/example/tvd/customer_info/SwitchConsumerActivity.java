@@ -74,9 +74,9 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                         break;
                     case SWITCH_CONSUMER_FAILURE:
                         progressdialog.dismiss();
-                        Toast.makeText(SwitchConsumerActivity.this, "Failure!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SwitchConsumerActivity.this, "No Consumer ID Added!!", Toast.LENGTH_SHORT).show();
+                        finish();
                         break;
-
                 }
                 super.handleMessage(msg);
             }
