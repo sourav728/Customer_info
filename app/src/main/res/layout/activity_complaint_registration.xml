@@ -74,6 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:singleLine="true"
                         android:background="@drawable/edit_shape"/>
                 <Button
                     android:id="@+id/btn_search"
@@ -137,6 +138,8 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="RSBA1234"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -159,6 +162,8 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="02456789"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -182,6 +187,8 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="Harish"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -204,6 +211,8 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="76575"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -226,6 +235,8 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="5LT2A"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -266,8 +277,11 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:text=":"/>
-                    <Spinner
+                    <TextView
                         android:layout_weight="1"
+                        android:enabled="false"
+                        android:text="CSD2"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="17sp"/>
@@ -314,6 +328,8 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="54678"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -332,11 +348,13 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:text=":"/>
+
                     <Spinner
-                        android:layout_weight="1"
+                        android:id="@+id/spinner1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"/>
+                        android:layout_weight="1"
+                        android:textSize="17sp" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="5dp"
@@ -354,7 +372,8 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:text=":"/>
-                    <TextView
+                    <Spinner
+                        android:id="@+id/spiner2"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

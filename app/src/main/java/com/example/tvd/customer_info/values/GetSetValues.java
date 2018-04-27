@@ -5,7 +5,7 @@ package com.example.tvd.customer_info.values;
  */
 
 public class GetSetValues {
-    private String latitude,longitude,login_id,consumer_id,rrno,relationship;
+    private String latitude,longitude,login_id,consumer_id,rrno,relationship,spiner_item;
 
     public String getLatitude() {
         return latitude;
@@ -17,6 +17,14 @@ public class GetSetValues {
 
     public String getLongitude() {
         return longitude;
+    }
+
+    public String getSpiner_item() {
+        return spiner_item;
+    }
+
+    public void setSpiner_item(String spiner_item) {
+        this.spiner_item = spiner_item;
     }
 
     public String getConsumer_id() {

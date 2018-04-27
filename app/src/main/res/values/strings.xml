@@ -9,4 +9,21 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_location">Map</string>
+    <string-array name="complaint_list">
+        <item>--SELECT--</item>
+        <item>BILLING ISSUES</item>
+        <item>ADDITIONAL TC/ENHANCEMENT</item>
+    </string-array>
+
+    <string-array name="first">
+        <item>--Select Subcategory--</item>
+        <item>Reconnection of supply following disconnection</item>
+        <item>Where field report is required</item>
+    </string-array>
+
+    <string-array name="second">
+        <item>--Select Subcategory--</item>
+        <item>Additional TC</item>
+        <item>TC Enhancement</item>
+    </string-array>
 </resources>
