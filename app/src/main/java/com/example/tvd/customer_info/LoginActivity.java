@@ -41,7 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     View layout;
     GetSetValues getSetValues;
     Typeface typeface;
-    TextView app_name;
+    TextView app_name,sign_up;
+
     private final Handler mHandler;
 
     {
@@ -50,11 +51,12 @@ public class LoginActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case LOGIN_SUCCESS:
-                        SavePreferences("EMAIL",get_email);
-                        SavePreferences("ID",getSetValues.getLogin_id());
+                        SavePreferences("EMAIL", get_email);
+                        SavePreferences("ID", getSetValues.getLogin_id());
                         progressdialog.dismiss();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                         //Below code is for custom toast message
                         inflater = getLayoutInflater();
                         layout = inflater.inflate(R.layout.toast1,
@@ -71,13 +73,12 @@ public class LoginActivity extends AppCompatActivity {
                         toast.setView(layout);
                         toast.show();
                         //end of custom toast coding
-                        finish();
                         break;
                     case LOGIN_FAILURE:
                         progressdialog.dismiss();
                         //below code is for custom toast
-                         inflater = getLayoutInflater();
-                         layout = inflater.inflate(R.layout.toast,
+                        inflater = getLayoutInflater();
+                        layout = inflater.inflate(R.layout.toast,
                                 (ViewGroup) findViewById(R.id.toast_layout));
                         ImageView imageView1 = (ImageView) layout.findViewById(R.id.image);
                         imageView1.setImageResource(R.drawable.invalid);
@@ -134,19 +135,24 @@ public class LoginActivity extends AppCompatActivity {
                         progressdialog.setTitle("Connecting To Server");
                         progressdialog.setMessage("Please Wait..");
                         progressdialog.show();
+                        // Creating user login session
+                        // Statically storing name,password
+                        /************For user login session**********/
+                        //sessionManager.createUserLoginSession(get_email, get_password);
+                        /********************************************/
 
-                        SendingData.Login login = sendingdata.new Login(mHandler,getSetValues);
+                        SendingData.Login login = sendingdata.new Login(mHandler, getSetValues);
                         login.execute(get_email, get_password, TokenId);
                     }
                 } else
                     Toast.makeText(LoginActivity.this, "Please connect to internet..", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
-    public void initialize()
-    {
-        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+    public void initialize() {
+        typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         sendingdata = new SendingData();
         fcall = new FunctionCall();
         login = (Button) findViewById(R.id.login_btn);
@@ -155,7 +161,8 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.edit_password);
         app_name.setTypeface(typeface);
     }
-    private void SavePreferences(String key, String value){
+
+    private void SavePreferences(String key, String value) {
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);

@@ -91,7 +91,7 @@
                 android:layout_height="50dp"
                 android:background="@drawable/buttonpressed"
                 android:text="Search"
-                android:textColor="#FFF"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textAllCaps="false"/>

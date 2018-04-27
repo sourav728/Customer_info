@@ -85,7 +85,8 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/buttonpressed"
                 android:text="LOGIN"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/black" />
+
         </LinearLayout>
 
     </FrameLayout>

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.tvd.customer_info.ComplaintRegistration;
 import com.example.tvd.customer_info.Location;
 import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.values.GetSetValues;
@@ -51,7 +52,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class More_fragment extends Fragment {
     public static final String GETSET = "getset";
-    RelativeLayout language, location;
+    RelativeLayout language, location,complaints;
     AlertDialog alertDialog1;
     GetSetValues getSetValues;
     CharSequence[] values = {"English", "Kannada"};
@@ -74,6 +75,7 @@ public class More_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_more_fragment, container, false);
         language = (RelativeLayout) view.findViewById(R.id.relative_language);
         location = (RelativeLayout) view.findViewById(R.id.relative_location);
+        complaints = (RelativeLayout) view.findViewById(R.id.relative_complaints);
         arrayList = new ArrayList<>();
 
 
@@ -88,6 +90,13 @@ public class More_fragment extends Fragment {
             public void onClick(View v) {
                 ConnectURL connectURL = new ConnectURL();
                 connectURL.execute();
+            }
+        });
+        complaints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ComplaintRegistration.class);
+                startActivity(intent);
             }
         });
         return view;

@@ -108,7 +108,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
     public void initialize()
     {
         sendingdata = new SendingData();
-        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+        typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         font_toolbar_text = (TextView) toolbar.findViewById(R.id.toolbar_title);

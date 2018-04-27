@@ -2,14 +2,13 @@ package com.example.tvd.customer_info;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -21,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -42,9 +42,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF",MODE_PRIVATE);
         String useremail = sharedPreferences.getString("EMAIL","");
-        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+        typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
         thisActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -81,11 +82,48 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_drawer,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        onNavigationItemSelected(item);
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        Fragment fragment = null;
+
+        int id = item.getItemId();
+
+        replaceFragment(id);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
     private void replaceFragment(int id)
     {
         Fragment fragment = null;
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_home)
+        {
             fragment = new home_fragment();
+        }
+        if (id == R.id.nav_logout)
+        {
+            Intent intent = new Intent(thisActivity, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            //sessionManager.logoutUser();
+
         }
         if (fragment!= null)
         {
@@ -94,15 +132,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
         }
     }
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     public void checkPermissionAbove()
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)

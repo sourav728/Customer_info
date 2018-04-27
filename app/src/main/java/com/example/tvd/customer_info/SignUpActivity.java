@@ -1,7 +1,6 @@
 package com.example.tvd.customer_info;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -32,6 +31,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     ProgressDialog progressdialog;
     FunctionCall fcall;
     Typeface typeface;
+
     private final Handler mHandler;
 
     {
@@ -65,6 +65,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         initialize();
+
+        // Check user login
+        // If User is not logged in , This will redirect user to LoginActivity.
+        /*******************I have to remove the comment line to activate session management ***************/
+       /* if (sessionManager.checkLogin())
+            finish();*/
+        /************************************End***********************************************************/
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -77,7 +85,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     public void initialize()
     {
-        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+
+        typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
         signup = (Button) findViewById(R.id.signup_btn);
         signup_text = (TextView) findViewById(R.id.signup);
         login_text = (TextView) findViewById(R.id.login);

@@ -84,7 +84,7 @@ public class AccountRegistrationActivity extends AppCompatActivity {
         Log.d("Debug","Login ID"+login_id);
 
         TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
-        typeface = Typeface.createFromAsset(getAssets(), "timesnewroman.ttf");
+        typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         initialize();
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

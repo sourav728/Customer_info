@@ -47,7 +47,7 @@ public class Home_fragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_fragment2, container, false);
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "timesnewroman.ttf");
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
         carouselView = (CarouselView) view.findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
         add_consumer = (LinearLayout) view.findViewById(R.id.lin_add_consumer);

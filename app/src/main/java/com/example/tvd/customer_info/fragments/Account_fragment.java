@@ -35,7 +35,7 @@ public class Account_fragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_fragment, container, false);
         initialize(view);
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"timesnewroman.ttf");
+        typeface=Typeface.createFromAsset(getActivity().getAssets(),"calibri.ttf");
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override

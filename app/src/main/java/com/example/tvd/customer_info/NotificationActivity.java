@@ -80,7 +80,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
     public void initialization()
     {
-        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+        typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         font_toolbar_title.setText("Notifications");

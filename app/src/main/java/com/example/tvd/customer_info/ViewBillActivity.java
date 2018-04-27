@@ -27,7 +27,7 @@ public class ViewBillActivity extends AppCompatActivity {
     }
     public void initialize()
     {
-        typeface = Typeface.createFromAsset(getAssets(),"timesnewroman.ttf");
+        typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         font_billing_details = (TextView) findViewById(R.id.txt_billing_details);
