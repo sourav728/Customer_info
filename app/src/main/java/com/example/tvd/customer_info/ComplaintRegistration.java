@@ -90,6 +90,114 @@ public class ComplaintRegistration extends AppCompatActivity {
                         sub_category_list.add(getSetValues);
                         sub_category_adapter.notifyDataSetChanged();
                     }
+                }else if (selected_role.equals("NEW CONNECTION/ADDITIONAL LOAD")){
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.third).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.third)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("VOLTAGE COMPLAINTS"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.fourth).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.fourth)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("FAILURE OF POWER SUPPLY"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.fifth).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.fifth)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("GENERAL"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.sixth).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.sixth)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("TRANSFER OF OWNERSHIP AND CONVERSION"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.seventh).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.seventh)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("SAFETY ISSUES"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.eight).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.eight)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("REFUND/ISSUE OF CERTIFICATES"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.ninth).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.ninth)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("ALLEGATIONS ON STAFF"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.tenth).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.tenth)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("PHASE CONVERSION"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.eleven).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.eleven)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("METER COMPLAINTS"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.twelve).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.twelve)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("THEFT"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.thirteen).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.thirteen)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+                }else if (selected_role.equals("TRANSFORMER FAILURE COMPLAINT"))
+                {
+                    sub_category_list.clear();
+                    for (int i = 0; i < getResources().getStringArray(R.array.fourteen).length; i++) {
+                        getSetValues = new GetSetValues();
+                        getSetValues.setSpiner_item(getResources().getStringArray(R.array.fourteen)[i]);
+                        sub_category_list.add(getSetValues);
+                        sub_category_adapter.notifyDataSetChanged();
+                    }
+
                 }
             }
 

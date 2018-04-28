@@ -42,27 +42,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <RadioGroup
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <RadioButton
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Account Id"/>
-                    </RadioGroup>
-                    <RadioGroup
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
                         <RadioButton
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="RR No"/>
-                    </RadioGroup>
-                    <RadioGroup
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
                         <RadioButton
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -353,6 +342,7 @@
                         android:id="@+id/spinner1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:scrollbars="none"
                         android:layout_weight="1"
                         android:textSize="17sp" />
                 </LinearLayout>
@@ -377,6 +367,7 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:scrollbars="none"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout

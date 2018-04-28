@@ -13,17 +13,110 @@
         <item>--SELECT--</item>
         <item>BILLING ISSUES</item>
         <item>ADDITIONAL TC/ENHANCEMENT</item>
+        <item>NEW CONNECTION/ADDITIONAL LOAD</item>
+        <item>VOLTAGE COMPLAINTS</item>
+        <item>FAILURE OF POWER SUPPLY</item>
+        <item>GENERAL</item>
+        <item>TRANSFER OF OWNERSHIP AND CONVERSION</item>
+        <item>SAFETY ISSUES</item>
+        <item>REFUND/ISSUE OF CERTIFICATES</item>
+        <item>ALLEGATIONS ON STAFF</item>
+        <item>PHASE CONVERSION</item>
+        <item>METER COMPLAINTS</item>
+        <item>THEFT</item>
+        <item>TRANSFORMER FAILURE COMPLAINT</item>
     </string-array>
 
     <string-array name="first">
         <item>--Select Subcategory--</item>
         <item>Reconnection of supply following disconnection</item>
         <item>Where field report is required</item>
+        <item>Where field report is not required</item>
     </string-array>
 
     <string-array name="second">
         <item>--Select Subcategory--</item>
         <item>Additional TC</item>
         <item>TC Enhancement</item>
+    </string-array>
+
+    <string-array name="third">
+        <item>--Select Subcategory--</item>
+        <item>Release of supply where network expansion/enhancement required for providing connection</item>
+        <item>IP Sets</item>
+        <item>Release of Supply where service is feasible from existing work</item>
+    </string-array>
+    
+    <string-array name="fourth">
+        <item>--Select Subcategory--</item>
+        <item>Voltage variations where Upgradations of distributed system is required</item>
+        <item>Opening of neutral</item>
+        <item>Voltage variations where no expansion or enhancement of network involved</item>
+    </string-array>
+
+    <string-array name="fifth">
+        <item>--Select Subcategory--</item>
+        <item>Fuse of call</item>
+        <item>Line Breakdown(Pole broken)</item>
+        <item>Line Breakdown</item>
+    </string-array>
+
+    <string-array name="sixth">
+        <item>--Select Subcategory--</item>
+        <item>Any Complaint Not covered specifically in the above</item>
+    </string-array>
+
+    <string-array name="seventh">
+        <item>--Select Subcategory--</item>
+        <item>Title Transfer of Ownership</item>
+        <item>Change of category</item>
+    </string-array>
+
+    <string-array name="eight">
+        <item>--Select Subcategory--</item>
+        <item>Straightening of bent pole</item>
+        <item>Shifting of poles</item>
+        <item>Tree Triming</item>
+        <item>Replacement of damaged pole</item>
+    </string-array>
+
+    <string-array name="ninth">
+        <item>--Select Subcategory--</item>
+        <item>Refund of deposits</item>
+        <item>Issue of certificate</item>
+    </string-array>
+
+    <string-array name="tenth">
+        <item>--Select Subcategory--</item>
+        <item>Allegation on staff</item>
+    </string-array>
+
+    <string-array name="eleven">
+        <item>--Select Subcategory--</item>
+        <item>Conversion from LT to HT and Vice versa </item>
+        <item>Conversion of LT Single phase to LT 3 phase </item>
+    </string-array>
+
+    <string-array name="twelve">
+        <item>--Select Subcategory--</item>
+        <item>Replaced burnt meter in all other cases</item>
+        <item>Inspect and ckeck correctness</item>
+        <item>Replaced burnt meter if cause not attributable to cunsumer</item>
+        <item>Replaced slow,creeping or stuck meters</item>
+    </string-array>
+
+    <string-array name="thirteen">
+        <item>--Select Subcategory--</item>
+        <item>Hooking Under Nirantara Jyoti Yojane </item>
+        <item>Theft</item>
+    </string-array>
+
+    <string-array name="fourteen">
+        <item>--Select Subcategory--</item>
+        <item>Industry</item>
+        <item>Irrigation Pumpset</item>
+        <item>Domestic</item>
+        <item>Water Supply</item>
+        <item>Mixed Load</item>
     </string-array>
 </resources>
