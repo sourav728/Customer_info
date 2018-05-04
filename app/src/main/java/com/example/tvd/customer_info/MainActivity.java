@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity
         email = (TextView) view.findViewById(R.id.nav_email);
         email.setText(useremail);
 
+        NavigationView logout_view = (NavigationView) findViewById(R.id.nav_view2);
+        logout_view.setNavigationItemSelectedListener(this);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -117,13 +120,11 @@ public class MainActivity extends AppCompatActivity
         {
             fragment = new home_fragment();
         }
-        if (id == R.id.nav_logout)
+        else if (id == R.id.nav_logout)
         {
-            Intent intent = new Intent(thisActivity, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
-            //sessionManager.logoutUser();
-
         }
         if (fragment!= null)
         {

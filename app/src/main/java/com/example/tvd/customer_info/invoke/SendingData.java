@@ -199,6 +199,7 @@ public class SendingData {
             receivingData.get_consumerinsert_info(result, handler);
         }
     }
+
     public class See_consumer_Details extends AsyncTask<String,String,String>
     {
         String response="";
@@ -234,5 +235,4 @@ public class SendingData {
             receivingData.get_consumer_list(result,handler,getSetValues,arrayList,consumerListAdapter);
         }
     }
-
 }

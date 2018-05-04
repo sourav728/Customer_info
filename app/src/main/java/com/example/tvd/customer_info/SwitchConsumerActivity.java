@@ -113,6 +113,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.back);
         font_toolbar_text = (TextView) toolbar.findViewById(R.id.toolbar_title);
         getSetValues = new GetSetValues();
+
         recyclerView = (RecyclerView) findViewById(R.id.consumer_recycler_view);
         arrayList = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.consumer_recycler_view);

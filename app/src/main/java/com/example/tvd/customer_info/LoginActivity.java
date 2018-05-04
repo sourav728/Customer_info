@@ -140,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
                         /************For user login session**********/
                         //sessionManager.createUserLoginSession(get_email, get_password);
                         /********************************************/
-
                         SendingData.Login login = sendingdata.new Login(mHandler, getSetValues);
                         login.execute(get_email, get_password, TokenId);
                     }
