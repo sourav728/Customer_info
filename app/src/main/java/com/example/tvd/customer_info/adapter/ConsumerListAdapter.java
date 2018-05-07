@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tvd.customer_info.MainActivity;
 import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.values.GetSetValues;
 
 import java.util.ArrayList;
+
+import static com.example.tvd.customer_info.values.ConstantValues.DEACTIVATE_ACCOUNT;
 
 public class ConsumerListAdapter extends RecyclerView.Adapter<ConsumerListAdapter.ConsumerHolder> {
     private ArrayList<GetSetValues> arrayList = new ArrayList<>();
@@ -54,11 +57,14 @@ public class ConsumerListAdapter extends RecyclerView.Adapter<ConsumerListAdapte
             rrno = (TextView) itemView.findViewById(R.id.txt_set_rrno);
             relationship = (TextView) itemView.findViewById(R.id.txt_set_relationship);
             delete = (ImageView) itemView.findViewById(R.id.img_delete);
+            delete = (ImageView) itemView.findViewById(R.id.img_delete);
+            delete.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
+            int position = getAdapterPosition();
+            ((MainActivity)context).show_dialog(DEACTIVATE_ACCOUNT,position,arrayList);
         }
     }
 }

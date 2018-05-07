@@ -78,17 +78,24 @@ public class Location extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
     private LatLng origin,destination;
     TextView distance_text,duration_text,source_address,destination_address;
+    ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+        back = (ImageView) findViewById(R.id.img_back);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
         init_persistent_bottomsheet();
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         Bundle bundle = getIntent().getExtras();
          lati = bundle.getString("LATITUDE");
          longi = bundle.getString("LONGITUDE");

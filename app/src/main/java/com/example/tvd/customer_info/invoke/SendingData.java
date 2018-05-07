@@ -10,8 +10,6 @@ import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
 
-import org.apache.http.conn.ConnectTimeoutException;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -28,36 +26,49 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.example.tvd.customer_info.values.ConstantValues.CONNECTION_TIME_OUT;
+
 public class SendingData {
     private ReceivingData receivingData = new ReceivingData();
     private FunctionCall fcall = new FunctionCall();
-
+    private Handler handler;
+    //In below code try catch has been added to check the response timeout
     private String UrlPostConnection(String Post_Url, HashMap<String, String> datamap) throws IOException {
-        String response = "";
-        URL url = new URL(Post_Url);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(15000);
-        conn.setConnectTimeout(15000);
-        conn.setRequestMethod("POST");
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-        OutputStream os = conn.getOutputStream();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-        writer.write(getPostDataString(datamap));
-        writer.flush();
-        writer.close();
-        os.close();
-        int responseCode = conn.getResponseCode();
-        if (responseCode == HttpsURLConnection.HTTP_OK) {
-            String line;
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            while ((line = br.readLine()) != null) {
-                response += line;
+        try
+        {
+            String response = "";
+            URL url = new URL(Post_Url);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer.write(getPostDataString(datamap));
+            writer.flush();
+            writer.close();
+            os.close();
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while ((line = br.readLine()) != null) {
+                    response += line;
+                }
+            } else {
+                response = "";
             }
-        } else {
-            response = "";
+            return response;
         }
-        return response;
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.d("Debug","SERVER TIME OUT");
+            handler.sendEmptyMessage(CONNECTION_TIME_OUT);
+        }
+        return null;
     }
 
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {

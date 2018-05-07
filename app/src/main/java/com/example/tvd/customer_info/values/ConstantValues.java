@@ -12,4 +12,5 @@ public class ConstantValues {
     public static final int CONNECTION_TIME_OUT = 9;
     public static final int SWITCH_CONSUMER_SUCCESS = 10;
     public static final int SWITCH_CONSUMER_FAILURE = 11;
+    public static final int DEACTIVATE_ACCOUNT = 12;
 }

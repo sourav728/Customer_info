@@ -18,17 +18,24 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tvd.customer_info.fragments.home_fragment;
+import com.example.tvd.customer_info.values.GetSetValues;
+
+import java.util.ArrayList;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.example.tvd.customer_info.values.ConstantValues.DEACTIVATE_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -179,6 +186,42 @@ public class MainActivity extends AppCompatActivity
                         checkPermissionAbove();
                     }
                 }
+                break;
+        }
+    }
+    public void show_dialog(int id, int position, ArrayList<GetSetValues> arrayList)
+    {
+        final AlertDialog alertDialog;
+        final GetSetValues getSetValues = arrayList.get(position);
+        switch (id)
+        {
+            case DEACTIVATE_ACCOUNT:
+                AlertDialog.Builder deactivate = new AlertDialog.Builder(this);
+                deactivate.setTitle("Deactivate ID");
+                deactivate.setCancelable(false);
+                LinearLayout deactivate_layout = (LinearLayout)getLayoutInflater().inflate(R.layout.deactivate_layout,null);
+                deactivate.setView(deactivate_layout);
+                TextView consumerid = (TextView) deactivate_layout.findViewById(R.id.txt_consumer_id);
+                TextView rrno = (TextView) deactivate_layout.findViewById(R.id.txt_rrno);
+                Button deactivate_btn = (Button) deactivate_layout.findViewById(R.id.dialog_positive_btn);
+                deactivate_btn.setText("Deactivate");
+                Button cancel_btn = (Button) deactivate_layout.findViewById(R.id.dialog_negative_btn);
+                consumerid.setText(getSetValues.getConsumer_id());
+                rrno.setText(getSetValues.getRrno());
+                alertDialog = deactivate.create();
+                deactivate_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                cancel_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
                 break;
         }
     }

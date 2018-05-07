@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                         break;
                     case CONNECTION_TIME_OUT:
                         progressdialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Connection Time out!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Server Is Busy Please try again later!!", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 super.handleMessage(msg);
