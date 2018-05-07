@@ -1,12 +1,8 @@
 package com.example.tvd.customer_info.invoke;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.tvd.customer_info.SwitchConsumerActivity;
 import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;

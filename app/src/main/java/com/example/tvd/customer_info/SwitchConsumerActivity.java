@@ -1,11 +1,13 @@
 package com.example.tvd.customer_info;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +50,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.example.tvd.customer_info.values.ConstantValues.DEACTIVATE_ACCOUNT;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_SUCCESS;
 
@@ -60,6 +66,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
     Typeface typeface;
     SendingData sendingdata;
     ProgressDialog progressdialog;
+    Context context;
     private final Handler mHandler;
     {
         mHandler = new Handler()
@@ -116,16 +123,54 @@ public class SwitchConsumerActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.consumer_recycler_view);
         arrayList = new ArrayList<>();
+
         recyclerView = (RecyclerView) findViewById(R.id.consumer_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        consumerListAdapter = new ConsumerListAdapter(this, arrayList, getSetValues);
+        consumerListAdapter = new ConsumerListAdapter(arrayList, this, getSetValues);
         recyclerView.setAdapter(consumerListAdapter);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF",MODE_PRIVATE);
         login_id = sharedPreferences.getString("ID","");
         font_toolbar_text.setTypeface(typeface);
         font_toolbar_text.setText("ConsumerLists");
+    }
+
+    public void show_deactivate_dialog(int id, int position, ArrayList<GetSetValues> arrayList)
+    {
+        final AlertDialog alertDialog;
+        final GetSetValues getSetValues = arrayList.get(position);
+        switch (id)
+        {
+            case DEACTIVATE_ACCOUNT:
+                AlertDialog.Builder deactivate = new AlertDialog.Builder(this);
+                deactivate.setTitle("Deactivate ID");
+                deactivate.setCancelable(false);
+                RelativeLayout deactivate_layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.deactivate_layout,null);
+                deactivate.setView(deactivate_layout);
+                TextView consumerid = (TextView) deactivate_layout.findViewById(R.id.txt_consumer_id1);
+                TextView rrno = (TextView) deactivate_layout.findViewById(R.id.txt_rrno1);
+                Button deactivate_btn = (Button) deactivate_layout.findViewById(R.id.dialog_positive_btn);
+                deactivate_btn.setText("Deactivate");
+                Button cancel_btn = (Button) deactivate_layout.findViewById(R.id.dialog_negative_btn);
+                consumerid.setText(getSetValues.getConsumer_id());
+                rrno.setText(getSetValues.getRrno());
+                alertDialog = deactivate.create();
+                deactivate_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                cancel_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
+                break;
+        }
     }
 
 }

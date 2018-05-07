@@ -34,7 +34,7 @@
                 android:textStyle="bold"
                 android:text=":"/>
             <TextView
-                android:id="@+id/txt_consumer_id"
+                android:id="@+id/txt_consumer_id1"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:textStyle="bold"
                 android:text=":"/>
             <TextView
-                android:id="@+id/txt_rrno"
+                android:id="@+id/txt_rrno1"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

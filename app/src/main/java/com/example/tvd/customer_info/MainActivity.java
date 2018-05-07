@@ -189,41 +189,5 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
-    public void show_dialog(int id, int position, ArrayList<GetSetValues> arrayList)
-    {
-        final AlertDialog alertDialog;
-        final GetSetValues getSetValues = arrayList.get(position);
-        switch (id)
-        {
-            case DEACTIVATE_ACCOUNT:
-                AlertDialog.Builder deactivate = new AlertDialog.Builder(this);
-                deactivate.setTitle("Deactivate ID");
-                deactivate.setCancelable(false);
-                LinearLayout deactivate_layout = (LinearLayout)getLayoutInflater().inflate(R.layout.deactivate_layout,null);
-                deactivate.setView(deactivate_layout);
-                TextView consumerid = (TextView) deactivate_layout.findViewById(R.id.txt_consumer_id);
-                TextView rrno = (TextView) deactivate_layout.findViewById(R.id.txt_rrno);
-                Button deactivate_btn = (Button) deactivate_layout.findViewById(R.id.dialog_positive_btn);
-                deactivate_btn.setText("Deactivate");
-                Button cancel_btn = (Button) deactivate_layout.findViewById(R.id.dialog_negative_btn);
-                consumerid.setText(getSetValues.getConsumer_id());
-                rrno.setText(getSetValues.getRrno());
-                alertDialog = deactivate.create();
-                deactivate_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-                cancel_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                    }
-                });
-                alertDialog.show();
-                break;
-        }
-    }
 
 }

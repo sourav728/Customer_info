@@ -1,15 +1,19 @@
 package com.example.tvd.customer_info.adapter;
 
+
 import android.content.Context;
+
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.tvd.customer_info.MainActivity;
 import com.example.tvd.customer_info.R;
+import com.example.tvd.customer_info.SwitchConsumerActivity;
 import com.example.tvd.customer_info.values.GetSetValues;
 
 import java.util.ArrayList;
@@ -17,14 +21,14 @@ import java.util.ArrayList;
 import static com.example.tvd.customer_info.values.ConstantValues.DEACTIVATE_ACCOUNT;
 
 public class ConsumerListAdapter extends RecyclerView.Adapter<ConsumerListAdapter.ConsumerHolder> {
-    private ArrayList<GetSetValues> arrayList = new ArrayList<>();
+    private ArrayList<GetSetValues> arrayList;
     private Context context;
-    private GetSetValues getSetValues;
+    private GetSetValues getsetvalues;
 
-    public ConsumerListAdapter(Context context, ArrayList<GetSetValues> arrayList, GetSetValues getSetValues) {
-        this.context = context;
+    public ConsumerListAdapter(ArrayList<GetSetValues> arrayList, Context context, GetSetValues getsetvalues) {
         this.arrayList = arrayList;
-        this.getSetValues = getSetValues;
+        this.context = context;
+        this.getsetvalues = getsetvalues;
     }
 
     @Override
@@ -57,14 +61,13 @@ public class ConsumerListAdapter extends RecyclerView.Adapter<ConsumerListAdapte
             rrno = (TextView) itemView.findViewById(R.id.txt_set_rrno);
             relationship = (TextView) itemView.findViewById(R.id.txt_set_relationship);
             delete = (ImageView) itemView.findViewById(R.id.img_delete);
-            delete = (ImageView) itemView.findViewById(R.id.img_delete);
-            delete.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            ((MainActivity)context).show_dialog(DEACTIVATE_ACCOUNT,position,arrayList);
+            ((SwitchConsumerActivity) context).show_deactivate_dialog(DEACTIVATE_ACCOUNT, position, arrayList);
         }
     }
 }
