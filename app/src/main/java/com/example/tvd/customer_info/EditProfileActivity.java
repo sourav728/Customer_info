@@ -1,10 +1,12 @@
 package com.example.tvd.customer_info;
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,11 +17,14 @@ public class EditProfileActivity extends AppCompatActivity {
     private Toolbar toolbar;
     Typeface typeface;
     TextView font_toolbar_title, font_email, font_mobile;
+    String useremail="";
+    EditText email,phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         initialize();
+
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -48,6 +53,9 @@ public class EditProfileActivity extends AppCompatActivity {
     public void initialize()
     {
         typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        useremail = sharedPreferences.getString("EMAIL", "");
+
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         email_hide = (LinearLayout) findViewById(R.id.lin_email);
@@ -58,6 +66,14 @@ public class EditProfileActivity extends AppCompatActivity {
         img_mobile = (ImageView) findViewById(R.id.img_edit_mobile);
         font_email = (TextView) findViewById(R.id.txt_email);
         font_mobile = (TextView) findViewById(R.id.txt_mobile);
+
+        email = (EditText) findViewById(R.id.edit_email);
+        phone = (EditText) findViewById(R.id.edit_mobile);
+
+        //setting values to edittext from shared preference
+        email.setText(useremail);
+        phone.setText("87678879865");
+
         font_toolbar_title.setTypeface(typeface);
         font_toolbar_title.setText("Personal Information");
         font_email.setTypeface(typeface);

@@ -2,6 +2,7 @@ package com.example.tvd.customer_info.fragments;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,10 +18,14 @@ import com.example.tvd.customer_info.EditProfileActivity;
 import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.ViewBillActivity;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Account_fragment extends Fragment {
     TextView edit_profile;
-    TextView font_username,font_user_mobile,font_outstanding,font_viewbill,font_paynow,font_last_payment,font_amount,font_dated;
+    TextView font_username, font_user_mobile, font_outstanding, font_viewbill, font_paynow, font_last_payment, font_amount, font_dated;
     Typeface typeface;
+    String useremail = "";
+
     public Account_fragment() {
     }
 
@@ -34,9 +39,10 @@ public class Account_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_fragment, container, false);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        useremail = sharedPreferences.getString("EMAIL", "");
         initialize(view);
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"calibri.ttf");
-
+        font_username.setText(useremail);
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,11 +62,12 @@ public class Account_fragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_account,menu);
+        inflater.inflate(R.menu.menu_account, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
-    public void initialize(View view)
-    {
+
+    public void initialize(View view) {
+        typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
         font_username = (TextView) view.findViewById(R.id.txt_font_username);
         font_user_mobile = (TextView) view.findViewById(R.id.txt_font_mobile);
         edit_profile = (TextView) view.findViewById(R.id.txt_edit_profile);
@@ -70,7 +77,9 @@ public class Account_fragment extends Fragment {
         font_last_payment = (TextView) view.findViewById(R.id.txt_font_lastpayment);
         font_amount = (TextView) view.findViewById(R.id.txt_font_amount);
         font_dated = (TextView) view.findViewById(R.id.txt_font_dated);
+
         //setting typespace values to textviews
+
         font_username.setTypeface(typeface);
         font_user_mobile.setTypeface(typeface);
         edit_profile.setTypeface(typeface);
@@ -81,3 +90,4 @@ public class Account_fragment extends Fragment {
         font_dated.setTypeface(typeface);
     }
 }
+

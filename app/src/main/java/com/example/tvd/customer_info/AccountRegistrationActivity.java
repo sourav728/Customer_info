@@ -56,6 +56,9 @@ public class AccountRegistrationActivity extends AppCompatActivity {
                     case SEARCH_NOT_FOUND:
                         progressDialog.dismiss();
                         Toast.makeText(AccountRegistrationActivity.this, "Search Not Found!!", Toast.LENGTH_SHORT).show();
+                        account_id.setText("");
+                        rrno.setText("");
+                        account_id.requestFocus();
                         show_hide.setVisibility(View.GONE);
                         frame_show_hide.setVisibility(View.GONE);
                         break;
