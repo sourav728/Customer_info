@@ -42,22 +42,33 @@ public class MainActivity extends AppCompatActivity
     private static final int RequestPermissionCode = 1;
     private boolean doubleBackToExitPressedOnce = true;
     private static AppCompatActivity thisActivity;
-    TextView name,email;
+    TextView name, email;
     TextView font_toolbar_title;
     Typeface typeface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF",MODE_PRIVATE);
-        String useremail = sharedPreferences.getString("EMAIL","");
-        typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String useremail = sharedPreferences.getString("EMAIL", "");
+
+        String curr_consumer_id = sharedPreferences.getString("Curr_Cons_ID", "");
+
+        typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         thisActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         font_toolbar_title.setTypeface(typeface);
-        font_toolbar_title.setText("CustomerInfo");
+
+        //below code will check that if any shared preference value is available which is set on Consumer
+        //list adapter if so then it will set that value to toolbar if not then it will set default value to toolbar
+        if (!curr_consumer_id.equals(""))
+            font_toolbar_title.setText(curr_consumer_id);
+        else
+            font_toolbar_title.setText("CustomerInfo");
+        //End of code
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -79,7 +90,7 @@ public class MainActivity extends AppCompatActivity
             public void run() {
                 checkPermissionAbove();
             }
-        },1000);
+        }, 1000);
     }
 
     @Override
@@ -95,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main_drawer,menu);
+        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -120,19 +131,15 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void replaceFragment(int id)
-    {
+    private void replaceFragment(int id) {
         Fragment fragment = null;
-        if (id == R.id.nav_home)
-        {
+        if (id == R.id.nav_home) {
             fragment = new home_fragment();
-        }
-        else if (id == R.id.nav_logout)
-        {
+        } else if (id == R.id.nav_logout) {
             /*Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();*/
-            SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF",MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.commit();
@@ -140,29 +147,27 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
             finish();
         }
-        if (fragment!= null)
-        {
+        if (fragment != null) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_frame, fragment);
             fragmentTransaction.commit();
         }
     }
-    public void checkPermissionAbove()
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            if (checkPermission())
-            {
+
+    public void checkPermissionAbove() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkPermission()) {
                 loadscreen();
-            }else requestPermission();
-        }else {
+            } else requestPermission();
+        } else {
             loadscreen();
         }
     }
-    private void loadscreen()
-    {
+
+    private void loadscreen() {
         replaceFragment(R.id.nav_home);
     }
+
     @TargetApi(23)
     private void requestPermission() {
         ActivityCompat.requestPermissions(MainActivity.this, new String[]
@@ -179,6 +184,7 @@ public class MainActivity extends AppCompatActivity
         return FirstPermissionResult == PackageManager.PERMISSION_GRANTED &&
                 SecondPermissionResult == PackageManager.PERMISSION_GRANTED;
     }
+
     @TargetApi(23)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -187,7 +193,7 @@ public class MainActivity extends AppCompatActivity
                 if (grantResults.length > 0) {
                     boolean ReadStoragePermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean ReadPhoneStatePermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if (ReadStoragePermission  && ReadPhoneStatePermission) {
+                    if (ReadStoragePermission && ReadPhoneStatePermission) {
                         loadscreen();
                     } else {
                         checkPermissionAbove();
@@ -196,5 +202,6 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
+
 
 }

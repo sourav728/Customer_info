@@ -78,6 +78,8 @@ public class EditProfileActivity extends AppCompatActivity {
         font_toolbar_title.setText("Personal Information");
         font_email.setTypeface(typeface);
         font_mobile.setTypeface(typeface);
+        email.setTypeface(typeface);
+        phone.setTypeface(typeface);
     }
 
 }

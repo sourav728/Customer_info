@@ -7,19 +7,24 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+/*import static com.example.tvd.customer_info.AccountRegistrationActivity.dialog;*/
+
 public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("Debug","OnReceive started..");
         try
         {
             if (isOnline(context))
             {
                 //dialog(true);
+                //dialog3(true);
                 Log.d("Debug","You are Online..");
             }
             else
             {
-                //dialog(false);
+               // dialog(false);
+               // dialog3(false);
                 Log.d("Debug","Connectivity failure!!");
             }
         }

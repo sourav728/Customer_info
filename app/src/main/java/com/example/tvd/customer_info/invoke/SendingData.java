@@ -156,9 +156,10 @@ public class SendingData {
     public class Customer_Search extends AsyncTask<String, String, String> {
         String response = "";
         Handler handler;
-
-        public Customer_Search(Handler handler) {
+        GetSetValues getSetValues;
+        public Customer_Search(Handler handler,GetSetValues getSetValues) {
             this.handler = handler;
+            this.getSetValues = getSetValues;
         }
 
         @Override
@@ -177,16 +178,17 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.get_customersearch_info(result, handler);
+            receivingData.get_customersearch_info(result, handler, getSetValues);
         }
     }
     //For consumer data insert into web service
     public class Customer_Data_Insert extends AsyncTask<String, String, String> {
         String response = "";
         Handler handler;
-
-        public Customer_Data_Insert(Handler handler) {
+        GetSetValues getSetValues;
+        public Customer_Data_Insert(Handler handler,GetSetValues getSetValues) {
             this.handler = handler;
+            this.getSetValues = getSetValues;
         }
 
         @Override
@@ -207,10 +209,10 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.get_consumerinsert_info(result, handler);
+            receivingData.get_consumerinsert_info(result, handler,getSetValues);
         }
     }
-
+    //For sending Consumer id's related to one account
     public class See_consumer_Details extends AsyncTask<String,String,String>
     {
         String response="";
@@ -244,6 +246,38 @@ public class SendingData {
         @Override
         protected void onPostExecute(String result) {
             receivingData.get_consumer_list(result,handler,getSetValues,arrayList,consumerListAdapter);
+        }
+    }
+    //For Account Deactivation
+    public class Deactivate_ID extends AsyncTask<String,String,String>
+    {
+        String response="";
+        Handler handler;
+        public Deactivate_ID(Handler handler)
+        {
+            this.handler = handler;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("AccountId",params[0]);
+            datamap.put("userid",params[1]);
+            datamap.put("TokenId",params[2]);
+            try
+            {
+                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/AccountDisable",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.getDeactivate_Details(result,handler);
+            super.onPostExecute(result);
         }
     }
 }

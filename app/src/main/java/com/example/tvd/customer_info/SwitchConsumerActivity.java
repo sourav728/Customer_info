@@ -2,6 +2,7 @@ package com.example.tvd.customer_info;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -50,6 +51,8 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_DEACTIVATED_SUCCESSFULLY;
+import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_DEACTIVATION_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.DEACTIVATE_ACCOUNT;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_SUCCESS;
@@ -84,6 +87,18 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                         Toast.makeText(SwitchConsumerActivity.this, "No Consumer ID Added!!", Toast.LENGTH_SHORT).show();
                         finish();
                         break;
+                    case ACCOUNT_DEACTIVATED_SUCCESSFULLY:
+                        progressdialog.dismiss();
+                        Toast.makeText(SwitchConsumerActivity.this, "Account Deactivated..", Toast.LENGTH_SHORT).show();
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                        break;
+                    case ACCOUNT_DEACTIVATION_FAILURE:
+                        progressdialog.dismiss();
+                        Toast.makeText(SwitchConsumerActivity.this, "Account Deactivation Failure!!", Toast.LENGTH_SHORT).show();
+                        break;
                 }
                 super.handleMessage(msg);
             }
@@ -94,16 +109,13 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_switch_consumer);
         initialize();
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        /*Consumer_list consumer_list = new Consumer_list();
-        consumer_list.execute();*/
-        /*progressdialog = ProgressDialog.show(SwitchConsumerActivity.this, "Connecting TO Server",
-                "Fetching details please wait..", true);*/
         progressdialog = new ProgressDialog(this, R.style.MyProgressDialogstyle);
         progressdialog.setTitle("Connecting To Server");
         progressdialog.setMessage("Please Wait..");
@@ -159,7 +171,12 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                 deactivate_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        progressdialog = new ProgressDialog(SwitchConsumerActivity.this, R.style.MyProgressDialogstyle);
+                        progressdialog.setTitle("Connecting To Server");
+                        progressdialog.setMessage("Please Wait..");
+                        progressdialog.show();
+                        SendingData.Deactivate_ID deactivate_id = sendingdata.new Deactivate_ID(mHandler);
+                        deactivate_id.execute(getSetValues.getConsumer_id(),login_id,TokenId);
                     }
                 });
                 cancel_btn.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +188,23 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                 alertDialog.show();
                 break;
         }
+    }
+    public void swap_Account(int position,ArrayList<GetSetValues>arrayList)
+    {
+        final GetSetValues getSetValues = arrayList.get(position);
+        SavePreferences("Curr_Cons_ID", getSetValues.getConsumer_id());
+        Intent intent = new Intent(SwitchConsumerActivity.this, MainActivity.class);
+        //below code will remove all the other activites on top
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+
+    }
+    private void SavePreferences(String key, String value) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
     }
 
 }

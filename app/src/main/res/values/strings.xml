@@ -46,7 +46,7 @@
         <item>IP Sets</item>
         <item>Release of Supply where service is feasible from existing work</item>
     </string-array>
-    
+
     <string-array name="fourth">
         <item>--Select Subcategory--</item>
         <item>Voltage variations where Upgradations of distributed system is required</item>
