@@ -121,4 +121,5 @@
     </string-array>
 
     <string name="rupee">\u20B9</string>
+    <string name="changelanguage">changelanguage</string>
 </resources>

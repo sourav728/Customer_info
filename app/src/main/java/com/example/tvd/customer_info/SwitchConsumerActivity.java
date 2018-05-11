@@ -61,24 +61,23 @@ import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUME
 public class SwitchConsumerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     RecyclerView recyclerView;
-    ArrayList<GetSetValues>arrayList;
+    ArrayList<GetSetValues> arrayList;
     GetSetValues getSetValues;
     private ConsumerListAdapter consumerListAdapter;
     String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
-    String Consumer_id="",rrno="",relationship="",login_id="";
+    String Consumer_id = "", rrno = "", relationship = "", login_id = "";
     TextView font_toolbar_text;
     Typeface typeface;
     SendingData sendingdata;
     ProgressDialog progressdialog;
     Context context;
     private final Handler mHandler;
+
     {
-        mHandler = new Handler()
-        {
+        mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                switch (msg.what)
-                {
+                switch (msg.what) {
                     case SWITCH_CONSUMER_SUCCESS:
                         progressdialog.dismiss();
                         Toast.makeText(SwitchConsumerActivity.this, "Success", Toast.LENGTH_SHORT).show();
@@ -91,7 +90,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                     case ACCOUNT_DEACTIVATED_SUCCESSFULLY:
                         progressdialog.dismiss();
                         Toast.makeText(SwitchConsumerActivity.this, "Account Deactivated..", Toast.LENGTH_SHORT).show();
-                        SharedPreferences sharedPreferences = getSharedPreferences("SWITCH_CONSUMER_ID",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
                         editor.commit();
@@ -109,6 +108,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
             }
         };
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,13 +126,13 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         progressdialog.setMessage("Please Wait..");
         progressdialog.show();
 
-        SendingData.See_consumer_Details see_consumer_details = sendingdata.new See_consumer_Details(mHandler,getSetValues,arrayList,consumerListAdapter);
-        see_consumer_details.execute(login_id,TokenId);
+        SendingData.See_consumer_Details see_consumer_details = sendingdata.new See_consumer_Details(mHandler, getSetValues, arrayList, consumerListAdapter);
+        see_consumer_details.execute(login_id, TokenId);
     }
-    public void initialize()
-    {
+
+    public void initialize() {
         sendingdata = new SendingData();
-        typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
+        typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         font_toolbar_text = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -147,23 +147,21 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         consumerListAdapter = new ConsumerListAdapter(arrayList, this, getSetValues);
         recyclerView.setAdapter(consumerListAdapter);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF",MODE_PRIVATE);
-        login_id = sharedPreferences.getString("ID","");
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        login_id = sharedPreferences.getString("ID", "");
         font_toolbar_text.setTypeface(typeface);
         font_toolbar_text.setText("ConsumerLists");
     }
 
-    public void show_deactivate_dialog(int id, int position, ArrayList<GetSetValues> arrayList)
-    {
+    public void show_deactivate_dialog(int id, int position, ArrayList<GetSetValues> arrayList) {
         final AlertDialog alertDialog;
         final GetSetValues getSetValues = arrayList.get(position);
-        switch (id)
-        {
+        switch (id) {
             case DEACTIVATE_ACCOUNT:
                 AlertDialog.Builder deactivate = new AlertDialog.Builder(this);
                 deactivate.setTitle("Deactivate ID");
                 deactivate.setCancelable(false);
-                RelativeLayout deactivate_layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.deactivate_layout,null);
+                RelativeLayout deactivate_layout = (RelativeLayout) getLayoutInflater().inflate(R.layout.deactivate_layout, null);
                 deactivate.setView(deactivate_layout);
                 TextView consumerid = (TextView) deactivate_layout.findViewById(R.id.txt_consumer_id1);
                 TextView rrno = (TextView) deactivate_layout.findViewById(R.id.txt_rrno1);
@@ -181,7 +179,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                         progressdialog.setMessage("Please Wait..");
                         progressdialog.show();
                         SendingData.Deactivate_ID deactivate_id = sendingdata.new Deactivate_ID(mHandler);
-                        deactivate_id.execute(getSetValues.getConsumer_id(),login_id,TokenId);
+                        deactivate_id.execute(getSetValues.getConsumer_id(), login_id, TokenId);
                     }
                 });
                 cancel_btn.setOnClickListener(new View.OnClickListener() {
@@ -194,17 +192,20 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                 break;
         }
     }
-    public void swap_Account(int position,ArrayList<GetSetValues>arrayList)
-    {
+
+    public void swap_Account(int position, ArrayList<GetSetValues> arrayList) {
         final GetSetValues getSetValues = arrayList.get(position);
         SavePreferences("Curr_Cons_ID", getSetValues.getConsumer_id());
+        SavePreferences("Curr_position", position + "");
         Intent intent = new Intent(SwitchConsumerActivity.this, MainActivity.class);
         //below code will remove all the other activites on top
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+        //here to set click value
 
     }
+
     private void SavePreferences(String key, String value) {
         SharedPreferences sharedPreferences = getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -29,6 +29,7 @@ public class ConsumerListAdapter extends RecyclerView.Adapter<ConsumerListAdapte
     private ArrayList<GetSetValues> arrayList;
     private Context context;
     private GetSetValues getsetvalues;
+    private static int Current_position = 0;
 
     public ConsumerListAdapter(ArrayList<GetSetValues> arrayList, Context context, GetSetValues getsetvalues) {
         this.arrayList = arrayList;
@@ -48,6 +49,22 @@ public class ConsumerListAdapter extends RecyclerView.Adapter<ConsumerListAdapte
         holder.consumerid.setText(getSetValues.getConsumer_id());
         holder.rrno.setText(getSetValues.getRrno());
         holder.relationship.setText(getSetValues.getRelationship());
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
+        String recycler_view_position = sharedPreferences.getString("Curr_position", "");
+        if (!recycler_view_position.equals("")) {
+            try {
+                Current_position = Integer.parseInt(recycler_view_position);
+                if (Current_position == position)
+                    holder.active.setVisibility(View.VISIBLE);
+                else holder.active.setVisibility(View.INVISIBLE);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+        }
+
     }
 
     @Override
@@ -56,7 +73,7 @@ public class ConsumerListAdapter extends RecyclerView.Adapter<ConsumerListAdapte
     }
 
     public class ConsumerHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView consumerid, rrno, relationship;
+        TextView consumerid, rrno, relationship, active;
         ImageView delete, switch_account;
 
         public ConsumerHolder(View itemView) {
@@ -64,6 +81,8 @@ public class ConsumerListAdapter extends RecyclerView.Adapter<ConsumerListAdapte
             // itemView.setOnClickListener(this);
             consumerid = (TextView) itemView.findViewById(R.id.txt_set_consumer_id);
             rrno = (TextView) itemView.findViewById(R.id.txt_set_rrno);
+            active = (TextView) itemView.findViewById(R.id.txt_active);
+
             relationship = (TextView) itemView.findViewById(R.id.txt_set_relationship);
             delete = (ImageView) itemView.findViewById(R.id.img_delete);
             switch_account = (ImageView) itemView.findViewById(R.id.img_switch);

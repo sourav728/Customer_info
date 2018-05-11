@@ -1,9 +1,11 @@
 package com.example.tvd.customer_info.fragments;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,11 +20,13 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tvd.customer_info.ComplaintRegistration;
 import com.example.tvd.customer_info.Location;
 import com.example.tvd.customer_info.R;
+import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.values.GetSetValues;
 
 import org.json.JSONArray;
@@ -59,7 +63,7 @@ public class More_fragment extends Fragment {
     String LONGITUDE = "", LATITUDE = "",CSDNAME="";
     ArrayList<GetSetValues> arrayList;
     String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
-
+    TextView changelanguage;
     public More_fragment() {
     }
 
@@ -78,6 +82,7 @@ public class More_fragment extends Fragment {
         complaints = (RelativeLayout) view.findViewById(R.id.relative_complaints);
         arrayList = new ArrayList<>();
 
+        changelanguage = (TextView) view.findViewById(R.id.txt_language);
 
         language.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,9 +127,11 @@ public class More_fragment extends Fragment {
                 switch (item) {
                     case 0:
                         Toast.makeText(getActivity(), "English Clicked", Toast.LENGTH_LONG).show();
+                        updateViews("en");
                         break;
                     case 1:
                         Toast.makeText(getActivity(), "Kannada Clicked", Toast.LENGTH_LONG).show();
+                        updateViews("KN");
                         break;
                 }
                 alertDialog1.dismiss();
@@ -261,5 +268,11 @@ public class More_fragment extends Fragment {
             e.printStackTrace();
         }
         return value;
+    }
+
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(getActivity(), languageCode);
+        Resources resources = context.getResources();
+        changelanguage.setText(resources.getString(R.string.changelanguage));
     }
 }

@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tvd.customer_info.fragments.home_fragment;
+import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.values.GetSetValues;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         String useremail = sharedPreferences.getString("EMAIL", "");
@@ -210,5 +212,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
+    }
 
 }
