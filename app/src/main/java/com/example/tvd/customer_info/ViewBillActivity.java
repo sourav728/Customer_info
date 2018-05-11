@@ -1,31 +1,71 @@
 package com.example.tvd.customer_info;
 
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.tvd.customer_info.invoke.SendingData;
+import com.example.tvd.customer_info.values.FunctionCall;
+import com.example.tvd.customer_info.values.GetSetValues;
+
+import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_SUCCESS;
 
 public class ViewBillActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    Typeface typeface;
+    SendingData sendingdata;
+    Typeface typeface,typeface2;
     TextView font_toolbar_title;
     TextView billing_period, reading_date, bill_no, due_date, sanc_load, connection_type, type_of_supply, tariff_plan,
             previous_reading, present_reading, constant, consumption, average, fixed_charge, energy_charge, fac,
             tod_changes, pf_panelty, ex_load_md_panelty, interest, others, tax, curr_bill_amt, arrears, credit_adjustment,
             gok_subsidy;
-    TextView font_bill_details, font_billing_period, font_reading_date, font_bill_no, font_due_date, font_personal_details,
+    TextView font_cons_name,font_fac, font_cons_address, font_bill_details, font_billing_period, font_reading_date, font_bill_no, font_due_date, font_personal_details,
             font_account_details, font_connection_details, font_sanc_load, font_connection_type, font_type_of_supply,
-            font_tariff_plan, font_consumption_details, font_previous_reading, font_present_reading, font_constant,
+            font_consumption_details, font_previous_reading, font_present_reading, font_constant,
             font_consumption, font_average, font_fixed_charges, font_energy_charges, font_additional_charges, font_tod_changes,
             font_pf_panelty, font_ex_load_panelty, font_interest, font_others, font_tax, font_curr_bill_amt, font_arrears,
             font_credit_adjustment, font_gok_subsidy;
+    TextView consumer_name, consumer_address, consumer_id, consumer_rrno;
+    ProgressDialog progressDialog;
+    GetSetValues getsetvalues;
+    String TokenID = "0x9851FFA7317D3E4F191A969454138816104173F9";
+    FunctionCall functionCall;
+    private final Handler mHandler;
+
+    {
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case VIEW_BILL_SUCCESS:
+                        progressDialog.dismiss();
+                        Toast.makeText(ViewBillActivity.this, "Success..", Toast.LENGTH_SHORT).show();
+                        setTextViewValues();
+                        break;
+                    case VIEW_BILL_FAILURE:
+                        progressDialog.dismiss();
+                        Toast.makeText(ViewBillActivity.this, "Failure!!", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_bill);
+        //function to initialize all textviews
         initialize();
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -34,10 +74,30 @@ public class ViewBillActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        progressDialog = new ProgressDialog(ViewBillActivity.this, R.style.MyProgressDialogstyle);
+        progressDialog.setTitle("Connecting To Server");
+        progressDialog.setMessage("Please Wait..");
+        progressDialog.show();
+        SharedPreferences sharedPreferences1 = getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
+        String curr_consumer_id = sharedPreferences1.getString("Curr_Cons_ID", "");
+        if (!curr_consumer_id.equals("")) {
+            SendingData.ViewBill view_bill = sendingdata.new ViewBill(mHandler, getsetvalues);
+            view_bill.execute(curr_consumer_id, TokenID);
+        } else {
+            finish();
+            Toast.makeText(this, "Please Select Consumer id to View bill details!!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void initialize() {
+        functionCall = new FunctionCall();
+        sendingdata = new SendingData();
+        getsetvalues = new GetSetValues();
         typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
+        typeface2 = Typeface.createFromAsset(getAssets(), "CALIBRIB.TTF");
+
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         font_toolbar_title.setTypeface(typeface);
@@ -50,7 +110,6 @@ public class ViewBillActivity extends AppCompatActivity {
         sanc_load = (TextView) findViewById(R.id.txt_sancsion_load);
         connection_type = (TextView) findViewById(R.id.txt_connection_type);
         type_of_supply = (TextView) findViewById(R.id.txt_type_of_supply);
-        tariff_plan = (TextView) findViewById(R.id.txt_tariff_plan);
         previous_reading = (TextView) findViewById(R.id.txt_previous_reading);
         present_reading = (TextView) findViewById(R.id.txt_present_reading);
         constant = (TextView) findViewById(R.id.txt_constant);
@@ -58,6 +117,7 @@ public class ViewBillActivity extends AppCompatActivity {
         average = (TextView) findViewById(R.id.txt_average);
         fixed_charge = (TextView) findViewById(R.id.txt_fixed_charges);
         energy_charge = (TextView) findViewById(R.id.txt_energy_charges);
+
         fac = (TextView) findViewById(R.id.txt_fac);
         tod_changes = (TextView) findViewById(R.id.txt_tod_changes);
         pf_panelty = (TextView) findViewById(R.id.txt_pf_penalty);
@@ -71,6 +131,9 @@ public class ViewBillActivity extends AppCompatActivity {
         gok_subsidy = (TextView) findViewById(R.id.txt_gok_subsidy);
 
         //All Textview initialization values for setting fonts to textview level
+        font_cons_name = (TextView) findViewById(R.id.font_cons_address);
+        font_cons_address = (TextView) findViewById(R.id.font_cons_address);
+        font_fac = (TextView) findViewById(R.id.font_fac);
         font_bill_details = (TextView) findViewById(R.id.font_billing_details);
         font_billing_period = (TextView) findViewById(R.id.font_billing_period);
         font_reading_date = (TextView) findViewById(R.id.font_reading_date);
@@ -82,7 +145,6 @@ public class ViewBillActivity extends AppCompatActivity {
         font_sanc_load = (TextView) findViewById(R.id.font_sanc_load);
         font_connection_type = (TextView) findViewById(R.id.font_connection_type);
         font_type_of_supply = (TextView) findViewById(R.id.font_type_of_supply);
-        font_tariff_plan = (TextView) findViewById(R.id.font_tariff_plan);
         font_consumption_details = (TextView) findViewById(R.id.font_consumption_details);
         font_previous_reading = (TextView) findViewById(R.id.font_previous_reading);
         font_present_reading = (TextView) findViewById(R.id.font_present_reading);
@@ -102,8 +164,14 @@ public class ViewBillActivity extends AppCompatActivity {
         font_arrears = (TextView) findViewById(R.id.font_arrears);
         font_credit_adjustment = (TextView) findViewById(R.id.font_credit_adjustment);
         font_gok_subsidy = (TextView) findViewById(R.id.font_gok_subsidy);
-
+        consumer_name = (TextView) findViewById(R.id.txt_name);
+        consumer_address = (TextView) findViewById(R.id.txt_address);
+        consumer_id = (TextView) findViewById(R.id.txt_consumer_id);
+        consumer_rrno = (TextView) findViewById(R.id.txt_rrno);
         //setting typespace values
+        font_cons_name.setTypeface(typeface);
+        font_cons_address.setTypeface(typeface);
+        font_fac.setTypeface(typeface);
         font_bill_details.setTypeface(typeface);
         font_billing_period.setTypeface(typeface);
         font_reading_date.setTypeface(typeface);
@@ -115,7 +183,6 @@ public class ViewBillActivity extends AppCompatActivity {
         font_sanc_load.setTypeface(typeface);
         font_connection_type.setTypeface(typeface);
         font_type_of_supply.setTypeface(typeface);
-        font_tariff_plan.setTypeface(typeface);
         font_consumption_details.setTypeface(typeface);
         font_previous_reading.setTypeface(typeface);
         font_present_reading.setTypeface(typeface);
@@ -131,9 +198,61 @@ public class ViewBillActivity extends AppCompatActivity {
         font_interest.setTypeface(typeface);
         font_others.setTypeface(typeface);
         font_tax.setTypeface(typeface);
-        font_curr_bill_amt.setTypeface(typeface);
+        font_curr_bill_amt.setTypeface(typeface2);
         font_arrears.setTypeface(typeface);
         font_credit_adjustment.setTypeface(typeface);
         font_gok_subsidy.setTypeface(typeface);
+
+        reading_date.setTypeface(typeface);
+        due_date.setTypeface(typeface);
+        consumer_name.setTypeface(typeface);
+        consumer_address.setTypeface(typeface);
+        consumer_id.setTypeface(typeface);
+        consumer_rrno.setTypeface(typeface);
+        sanc_load.setTypeface(typeface);
+        connection_type.setTypeface(typeface);
+        type_of_supply.setTypeface(typeface);
+        previous_reading.setTypeface(typeface);
+        present_reading.setTypeface(typeface);
+        constant.setTypeface(typeface);
+        consumption.setTypeface(typeface);
+        average.setTypeface(typeface);
+        fixed_charge.setTypeface(typeface);
+        energy_charge.setTypeface(typeface);
+        fac.setTypeface(typeface);
+        tod_changes.setTypeface(typeface);
+        pf_panelty.setTypeface(typeface);
+        ex_load_md_panelty.setTypeface(typeface);
+        interest.setTypeface(typeface);
+        others.setTypeface(typeface);
+        tax.setTypeface(typeface);
+        curr_bill_amt.setTypeface(typeface2);
+        arrears.setTypeface(typeface);
+        credit_adjustment.setTypeface(typeface);
+        gok_subsidy.setTypeface(typeface);
+    }
+
+    public void setTextViewValues() {
+        reading_date.setText(functionCall.Parse_date(getsetvalues.getView_bill_date1()));
+        due_date.setText(functionCall.Parse_date(getsetvalues.getView_bill_due_date()));
+        consumer_name.setText(getsetvalues.getView_bill_cons_name());
+        consumer_address.setText(getsetvalues.getView_bill_add());
+        consumer_id.setText(getsetvalues.getView_bill_cons_id());
+        consumer_rrno.setText(getsetvalues.getView_bill_rrno());
+        sanc_load.setText(getsetvalues.getView_bill_kwhp());
+        connection_type.setText(getsetvalues.getView_bill_tariff());
+        previous_reading.setText(getsetvalues.getView_bill_prevread());
+        present_reading.setText(getsetvalues.getView_bill_curr_read());
+        consumption.setText(getsetvalues.getView_bill_con());
+        average.setText(getsetvalues.getView_bill_avgcon());
+        fixed_charge.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_fc()));
+        energy_charge.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_ec()));
+        fac.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_fac()));
+        pf_panelty.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_pfpanelty()));
+        ex_load_md_panelty.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_bmdpanelty()));
+        curr_bill_amt.setText(String.format("%s %s", this.getResources().getString(R.string.rupee), getsetvalues.getView_bill_netpayable()));
+        arrears.setText(String.format("%s %s", this.getResources().getString(R.string.rupee), getsetvalues.getView_bill_arrears()));
+        credit_adjustment.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_adjamt()));
+
     }
 }

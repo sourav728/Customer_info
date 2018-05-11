@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,6 +91,10 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                     case ACCOUNT_DEACTIVATED_SUCCESSFULLY:
                         progressdialog.dismiss();
                         Toast.makeText(SwitchConsumerActivity.this, "Account Deactivated..", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences = getSharedPreferences("SWITCH_CONSUMER_ID",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.commit();
                         finish();
                         overridePendingTransition(0, 0);
                         startActivity(getIntent());
@@ -201,7 +206,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
 
     }
     private void SavePreferences(String key, String value) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.commit();

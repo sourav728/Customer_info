@@ -66,7 +66,7 @@ public class SendingData {
         {
             e.printStackTrace();
             Log.d("Debug","SERVER TIME OUT");
-            handler.sendEmptyMessage(CONNECTION_TIME_OUT);
+            //handler.sendEmptyMessage(CONNECTION_TIME_OUT);
         }
         return null;
     }
@@ -106,7 +106,7 @@ public class SendingData {
             datamap.put("Password", params[3]);
             datamap.put("TokenId", params[4]);
             try {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerRegistration", datamap);
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerRegistration", datamap);
             } catch (Exception e) {
                 e.printStackTrace();
 
@@ -139,7 +139,7 @@ public class SendingData {
             datamap.put("UserPassword", params[1]);
             datamap.put("TokenId", params[2]);
             try {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerLogin", datamap);
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerLogin", datamap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -169,7 +169,7 @@ public class SendingData {
             datamap.put("RRNO", params[1]);
             datamap.put("TokenId", params[2]);
             try {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerSearch", datamap);
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerSearch", datamap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -200,7 +200,7 @@ public class SendingData {
             datamap.put("Relationship", params[3]);
             datamap.put("TokenId", params[4]);
             try {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDataInsert", datamap);
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDataInsert", datamap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -234,7 +234,7 @@ public class SendingData {
             datamap.put("TokenId",params[1]);
             try
             {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDetails",datamap);
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDetails",datamap);
             }
             catch (Exception e)
             {
@@ -265,7 +265,7 @@ public class SendingData {
             datamap.put("TokenId",params[2]);
             try
             {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/AccountDisable",datamap);
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/AccountDisable",datamap);
             }
             catch (Exception e)
             {
@@ -277,6 +277,38 @@ public class SendingData {
         @Override
         protected void onPostExecute(String result) {
             receivingData.getDeactivate_Details(result,handler);
+            super.onPostExecute(result);
+        }
+    }
+    //For Sending data to view bill
+    public class ViewBill extends AsyncTask<String,String,String>
+    {
+        String response="";
+        Handler handler;
+        GetSetValues getSetValues;
+        public ViewBill(Handler handler, GetSetValues getSetValues)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("AccountId",params[0]);
+            datamap.put("TokenId",params[1]);
+            try {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/BillDetails",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.getBillDetails(result,handler,getSetValues);
             super.onPostExecute(result);
         }
     }

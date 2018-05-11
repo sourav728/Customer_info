@@ -119,4 +119,6 @@
         <item>Water Supply</item>
         <item>Mixed Load</item>
     </string-array>
+
+    <string name="rupee">\u20B9</string>
 </resources>

@@ -32,6 +32,8 @@ import static com.example.tvd.customer_info.values.ConstantValues.SEARCH_FOUND;
 import static com.example.tvd.customer_info.values.ConstantValues.SEARCH_NOT_FOUND;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_SUCCESS;
 
 public class ReceivingData {
     private FunctionCall functionCall = new FunctionCall();
@@ -175,18 +177,6 @@ public class ReceivingData {
             handler.sendEmptyMessage(SEARCH_NOT_FOUND);
         }
 
-       /* try {
-            jsonObject = new JSONObject(res);
-            String message = jsonObject.getString("message");
-            if (StringUtils.startsWithIgnoreCase(message, "success"))
-                handler.sendEmptyMessage(SEARCH_FOUND);
-            else
-                handler.sendEmptyMessage(SEARCH_NOT_FOUND);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            functionCall.logStatus("JSON Exception Failure!!");
-            handler.sendEmptyMessage(SEARCH_NOT_FOUND);
-        }*/
     }
 
     public void get_consumerinsert_info(String result, Handler handler,GetSetValues getSetValues) {
@@ -270,6 +260,145 @@ public class ReceivingData {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(ACCOUNT_DEACTIVATION_FAILURE);
+        }
+    }
+    //For getting Bill details of customer
+    public void getBillDetails(String result, Handler handler, GetSetValues getSetValues)
+    {
+        String res = parseServerXML(result);
+        Log.d("Debug","Bill Details Result"+ res);
+        JSONArray jsonArray;
+        try
+        {
+            jsonArray = new JSONArray(res);
+            if (jsonArray.length()>0)
+            {
+                for (int i=0;i<jsonArray.length();i++)
+                {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String date1 = jsonObject.getString("date1");
+                    String DueDate = jsonObject.getString("DueDate");
+                    String CONSUMER_NAME = jsonObject.getString("CONSUMER_NAME");
+                    String ADD1 = jsonObject.getString("ADD1");
+                    String mobile_no = jsonObject.getString("mobile_no");
+                    String email_id = jsonObject.getString("email_id");
+                    String consid = jsonObject.getString("consid");
+                    String rrno = jsonObject.getString("rrno");
+                    String ETVMETER = jsonObject.getString("ETVMETER");
+                    String KWHP = jsonObject.getString("KWHP");
+                    String TARIFF = jsonObject.getString("TARIFF");
+                    String PREVREAD = jsonObject.getString("PREVREAD");
+                    String CURREAD = jsonObject.getString("CURREAD");
+                    String CON = jsonObject.getString("CON");
+                    String AVGCON = jsonObject.getString("AVGCON");
+                    String FC = jsonObject.getString("FC");
+                    String EC = jsonObject.getString("EC");
+                    String FAC = jsonObject.getString("FAC");
+                    String RBTAMT = jsonObject.getString("RBTAMT");
+                    String PFPENALTY = jsonObject.getString("PFPENALTY");
+                    String BMDPENALTY = jsonObject.getString("BMDPENALTY");
+                    String DI = jsonObject.getString("DI");
+                    String DO = jsonObject.getString("DO");
+                    String DT = jsonObject.getString("DT");
+                    String NET_PAYABLE_AMOUNT = jsonObject.getString("NET_PAYABLE_AMOUNT");
+                    String ARREARS = jsonObject.getString("ARREARS");
+                    String ADJAMOUNT = jsonObject.getString("ADJAMOUNT");
+                    String DG = jsonObject.getString("DG");
+
+                    if (!date1.equals(""))
+                        getSetValues.setView_bill_date1(date1);
+                    else getSetValues.setView_bill_date1("NA");
+                    if (!DueDate.equals(""))
+                        getSetValues.setView_bill_due_date(DueDate);
+                    else getSetValues.setView_bill_due_date("NA");
+                    if (!CONSUMER_NAME.equals(""))
+                        getSetValues.setView_bill_cons_name(CONSUMER_NAME);
+                    else getSetValues.setView_bill_cons_name("NA");
+                    if (!ADD1.equals(""))
+                        getSetValues.setView_bill_add(ADD1);
+                    else getSetValues.setView_bill_add("NA");
+                    if (!mobile_no.equals(""))
+                        getSetValues.setView_bill_mobileno(mobile_no);
+                    else getSetValues.setView_bill_mobileno("NA");
+                    if (!email_id.equals(""))
+                        getSetValues.setView_bill_email(email_id);
+                    else getSetValues.setView_bill_email("NA");
+                    if (!consid.equals(""))
+                        getSetValues.setView_bill_cons_id(consid);
+                    else getSetValues.setView_bill_cons_id("NA");
+                    if (!rrno.equals(""))
+                        getSetValues.setView_bill_rrno(rrno);
+                    else getSetValues.setView_bill_rrno("NA");
+                    if (!ETVMETER.equals(""))
+                        getSetValues.setView_bill_etv_meter(ETVMETER);
+                    else getSetValues.setView_bill_etv_meter("NA");
+                    if (!KWHP.equals(""))
+                        getSetValues.setView_bill_kwhp(KWHP);
+                    else getSetValues.setView_bill_kwhp(KWHP);
+                    if (!TARIFF.equals(""))
+                        getSetValues.setView_bill_tariff(TARIFF);
+                    else getSetValues.setView_bill_tariff("NA");
+                    if (!PREVREAD.equals(""))
+                        getSetValues.setView_bill_prevread(PREVREAD);
+                    else getSetValues.setView_bill_prevread("NA");
+                    if (!CURREAD.equals(""))
+                        getSetValues.setView_bill_curr_read(CURREAD);
+                    else getSetValues.setView_bill_curr_read("NA");
+                    if (!CON.equals(""))
+                        getSetValues.setView_bill_con(CON);
+                    else getSetValues.setView_bill_con("NA");
+                    if (!AVGCON.equals(""))
+                        getSetValues.setView_bill_avgcon(AVGCON);
+                    else getSetValues.setView_bill_avgcon("NA");
+                    if (!FC.equals(""))
+                        getSetValues.setView_bill_fc(FC);
+                    else getSetValues.setView_bill_fc("NA");
+                    if (!EC.equals(""))
+                        getSetValues.setView_bill_ec(EC);
+                    else getSetValues.setView_bill_ec("NA");
+                    if (!FAC.equals(""))
+                        getSetValues.setView_bill_fac(FAC);
+                    else getSetValues.setView_bill_fac("NA");
+                    if (!RBTAMT.equals(""))
+                        getSetValues.setView_bill_rbtamt(RBTAMT);
+                    else getSetValues.setView_bill_rbtamt("NA");
+                    if (!PFPENALTY.equals(""))
+                        getSetValues.setView_bill_pfpanelty(PFPENALTY);
+                    else getSetValues.setView_bill_pfpanelty("NA");
+                    if (!BMDPENALTY.equals(""))
+                        getSetValues.setView_bill_bmdpanelty(BMDPENALTY);
+                    else getSetValues.setView_bill_bmdpanelty("NA");
+                    if (!DI.equals(""))
+                        getSetValues.setView_bill_di(DI);
+                    else getSetValues.setView_bill_di("NA");
+                    if (!DO.equals(""))
+                        getSetValues.setView_bill_do(DO);
+                    else getSetValues.setView_bill_do("NA");
+                    if (!DT.equals(""))
+                        getSetValues.setView_bill_dt(DT);
+                    else getSetValues.setView_bill_dt("NA");
+                    if (!NET_PAYABLE_AMOUNT.equals(""))
+                        getSetValues.setView_bill_netpayable(NET_PAYABLE_AMOUNT);
+                    else getSetValues.setView_bill_netpayable("NA");
+                    if (!ARREARS.equals(""))
+                        getSetValues.setView_bill_arrears(ARREARS);
+                    else getSetValues.setView_bill_arrears("NA");
+                    if (!ADJAMOUNT.equals(""))
+                        getSetValues.setView_bill_adjamt(ADJAMOUNT);
+                    else getSetValues.setView_bill_adjamt("NA");
+                    if (!DG.equals(""))
+                        getSetValues.setView_bill_dg(DG);
+                    else getSetValues.setView_bill_dg("NA");
+                }
+                handler.sendEmptyMessage(VIEW_BILL_SUCCESS);
+            }
+            else handler.sendEmptyMessage(VIEW_BILL_FAILURE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(VIEW_BILL_FAILURE);
         }
     }
 

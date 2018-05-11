@@ -25,7 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/my_toolbar"
-        android:layout_above="@+id/btn_pay_layout">
+        android:layout_above="@+id/btn_pay_layout"
+        android:scrollbars="none">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +52,8 @@
                         android:textSize="18sp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
                         <TextView
                             android:id="@+id/font_billing_period"
                             android:layout_weight="1"
@@ -70,6 +72,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -93,11 +96,13 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
                         <TextView
                             android:id="@+id/font_bill_no"
                             android:layout_weight="1"
@@ -116,6 +121,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -139,6 +145,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <View
@@ -146,12 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#BDBDBD"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
                         <LinearLayout
-                            android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -162,7 +164,60 @@
                                 android:text="Personal Details"
                                 android:textColor="@color/textcolor"
                                 android:textSize="17sp"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/font_cons_name"
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="17sp"
+                                    android:text="Name"/>
+                                <TextView
+                                    android:layout_weight="1.7"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text=":"/>
+                                <TextView
+                                    android:id="@+id/txt_name"
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="viewStart"
+                                    android:textSize="17sp"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/font_cons_address"
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="17sp"
+                                    android:text="Address"/>
+                                <TextView
+                                    android:layout_weight="1.7"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text=":"/>
+                                <TextView
+                                    android:id="@+id/txt_address"
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="viewStart"
+                                    android:textSize="17sp"/>
+                            </LinearLayout>
                         </LinearLayout>
+                    <View
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#BDBDBD"/>
                         <LinearLayout
                             android:layout_weight="1"
                             android:layout_width="match_parent"
@@ -175,20 +230,54 @@
                                 android:text="Account Details"
                                 android:textSize="17sp"
                                 android:textColor="@color/textcolor"/>
-                            <TextView
-                                android:id="@+id/font_account_id"
+                           <LinearLayout
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content">
+                               <TextView
+                                   android:layout_weight="1"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:textSize="17sp"
+                                   android:text="Consumer ID"/>
+                               <TextView
+                                   android:layout_weight="1.7"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:textStyle="bold"
+                                   android:text=":"/>
+                               <TextView
+                                   android:id="@+id/txt_consumer_id"
+                                   android:layout_weight="1"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:textAlignment="viewEnd"
+                                   android:textSize="17sp"/>
+                            </LinearLayout>
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="17sp"
-                                android:text="Account ID :"/>
-                            <TextView
-                                android:id="@+id/font_rrno"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="17sp"
-                                android:text="RR Number :"/>
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="17sp"
+                                    android:text="RR No"/>
+                                <TextView
+                                    android:layout_weight="1.7"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text=":"/>
+                                <TextView
+                                    android:id="@+id/txt_rrno"
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="viewEnd"
+                                    android:textSize="17sp"/>
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
+
                     <View
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
@@ -223,6 +312,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -246,6 +336,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -269,29 +360,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="17sp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/font_tariff_plan"
-                            android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"
-                            android:text="Tariff Plan"/>
-                        <TextView
-                            android:layout_weight="1.7"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text=":"/>
-                        <TextView
-                            android:id="@+id/txt_tariff_plan"
-                            android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <View
@@ -329,6 +398,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -353,6 +423,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -377,6 +448,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -401,6 +473,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -425,13 +498,10 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
-                    <View
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#BDBDBD"/>
+
                     <LinearLayout
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
@@ -454,14 +524,11 @@
                             android:id="@+id/txt_fixed_charges"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:layout_weight="1"
                             android:textSize="17sp"/>
                     </LinearLayout>
-                    <View
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#BDBDBD"/>
+
                     <LinearLayout
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
@@ -484,6 +551,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <View
@@ -521,6 +589,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -545,6 +614,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -569,6 +639,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -593,6 +664,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -617,6 +689,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -641,6 +714,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -665,32 +739,10 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/font_curr_bill_amt"
-                            android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Current Bill Amount"
-                            android:textSize="17sp"/>
-                        <TextView
-                            android:layout_weight="1.7"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text=":"/>
-                        <TextView
-                            android:id="@+id/txt_curr_bill_amt"
-                            android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="17sp"/>
-                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
@@ -713,6 +765,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -737,6 +790,7 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <LinearLayout
@@ -761,13 +815,42 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
                             android:textSize="17sp"/>
                     </LinearLayout>
                     <View
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#BDBDBD"/>
+                        android:background="@color/black"/>
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/font_curr_bill_amt"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:singleLine="true"
+                            android:text="Net Payable"
+                            android:textSize="20sp"/>
+                        <TextView
+                            android:layout_weight="1.7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text=":"/>
+                        <TextView
+                            android:id="@+id/txt_curr_bill_amt"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="viewEnd"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
+                    </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>

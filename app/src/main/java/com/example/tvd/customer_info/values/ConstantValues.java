@@ -1,7 +1,5 @@
 package com.example.tvd.customer_info.values;
 
-import retrofit2.http.PUT;
-
 public class ConstantValues {
     public static final int REGISTRATION_SUCCESS = 1;
     public static final int REGISTRATION_FAILURE = 2;
@@ -17,4 +15,6 @@ public class ConstantValues {
     public static final int DEACTIVATE_ACCOUNT = 12;
     public static final int ACCOUNT_DEACTIVATED_SUCCESSFULLY = 13;
     public static final int ACCOUNT_DEACTIVATION_FAILURE = 14;
+    public static final int VIEW_BILL_SUCCESS = 15;
+    public static final int VIEW_BILL_FAILURE = 16;
 }

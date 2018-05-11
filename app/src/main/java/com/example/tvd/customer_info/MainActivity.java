@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         String useremail = sharedPreferences.getString("EMAIL", "");
 
-        String curr_consumer_id = sharedPreferences.getString("Curr_Cons_ID", "");
+        SharedPreferences sharedPreferences1 = getSharedPreferences("SWITCH_CONSUMER_ID",MODE_PRIVATE);
+        String curr_consumer_id = sharedPreferences1.getString("Curr_Cons_ID", "");
 
         typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         thisActivity = this;
@@ -143,6 +144,12 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.commit();
+
+            SharedPreferences sharedPreferences1 = getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+            editor1.clear();
+            editor1.commit();
+
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();

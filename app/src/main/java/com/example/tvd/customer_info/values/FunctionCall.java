@@ -1,9 +1,16 @@
 package com.example.tvd.customer_info.values;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class FunctionCall {
     public void logStatus(String message) {
@@ -23,4 +30,24 @@ public class FunctionCall {
         }
         return false;
     }
+
+    public String Parse_date(String time)
+    {
+        String inputPattern = "dd-MM-yyyy HH:mm:ss";
+        String outputPattern = "dd-MM-yyyy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
 }

@@ -143,7 +143,7 @@ public class More_fragment extends Fragment {
             datamap.put("subdivisioncode", "540038");
             datamap.put("TokenId", TokenId);
             try {
-                response = UrlPostConnection("http://www.bc_service.hescomtrm.com/CUSTINFOSERVICE.asmx/SubdivisionLocation", datamap);
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/SubdivisionLocation", datamap);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -74,6 +74,7 @@ public class AccountRegistrationActivity extends AppCompatActivity {
                     case INSERTION_SUCCESSFULL:
                         progressDialog.dismiss();
                         Toast.makeText(AccountRegistrationActivity.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        finish();
                         break;
                     case INSERTION_FAILURE:
                         progressDialog.dismiss();
