@@ -25,7 +25,9 @@ import android.widget.Toast;
 
 import com.example.tvd.customer_info.ComplaintRegistration;
 import com.example.tvd.customer_info.Location;
+import com.example.tvd.customer_info.MainActivity;
 import com.example.tvd.customer_info.R;
+import com.example.tvd.customer_info.SwitchConsumerActivity;
 import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.values.GetSetValues;
 
@@ -54,6 +56,8 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class More_fragment extends Fragment {
     public static final String GETSET = "getset";
     RelativeLayout language, location,complaints;
@@ -63,7 +67,8 @@ public class More_fragment extends Fragment {
     String LONGITUDE = "", LATITUDE = "",CSDNAME="";
     ArrayList<GetSetValues> arrayList;
     String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
-    TextView changelanguage;
+    TextView changelanguage,txt_location,txt_complaint;
+    Intent intent;
     public More_fragment() {
     }
 
@@ -77,12 +82,15 @@ public class More_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_more_fragment, container, false);
+
         language = (RelativeLayout) view.findViewById(R.id.relative_language);
         location = (RelativeLayout) view.findViewById(R.id.relative_location);
         complaints = (RelativeLayout) view.findViewById(R.id.relative_complaints);
         arrayList = new ArrayList<>();
 
         changelanguage = (TextView) view.findViewById(R.id.txt_language);
+        txt_location = (TextView) view.findViewById(R.id.txt_location);
+        txt_complaint = (TextView) view.findViewById(R.id.txt_complaint_registration);
 
         language.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +112,20 @@ public class More_fragment extends Fragment {
                 startActivity(intent);
             }
         });
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language = sharedPreferences.getString("LANGUAGE", "");
+        //below code is for loading different font
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
+        }
         return view;
     }
 
@@ -126,12 +148,25 @@ public class More_fragment extends Fragment {
 
                 switch (item) {
                     case 0:
-                        Toast.makeText(getActivity(), "English Clicked", Toast.LENGTH_LONG).show();
-                        updateViews("en");
+                        Toast.makeText(getActivity(), "English font applied", Toast.LENGTH_LONG).show();
+                        SavePreferences("LANGUAGE","en");
+                       // updateViews("en");
+
+                        intent = new Intent(getActivity(), MainActivity.class);
+                        //below code will remove all the other activites on top
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        getActivity().finish();
                         break;
                     case 1:
-                        Toast.makeText(getActivity(), "Kannada Clicked", Toast.LENGTH_LONG).show();
-                        updateViews("KN");
+                        Toast.makeText(getActivity(), "Kannada font applied", Toast.LENGTH_LONG).show();
+                        SavePreferences("LANGUAGE","KN");
+                       // updateViews("KN");
+                        intent = new Intent(getActivity(), MainActivity.class);
+                        //below code will remove all the other activites on top
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        getActivity().finish();
                         break;
                 }
                 alertDialog1.dismiss();
@@ -274,5 +309,13 @@ public class More_fragment extends Fragment {
         Context context = LocaleHelper.setLocale(getActivity(), languageCode);
         Resources resources = context.getResources();
         changelanguage.setText(resources.getString(R.string.changelanguage));
+        txt_location.setText(resources.getString(R.string.hescom_offices));
+        txt_complaint.setText(resources.getString(R.string.complaint_registration));
+    }
+    private void SavePreferences(String key, String value) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
     }
 }

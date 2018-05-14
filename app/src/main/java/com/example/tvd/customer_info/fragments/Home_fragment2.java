@@ -1,7 +1,10 @@
 package com.example.tvd.customer_info.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,8 +24,11 @@ import com.example.tvd.customer_info.AccountRegistrationActivity;
 import com.example.tvd.customer_info.NotificationActivity;
 import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.SwitchConsumerActivity;
+import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Home_fragment2 extends Fragment {
 
@@ -48,6 +54,10 @@ public class Home_fragment2 extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_fragment2, container, false);
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language = sharedPreferences.getString("LANGUAGE", "");
+
         carouselView = (CarouselView) view.findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
         add_consumer = (LinearLayout) view.findViewById(R.id.lin_add_consumer);
@@ -71,6 +81,17 @@ public class Home_fragment2 extends Fragment {
         txt_add_consumer.setTypeface(typeface);
         txt_switch_consumer_account = (TextView) view.findViewById(R.id.txt_switch_consumer);
         txt_switch_consumer_account.setTypeface(typeface);
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
+        }
         return view;
     }
 
@@ -123,5 +144,12 @@ public class Home_fragment2 extends Fragment {
                 }
             }
         }
+    }
+
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(getActivity(), languageCode);
+        Resources resources = context.getResources();
+        txt_add_consumer.setText(resources.getString(R.string.addconsumer));
+        txt_switch_consumer_account.setText(resources.getString(R.string.switchconsumer));
     }
 }

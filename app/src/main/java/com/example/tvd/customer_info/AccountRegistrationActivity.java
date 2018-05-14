@@ -2,8 +2,10 @@ package com.example.tvd.customer_info;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -22,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.invoke.SendingData;
 import com.example.tvd.customer_info.receiver.NetworkChangeReceiver;
 import com.example.tvd.customer_info.values.GetSetValues;
@@ -96,8 +99,9 @@ public class AccountRegistrationActivity extends AppCompatActivity {
         registerNetworkBroadcastForNougat();
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF",MODE_PRIVATE);
         login_id = sharedPreferences.getString("ID","");
-        Log.d("Debug","Login ID"+login_id);
+        String language = sharedPreferences.getString("LANGUAGE", "");
 
+        Log.d("Debug","Login ID"+login_id);
         TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
         typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         initialize();
@@ -134,6 +138,19 @@ public class AccountRegistrationActivity extends AppCompatActivity {
                 customer_data_insert.execute(login_id,get_account_id,get_rrno,"",TokenId);
             }
         });
+
+        //below code is for loading different font
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
+        }
     }
 
     public void initialize() {
@@ -154,7 +171,7 @@ public class AccountRegistrationActivity extends AppCompatActivity {
         font_acount.setTypeface(typeface);
         font_rrno.setTypeface(typeface);
         font_toolbar_title.setTypeface(typeface);
-        font_toolbar_title.setText("Account Registration");
+        //font_toolbar_title.setText("Account Registration");
         toolbar.setNavigationIcon(R.drawable.back);
         search.setTypeface(typeface);
 
@@ -240,6 +257,12 @@ public class AccountRegistrationActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         unregisterNetworkChanges();
+    }
+
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(AccountRegistrationActivity.this, languageCode);
+        Resources resources = context.getResources();
+        font_toolbar_title.setText(resources.getString(R.string.account_registration));
     }
 
 }

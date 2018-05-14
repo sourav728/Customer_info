@@ -1,7 +1,9 @@
 package com.example.tvd.customer_info;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.invoke.SendingData;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
@@ -81,12 +84,27 @@ public class ViewBillActivity extends AppCompatActivity {
         progressDialog.show();
         SharedPreferences sharedPreferences1 = getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
         String curr_consumer_id = sharedPreferences1.getString("Curr_Cons_ID", "");
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language = sharedPreferences.getString("LANGUAGE", "");
+
         if (!curr_consumer_id.equals("")) {
             SendingData.ViewBill view_bill = sendingdata.new ViewBill(mHandler, getsetvalues);
             view_bill.execute(curr_consumer_id, TokenID);
         } else {
             finish();
             Toast.makeText(this, "Please Select Consumer id to View bill details!!", Toast.LENGTH_SHORT).show();
+        }
+        //below code is for loading different font
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
         }
 
     }
@@ -101,7 +119,7 @@ public class ViewBillActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         font_toolbar_title.setTypeface(typeface);
-        font_toolbar_title.setText("Bill Details");
+       // font_toolbar_title.setText("Bill Details");
         //All Textview Initialization for setting values
         billing_period = (TextView) findViewById(R.id.txt_billing_period);
         reading_date = (TextView) findViewById(R.id.txt_reading_date);
@@ -231,7 +249,6 @@ public class ViewBillActivity extends AppCompatActivity {
         credit_adjustment.setTypeface(typeface);
         gok_subsidy.setTypeface(typeface);
     }
-
     public void setTextViewValues() {
         reading_date.setText(functionCall.Parse_date(getsetvalues.getView_bill_date1()));
         due_date.setText(functionCall.Parse_date(getsetvalues.getView_bill_due_date()));
@@ -245,7 +262,12 @@ public class ViewBillActivity extends AppCompatActivity {
         present_reading.setText(getsetvalues.getView_bill_curr_read());
         consumption.setText(getsetvalues.getView_bill_con());
         average.setText(getsetvalues.getView_bill_avgcon());
+
+        tod_changes.setText(String.format("%s %s", this.getResources().getString(R.string.rupee), getsetvalues.getView_bill_rbtamt()));
         fixed_charge.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_fc()));
+        interest.setText(String.format("%s %s", this.getResources().getString(R.string.rupee), getsetvalues.getView_bill_di()));
+        others.setText(String.format("%s %s", this.getResources().getString(R.string.rupee), getsetvalues.getView_bill_do()));
+        tax.setText(String.format("%s %s", this.getResources().getString(R.string.rupee), getsetvalues.getView_bill_dt()));
         energy_charge.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_ec()));
         fac.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_fac()));
         pf_panelty.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_pfpanelty()));
@@ -254,5 +276,10 @@ public class ViewBillActivity extends AppCompatActivity {
         arrears.setText(String.format("%s %s", this.getResources().getString(R.string.rupee), getsetvalues.getView_bill_arrears()));
         credit_adjustment.setText(String.format("%s %s", this.getResources().getString(R.string.rupee),getsetvalues.getView_bill_adjamt()));
 
+    }
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(ViewBillActivity.this, languageCode);
+        Resources resources = context.getResources();
+        font_toolbar_title.setText(resources.getString(R.string.account_registration));
     }
 }

@@ -96,7 +96,7 @@
                         android:layout_height="30dp"
                         android:src="@drawable/complaint"/>
                     <TextView
-                        android:id="@+id/txt_hescom_offices"
+                        android:id="@+id/txt_complaint_registration"
                         android:layout_toRightOf="@+id/img_complaint"
                         android:layout_width="250dp"
                         android:layout_height="30dp"
@@ -104,7 +104,7 @@
                         android:textAlignment="viewStart"
                         android:gravity="center"/>
                     <ImageView
-                        android:layout_toRightOf="@+id/txt_hescom_offices"
+                        android:layout_toRightOf="@+id/txt_complaint_registration"
                         android:layout_width="50dp"
                         android:layout_height="30dp"
                         android:textAlignment="viewEnd"

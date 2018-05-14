@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
+import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.invoke.SendingData;
 import com.example.tvd.customer_info.values.GetSetValues;
 
@@ -113,8 +115,9 @@ public class SwitchConsumerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_switch_consumer);
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language = sharedPreferences.getString("LANGUAGE", "");
         initialize();
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +131,19 @@ public class SwitchConsumerActivity extends AppCompatActivity {
 
         SendingData.See_consumer_Details see_consumer_details = sendingdata.new See_consumer_Details(mHandler, getSetValues, arrayList, consumerListAdapter);
         see_consumer_details.execute(login_id, TokenId);
+        //below code is for loading different font
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
+        }
+
     }
 
     public void initialize() {
@@ -150,7 +166,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         login_id = sharedPreferences.getString("ID", "");
         font_toolbar_text.setTypeface(typeface);
-        font_toolbar_text.setText("ConsumerLists");
+       // font_toolbar_text.setText("ConsumerLists");
     }
 
     public void show_deactivate_dialog(int id, int position, ArrayList<GetSetValues> arrayList) {
@@ -213,4 +229,9 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(SwitchConsumerActivity.this, languageCode);
+        Resources resources = context.getResources();
+        font_toolbar_text.setText(resources.getString(R.string.account_registration));
+    }
 }

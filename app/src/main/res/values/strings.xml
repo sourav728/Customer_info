@@ -121,5 +121,20 @@
     </string-array>
 
     <string name="rupee">\u20B9</string>
-    <string name="changelanguage">changelanguage</string>
+    <string name="changelanguage">Change Language</string>
+    <string name="addconsumer">ADD CONSUMER </string>
+    <string name="switchconsumer">SWITCH CONSUMER</string>
+
+    <string name="view_edit_profile">View/Edit Profile</string>
+    <string name="view_bill">View Bill</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="total_outstanding">Total Outstanding</string>
+    <string name="last_payment_details">Last Payment Details</string>
+    <string name="account_registration">Account Registration</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="consumer_lists">ConsumerLists</string>
+    <string name="hescom_offices">HESCOM Offices</string>
+    <string name="complaint_registration">Complaint Registration</string>
+
+    <string name="personal_information">Personal Information</string>
 </resources>

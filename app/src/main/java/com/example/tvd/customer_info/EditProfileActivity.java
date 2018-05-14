@@ -1,6 +1,8 @@
 package com.example.tvd.customer_info;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.tvd.customer_info.helper.LocaleHelper;
 
 public class EditProfileActivity extends AppCompatActivity {
     LinearLayout email_hide, mobile_hide, show_email, show_mobile;
@@ -23,9 +27,10 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        SharedPreferences sharedPreferences =getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language = sharedPreferences.getString("LANGUAGE", "");
+
         initialize();
-
-
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +53,19 @@ public class EditProfileActivity extends AppCompatActivity {
                 img_mobile.setVisibility(View.INVISIBLE);
             }
         });
+
+        //below code is for loading different font
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
+        }
     }
 
     public void initialize()
@@ -75,11 +93,15 @@ public class EditProfileActivity extends AppCompatActivity {
         phone.setText("87678879865");
 
         font_toolbar_title.setTypeface(typeface);
-        font_toolbar_title.setText("Personal Information");
+       // font_toolbar_title.setText("Personal Information");
         font_email.setTypeface(typeface);
         font_mobile.setTypeface(typeface);
         email.setTypeface(typeface);
         phone.setTypeface(typeface);
     }
-
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(EditProfileActivity.this, languageCode);
+        Resources resources = context.getResources();
+        font_toolbar_title.setText(resources.getString(R.string.personal_information));
+    }
 }

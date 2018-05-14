@@ -1,8 +1,10 @@
 package com.example.tvd.customer_info.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.example.tvd.customer_info.EditProfileActivity;
 import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.ViewBillActivity;
+import com.example.tvd.customer_info.helper.LocaleHelper;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -41,6 +44,7 @@ public class Account_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_account_fragment, container, false);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         useremail = sharedPreferences.getString("EMAIL", "");
+        String language = sharedPreferences.getString("LANGUAGE", "");
         initialize(view);
         font_username.setText(useremail);
         edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +61,18 @@ public class Account_fragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+        //below code is for loading different font 
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
+        }
         return view;
     }
 
@@ -88,6 +104,15 @@ public class Account_fragment extends Fragment {
         font_paynow.setTypeface(typeface);
         font_last_payment.setTypeface(typeface);
         font_dated.setTypeface(typeface);
+    }
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(getActivity(), languageCode);
+        Resources resources = context.getResources();
+        edit_profile.setText(resources.getString(R.string.view_edit_profile));
+        font_viewbill.setText(resources.getString(R.string.view_bill));
+        font_paynow.setText(resources.getString(R.string.pay_now));
+        font_outstanding.setText(resources.getString(R.string.total_outstanding));
+        font_last_payment.setText(resources.getString(R.string.last_payment_details));
     }
 }
 
