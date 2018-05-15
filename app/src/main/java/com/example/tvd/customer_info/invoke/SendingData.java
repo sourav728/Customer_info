@@ -312,4 +312,69 @@ public class SendingData {
             super.onPostExecute(result);
         }
     }
+
+    //For Sending Password into mobile
+    public class SendSMS extends AsyncTask<String,String,String>
+    {
+        String response = "";
+        Handler handler;
+        public SendSMS(Handler handler)
+        {
+            this.handler = handler;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("MobNo",params[0]);
+            Log.d("Debug","Mobile No"+params[0]);
+            datamap.put("TokenId",params[1]);
+            Log.d("Debug","Token Id"+params[1]);
+
+            try
+            {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/ForgotPassWord",datamap);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.getSMS_details(result,handler);
+            super.onPostExecute(result);
+        }
+    }
+    //For Sending Email
+    public class SendEmail extends AsyncTask<String,String,String>
+    {
+        String response = "";
+        Handler handler;
+        public SendEmail(Handler handler)
+        {
+            this.handler = handler;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("Email",params[0]);
+            datamap.put("TokenId",params[1]);
+            try {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/SendEmail",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.getEmail_Details(result,handler);
+            super.onPostExecute(result);
+        }
+    }
+
 }

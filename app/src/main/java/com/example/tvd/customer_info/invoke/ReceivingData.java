@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_DEACTIVATED_SUCCESSFULLY;
 import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_DEACTIVATION_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.CONNECTION_TIME_OUT;
+import static com.example.tvd.customer_info.values.ConstantValues.EMAIL_SEND_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.EMAIL_SEND_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_SUCCESSFULL;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
@@ -30,6 +32,8 @@ import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_F
 import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.SEARCH_FOUND;
 import static com.example.tvd.customer_info.values.ConstantValues.SEARCH_NOT_FOUND;
+import static com.example.tvd.customer_info.values.ConstantValues.SMS_SEND_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.SMS_SEND_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_FAILURE;
@@ -399,6 +403,49 @@ public class ReceivingData {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(VIEW_BILL_FAILURE);
+        }
+    }
+    //For getting SMS details
+    public void getSMS_details(String result, Handler handler)
+    {
+        String res = parseServerXML(result);
+        Log.d("Debug","SMS Result Result"+res);
+        JSONObject jsonObject;
+        try
+        {
+            jsonObject = new JSONObject(res);
+            String message = jsonObject.getString("message");
+            if (StringUtils.startsWithIgnoreCase(message, "Success"))
+                handler.sendEmptyMessage(SMS_SEND_SUCCESS);
+            else
+                handler.sendEmptyMessage(SMS_SEND_FAILURE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(SMS_SEND_FAILURE);
+        }
+    }
+    public void getEmail_Details(String result, Handler handler)
+    {
+        String res = parseServerXML(result);
+        Log.d("Debug","SMS Result Result"+res);
+        JSONObject jsonObject;
+        try
+        {
+            jsonObject = new JSONObject(res);
+            String message = jsonObject.getString("message");
+            if (StringUtils.startsWithIgnoreCase(message, "Success"))
+                handler.sendEmptyMessage(EMAIL_SEND_SUCCESS);
+            else
+                handler.sendEmptyMessage(EMAIL_SEND_FAILURE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(EMAIL_SEND_FAILURE);
         }
     }
 

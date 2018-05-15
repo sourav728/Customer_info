@@ -17,4 +17,8 @@ public class ConstantValues {
     public static final int ACCOUNT_DEACTIVATION_FAILURE = 14;
     public static final int VIEW_BILL_SUCCESS = 15;
     public static final int VIEW_BILL_FAILURE = 16;
+    public static final int SMS_SEND_SUCCESS = 17;
+    public static final int SMS_SEND_FAILURE = 18;
+    public static final int EMAIL_SEND_SUCCESS = 19;
+    public static final int EMAIL_SEND_FAILURE = 20;
 }

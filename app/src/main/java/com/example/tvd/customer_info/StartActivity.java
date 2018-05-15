@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class StartActivity extends AppCompatActivity {
     View layout;
     GetSetValues getSetValues;
     Typeface typeface;
-    TextView app_name,sign_up;
+    TextView forgot_password;
 
 
     private final Handler mHandler;
@@ -130,9 +131,9 @@ public class StartActivity extends AppCompatActivity {
                 if (fcall.isInternetOn(StartActivity.this)) {
                     get_email = email.getText().toString();
                     get_password = password.getText().toString();
-                    if (email.getText().length() <= 0) {
+                    if (TextUtils.isEmpty(email.getText())) {
                         email.setError("Please Enter Email!!");
-                    } else if (password.getText().length() <= 0) {
+                    } else if (TextUtils.isEmpty(password.getText())) {
                         password.setError("Please Enter Password!!");
                     } else {
                         progressdialog = new ProgressDialog(StartActivity.this, R.style.MyProgressDialogstyle);
@@ -152,6 +153,13 @@ public class StartActivity extends AppCompatActivity {
             }
         });
         setListener();
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setListener() {
@@ -204,9 +212,9 @@ public class StartActivity extends AppCompatActivity {
         sendingdata = new SendingData();
         fcall = new FunctionCall();
         login = (Button) findViewById(R.id.login_btn);
-        app_name = (TextView) findViewById(R.id.txt_app_name);
         email = (EditText) findViewById(R.id.edit_email);
         password = (EditText) findViewById(R.id.edit_password);
+        forgot_password = (TextView) findViewById(R.id.txt_forgot_password);
 
     }
     private void SavePreferences(String key, String value) {
