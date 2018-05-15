@@ -125,6 +125,10 @@ public class More_fragment extends Fragment {
             {
                 updateViews("en");
             }
+            else if (language.equals(""))
+            {
+                updateViews("NA");
+            }
         }
         return view;
     }
@@ -318,4 +322,5 @@ public class More_fragment extends Fragment {
         editor.putString(key, value);
         editor.commit();
     }
+
 }

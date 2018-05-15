@@ -29,4 +29,8 @@
     <style name="MyProgressDialogstyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/yellow</item>
     </style>
+    <style name="TextLabel" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorControlActivated">#FFCC00</item>
+    </style>
 </resources>

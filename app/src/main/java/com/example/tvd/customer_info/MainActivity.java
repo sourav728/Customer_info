@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity
             editor1.clear();
             editor1.commit();
 
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, StartActivity.class);
             startActivity(intent);
             finish();
         }

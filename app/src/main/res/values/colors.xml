@@ -15,4 +15,8 @@
     <color name="lime">#CDDC39</color>
     <color name="textcolor">#42A5F5</color>
     <color name="green">#4CAF50</color>
+
+    <color name="white_greyish">#EEEEEE</color>
+    <color name="button_selectorcolor">#9E9E9E</color>
+    <color name="white">#FFFFFF</color>
 </resources>
