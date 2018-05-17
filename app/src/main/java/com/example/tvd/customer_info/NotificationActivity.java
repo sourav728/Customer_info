@@ -1,6 +1,9 @@
 package com.example.tvd.customer_info;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.tvd.customer_info.adapter.NotificationAdapter;
+import com.example.tvd.customer_info.helper.LocaleHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +36,8 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        SharedPreferences sharedPreferences =getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language = sharedPreferences.getString("LANGUAGE", "");
         initialization();
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -67,6 +73,18 @@ public class NotificationActivity extends AppCompatActivity {
                 }, 3000L);
             }
         });
+        //below code is for loading different font
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
+        }
     }
 
 
@@ -83,8 +101,14 @@ public class NotificationActivity extends AppCompatActivity {
         typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        font_toolbar_title.setText("Notifications");
+        //font_toolbar_title.setText("Notifications");
         font_toolbar_title.setTypeface(typeface);
+    }
+
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(NotificationActivity.this, languageCode);
+        Resources resources = context.getResources();
+        font_toolbar_title.setText(resources.getString(R.string.notification));
     }
 }
 

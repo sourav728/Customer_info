@@ -21,4 +21,6 @@ public class ConstantValues {
     public static final int SMS_SEND_FAILURE = 18;
     public static final int EMAIL_SEND_SUCCESS = 19;
     public static final int EMAIL_SEND_FAILURE = 20;
+    public static final int PASSWORD_CHANGED_SUCCESS =21;
+    public static final int PASSWORD_CHANGED_FAILURE =22;
 }

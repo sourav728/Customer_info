@@ -28,6 +28,8 @@ import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_FAIL
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_SUCCESSFULL;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.PASSWORD_CHANGED_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.PASSWORD_CHANGED_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.SEARCH_FOUND;
@@ -427,6 +429,7 @@ public class ReceivingData {
             handler.sendEmptyMessage(SMS_SEND_FAILURE);
         }
     }
+    //For getting Email details
     public void getEmail_Details(String result, Handler handler)
     {
         String res = parseServerXML(result);
@@ -446,6 +449,28 @@ public class ReceivingData {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(EMAIL_SEND_FAILURE);
+        }
+    }
+    //For Change password
+    public void get_Password_change_status(String result, Handler handler)
+    {
+        String res = parseServerXML(result);
+        Log.d("Debug","Password Change Status"+ result);
+        JSONObject jsonObject;
+        try
+        {
+            jsonObject = new JSONObject(res);
+            String message = jsonObject.getString("message");
+            if (StringUtils.startsWithIgnoreCase(message, "Success"))
+                handler.sendEmptyMessage(PASSWORD_CHANGED_SUCCESS);
+            else
+                handler.sendEmptyMessage(PASSWORD_CHANGED_FAILURE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(PASSWORD_CHANGED_FAILURE);
         }
     }
 

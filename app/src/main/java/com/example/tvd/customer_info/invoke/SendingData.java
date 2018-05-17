@@ -376,5 +376,38 @@ public class SendingData {
             super.onPostExecute(result);
         }
     }
+    //For Password Reset
+    public class PasswordReset extends AsyncTask<String,String,String>
+    {
+        String response = "";
+        Handler handler;
+        public PasswordReset(Handler handler)
+        {
+             this.handler = handler;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("Userid",params[0]);
+            datamap.put("OldPassword",params[1]);
+            datamap.put("NewPassword",params[2]);
+            datamap.put("TokenId", params[3]);
+            try
+            {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/ChangePassword",datamap);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_Password_change_status(result,handler);
+            super.onPostExecute(result);
+        }
+    }
 
 }

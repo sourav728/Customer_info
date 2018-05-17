@@ -2,7 +2,7 @@
 <resources>
     <string name="changelanguage">ಭಾಷೆ ಬದಲಾಯಿಸಿ</string>
     <string name="addconsumer">ಗ್ರಾಹಕರನ್ನು ಸೇರಿಸಿ</string>
-    <string name="switchconsumer">ಗ್ರಾಹಕರನ್ನು ಬದಲಿಸಿ</string>
+    <string name="switch_consumer">ಗ್ರಾಹಕರನ್ನು ಬದಲಿಸಿ</string>
     <string name="view_edit_profile">ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಿ / ಸಂಪಾದಿಸಿ</string>
     <string name="view_bill">ಬಿಲ್ ವೀಕ್ಷಿಸಿ</string>
     <string name="pay_now">ಈಗ ಪಾವತಿಸಿ</string>
@@ -14,5 +14,7 @@
     <string name="hescom_offices">ಹೆಸ್ಕಾಮ್ ಕಛೇರಿಗಳು</string>
     <string name="complaint_registration">ದೂರು ನೋಂದಣಿ</string>
     <string name="personal_information">ವಯಕ್ತಿಕ ಮಾಹಿತಿ</string>
-
+    <string name="notification">ಅಧಿಸೂಚನೆ</string>
+    <string name="switchconsumer">ಗ್ರಾಹಕನನ್ನು ಬದಲಾಯಿಸು</string>
+    <string name="Addconsumer">ಗ್ರಾಹಕರನ್ನು ಸೇರಿಸಿ</string>
 </resources>

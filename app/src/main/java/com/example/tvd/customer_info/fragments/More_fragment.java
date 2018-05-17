@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tvd.customer_info.ChangePassword;
 import com.example.tvd.customer_info.ComplaintRegistration;
 import com.example.tvd.customer_info.Location;
 import com.example.tvd.customer_info.MainActivity;
@@ -60,7 +61,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class More_fragment extends Fragment {
     public static final String GETSET = "getset";
-    RelativeLayout language, location,complaints;
+    RelativeLayout language, location,complaints,change_pass;
     AlertDialog alertDialog1;
     GetSetValues getSetValues;
     CharSequence[] values = {"English", "Kannada"};
@@ -86,6 +87,7 @@ public class More_fragment extends Fragment {
         language = (RelativeLayout) view.findViewById(R.id.relative_language);
         location = (RelativeLayout) view.findViewById(R.id.relative_location);
         complaints = (RelativeLayout) view.findViewById(R.id.relative_complaints);
+        change_pass = (RelativeLayout) view.findViewById(R.id.relative_changepassword);
         arrayList = new ArrayList<>();
 
         changelanguage = (TextView) view.findViewById(R.id.txt_language);
@@ -109,6 +111,13 @@ public class More_fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ComplaintRegistration.class);
+                startActivity(intent);
+            }
+        });
+        change_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChangePassword.class);
                 startActivity(intent);
             }
         });

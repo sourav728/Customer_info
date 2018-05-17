@@ -54,7 +54,8 @@
         </receiver>
 
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ForgotPasswordActivity"></activity>
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".ChangePassword"></activity>
     </application>
 
 </manifest>

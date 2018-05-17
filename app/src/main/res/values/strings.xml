@@ -130,6 +130,7 @@
     <string name="pay_now">Pay Now</string>
     <string name="total_outstanding">Total Outstanding</string>
     <string name="last_payment_details">Last Payment Details</string>
+    <string name="switch_consumer">Switch Consumer</string>
     <string name="account_registration">Account Registration</string>
     <string name="bill_details">Bill Details</string>
     <string name="consumer_lists">ConsumerLists</string>
@@ -156,4 +157,6 @@
     <string name="registered_emailid">Please enter your Registered Email Id below:</string>
     <string name="submit">SUBMIT</string>
     <string name="back">BACK</string>
+    <string name="notification">Notification</string>
+    <string name="Addconsumer">Add Consumer</string>
 </resources>

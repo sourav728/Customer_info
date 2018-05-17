@@ -232,6 +232,6 @@ public class SwitchConsumerActivity extends AppCompatActivity {
     private void updateViews(String languageCode) {
         Context context = LocaleHelper.setLocale(SwitchConsumerActivity.this, languageCode);
         Resources resources = context.getResources();
-        font_toolbar_text.setText(resources.getString(R.string.account_registration));
+        font_toolbar_text.setText(resources.getString(R.string.switchconsumer));
     }
 }

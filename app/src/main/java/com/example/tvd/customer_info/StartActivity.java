@@ -128,6 +128,7 @@ public class StartActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (fcall.isInternetOn(StartActivity.this)) {
                     get_email = email.getText().toString();
                     get_password = password.getText().toString();

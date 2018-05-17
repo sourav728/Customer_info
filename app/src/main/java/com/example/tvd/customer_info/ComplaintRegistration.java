@@ -1,5 +1,8 @@
 package com.example.tvd.customer_info;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.tvd.customer_info.adapter.RoleAdapter;
+import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.values.GetSetValues;
 
 import java.util.ArrayList;
@@ -28,6 +32,9 @@ public class ComplaintRegistration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint_registration);
+        SharedPreferences sharedPreferences =getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language = sharedPreferences.getString("LANGUAGE", "");
+
         initialize();
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +42,18 @@ public class ComplaintRegistration extends AppCompatActivity {
                 finish();
             }
         });
+        //below code is for loading different font
+        if (!language.equals(""))
+        {
+            if (language.equals("KN"))
+            {
+                updateViews("KN");
+            }
+            else if (language.equals("en"))
+            {
+                updateViews("en");
+            }
+        }
     }
 
     public void initialize() {
@@ -43,7 +62,7 @@ public class ComplaintRegistration extends AppCompatActivity {
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         toolbar.setNavigationIcon(R.drawable.back);
         font_toolbar_title.setTypeface(typeface);
-        font_toolbar_title.setText("Complaint Registration");
+        //font_toolbar_title.setText("Complaint Registration");
 
         first_spiner = (Spinner) findViewById(R.id.spinner1);
         second_spiner = (Spinner) findViewById(R.id.spiner2);
@@ -207,5 +226,10 @@ public class ComplaintRegistration extends AppCompatActivity {
             }
         });
 
+    }
+    private void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(ComplaintRegistration.this, languageCode);
+        Resources resources = context.getResources();
+        font_toolbar_title.setText(resources.getString(R.string.complaint_registration));
     }
 }

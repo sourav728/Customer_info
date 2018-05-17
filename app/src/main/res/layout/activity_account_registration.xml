@@ -15,7 +15,7 @@
             android:id="@+id/toolbar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Toolbar Title"
+            android:text="Add Consumer"
             android:textColor="@color/black2"
             android:textSize="18sp"
             android:layout_gravity="center" />

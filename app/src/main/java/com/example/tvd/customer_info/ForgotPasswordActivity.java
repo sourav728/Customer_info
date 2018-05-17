@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -31,6 +32,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     Boolean email_selected = false, mobile_selected = false;
     String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
     String getemail = "", getmobile = "";
+    FloatingActionButton back;
     private final Handler mHandler;
 
     {
@@ -106,6 +108,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     Toast.makeText(ForgotPasswordActivity.this, "Choose either anyone option!!", Toast.LENGTH_SHORT).show();
             }
         });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ForgotPasswordActivity.this, StartActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void initialize() {
@@ -113,5 +124,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.edit_email);
         mobile = (EditText) findViewById(R.id.edit_mobile);
         send = (Button) findViewById(R.id.send_btn);
+        back = (FloatingActionButton) findViewById(R.id.fab);
     }
 }
