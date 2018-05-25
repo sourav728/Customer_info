@@ -55,7 +55,8 @@
 
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".ChangePassword"></activity>
+        <activity android:name=".ChangePassword" />
+        <activity android:name=".WebViewActivity"></activity>
     </application>
 
 </manifest>

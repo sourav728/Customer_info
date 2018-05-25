@@ -2,6 +2,7 @@ package com.example.tvd.customer_info;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public class ViewBillActivity extends AppCompatActivity {
     GetSetValues getsetvalues;
     String TokenID = "0x9851FFA7317D3E4F191A969454138816104173F9";
     FunctionCall functionCall;
+    Button pay;
     private final Handler mHandler;
 
     {
@@ -107,6 +110,13 @@ public class ViewBillActivity extends AppCompatActivity {
             }
         }
 
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewBillActivity.this, WebViewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void initialize() {
@@ -115,6 +125,7 @@ public class ViewBillActivity extends AppCompatActivity {
         getsetvalues = new GetSetValues();
         typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         typeface2 = Typeface.createFromAsset(getAssets(), "CALIBRIB.TTF");
+        pay = (Button) findViewById(R.id.btn_pay);
 
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -248,6 +259,8 @@ public class ViewBillActivity extends AppCompatActivity {
         arrears.setTypeface(typeface);
         credit_adjustment.setTypeface(typeface);
         gok_subsidy.setTypeface(typeface);
+
+        pay.setTypeface(typeface);
     }
     public void setTextViewValues() {
         reading_date.setText(functionCall.Parse_date(getsetvalues.getView_bill_date1()));

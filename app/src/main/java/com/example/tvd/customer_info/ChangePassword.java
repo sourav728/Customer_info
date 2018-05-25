@@ -87,6 +87,7 @@ public class ChangePassword extends AppCompatActivity {
         old_pass = (EditText) findViewById(R.id.edit_old_password);
         new_pass = (EditText) findViewById(R.id.edit_new_password);
         send = (Button) findViewById(R.id.send_btn);
+        back = (FloatingActionButton) findViewById(R.id.fab);
         sendingdata = new SendingData();
     }
 }

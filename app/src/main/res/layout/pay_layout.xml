@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     app:contentInsetStart="0dp">
     <Button
+        android:id="@+id/btn_pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/yellow"
