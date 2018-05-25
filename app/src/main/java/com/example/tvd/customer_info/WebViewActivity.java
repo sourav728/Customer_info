@@ -14,10 +14,11 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         WebView webView = (WebView)findViewById(R.id.webView);
+        webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         webView.setWebViewClient(new CustomWebViewClient());
         WebSettings webSetting = webView.getSettings();
         webSetting.setJavaScriptEnabled(true);
-        webSetting.setDisplayZoomControls(true);
+
         webView.loadUrl("http://www.hescom.co.in/");
     }
     public class CustomWebViewClient extends WebViewClient
