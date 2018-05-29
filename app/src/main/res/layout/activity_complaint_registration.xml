@@ -58,13 +58,13 @@
                             android:text="Customer"/>
                     </RadioGroup>
                 </LinearLayout>
-                    <EditText
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:singleLine="true"
-                        android:background="@drawable/edit_shape"/>
+                <EditText
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:background="@drawable/edit_shape"/>
                 <Button
                     android:id="@+id/btn_search"
                     android:layout_marginTop="10dp"

@@ -153,130 +153,130 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#BDBDBD"/>
-                        <LinearLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/font_personal_details"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:text="Personal Details"
+                            android:textColor="@color/textcolor"
+                            android:textSize="17sp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
                             <TextView
-                                android:id="@+id/font_personal_details"
+                                android:id="@+id/font_cons_name"
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Personal Details"
-                                android:textColor="@color/textcolor"
+                                android:textSize="17sp"
+                                android:text="Name"/>
+                            <TextView
+                                android:layout_weight="1.7"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:text=":"/>
+                            <TextView
+                                android:id="@+id/txt_name"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="viewStart"
                                 android:textSize="17sp"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:id="@+id/font_cons_name"
-                                    android:layout_weight="1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="17sp"
-                                    android:text="Name"/>
-                                <TextView
-                                    android:layout_weight="1.7"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textStyle="bold"
-                                    android:text=":"/>
-                                <TextView
-                                    android:id="@+id/txt_name"
-                                    android:layout_weight="1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textAlignment="viewStart"
-                                    android:textSize="17sp"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:id="@+id/font_cons_address"
-                                    android:layout_weight="1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="17sp"
-                                    android:text="Address"/>
-                                <TextView
-                                    android:layout_weight="1.7"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textStyle="bold"
-                                    android:text=":"/>
-                                <TextView
-                                    android:id="@+id/txt_address"
-                                    android:layout_weight="1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textAlignment="viewStart"
-                                    android:textSize="17sp"/>
-                            </LinearLayout>
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/font_cons_address"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="17sp"
+                                android:text="Address"/>
+                            <TextView
+                                android:layout_weight="1.7"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:text=":"/>
+                            <TextView
+                                android:id="@+id/txt_address"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="viewStart"
+                                android:textSize="17sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
                     <View
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#BDBDBD"/>
-                        <LinearLayout
-                            android:layout_weight="1"
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/font_account_details"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:text="Account Details"
+                            android:textSize="17sp"
+                            android:textColor="@color/textcolor"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
                             <TextView
-                                android:id="@+id/font_account_details"
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Account Details"
                                 android:textSize="17sp"
-                                android:textColor="@color/textcolor"/>
-                           <LinearLayout
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content">
-                               <TextView
-                                   android:layout_weight="1"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:textSize="17sp"
-                                   android:text="Consumer ID"/>
-                               <TextView
-                                   android:layout_weight="1.7"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:textStyle="bold"
-                                   android:text=":"/>
-                               <TextView
-                                   android:id="@+id/txt_consumer_id"
-                                   android:layout_weight="1"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:textAlignment="viewEnd"
-                                   android:textSize="17sp"/>
-                            </LinearLayout>
-                            <LinearLayout
+                                android:text="Consumer ID"/>
+                            <TextView
+                                android:layout_weight="1.7"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:layout_weight="1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="17sp"
-                                    android:text="RR No"/>
-                                <TextView
-                                    android:layout_weight="1.7"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textStyle="bold"
-                                    android:text=":"/>
-                                <TextView
-                                    android:id="@+id/txt_rrno"
-                                    android:layout_weight="1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textAlignment="viewEnd"
-                                    android:textSize="17sp"/>
-                            </LinearLayout>
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:text=":"/>
+                            <TextView
+                                android:id="@+id/txt_consumer_id"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="viewEnd"
+                                android:textSize="17sp"/>
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="17sp"
+                                android:text="RR No"/>
+                            <TextView
+                                android:layout_weight="1.7"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:text=":"/>
+                            <TextView
+                                android:id="@+id/txt_rrno"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="viewEnd"
+                                android:textSize="17sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <View
                         android:layout_marginTop="10dp"

@@ -46,4 +46,5 @@ public class RoleAdapter extends BaseAdapter {
         tv_role.setText(arrayList.get(position).getSpiner_item());
         return convertView;
     }
+
 }

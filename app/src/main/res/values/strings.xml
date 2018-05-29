@@ -120,6 +120,19 @@
         <item>Mixed Load</item>
     </string-array>
 
+    <string-array name="feedbacktype">
+        <item>--Select Feedback Type--</item>
+        <item>Power supply Reliability</item>
+        <item>Complaint handling</item>
+        <item>Billing/payment system</item>
+        <item>Social media presence</item>
+        <item>HESCOM Website</item>
+        <item>Mobile Application</item>
+        <item>Services(New connection etc.)</item>
+        <item>Consumer interaction</item>
+        <item>Others</item>
+    </string-array>
+
     <string name="rupee">\u20B9</string>
     <string name="changelanguage">Change Language</string>
     <string name="addconsumer">ADD CONSUMER </string>
