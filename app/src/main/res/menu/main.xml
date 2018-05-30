@@ -4,7 +4,6 @@
     <item
         android:id="@+id/action_notification"
         android:orderInCategory="100"
-        android:icon="@drawable/notification"
         app:actionLayout="@layout/notification_layout"
         app:showAsAction="withText|ifRoom" />
 </menu>

@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NotificationActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
@@ -68,7 +69,8 @@ public class NotificationActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        shuffleItems();
+                        //shuffleItems();
+                        Toast.makeText(NotificationActivity.this, "Refreshing...", Toast.LENGTH_SHORT).show();
                     }
                 }, 3000L);
             }
@@ -88,14 +90,14 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
 
-    public void shuffleItems() {
+   /* public void shuffleItems() {
         // shuffle the ArrayList's items and set the adapter
         Collections.shuffle(personNames, new Random(System.currentTimeMillis()));
         Collections.shuffle(personImages, new Random(System.currentTimeMillis()));
         // call the constructor of CustomAdapter to send the reference and data to Adapter
         NotificationAdapter customAdapter = new NotificationAdapter(NotificationActivity.this, personNames, personImages,typeface);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
-    }
+    }*/
     public void initialization()
     {
         typeface = Typeface.createFromAsset(getAssets(),"calibri.ttf");

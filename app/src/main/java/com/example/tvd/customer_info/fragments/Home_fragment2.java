@@ -16,9 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.tvd.customer_info.AccountRegistrationActivity;
 import com.example.tvd.customer_info.NotificationActivity;
@@ -35,11 +38,13 @@ public class Home_fragment2 extends Fragment {
     CarouselView carouselView;
     int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3};
     TextView textcartitemcount;
+    ImageView notification;
     int mCartItemCount = 10;
     LinearLayout add_consumer, switch_consumer;
     TextView txt_add_consumer, txt_switch_consumer_account;
     Typeface typeface;
-
+    Toolbar toolbar;
+    Animation shake;
     public Home_fragment2() {
     }
 
@@ -55,6 +60,7 @@ public class Home_fragment2 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_fragment2, container, false);
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
 
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         String language = sharedPreferences.getString("LANGUAGE", "");
 
@@ -62,6 +68,8 @@ public class Home_fragment2 extends Fragment {
         carouselView.setPageCount(sampleImages.length);
         add_consumer = (LinearLayout) view.findViewById(R.id.lin_add_consumer);
         switch_consumer = (LinearLayout) view.findViewById(R.id.lin_switch_consumer);
+
+
         carouselView.setImageListener(imageListener);
         add_consumer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,12 +110,16 @@ public class Home_fragment2 extends Fragment {
         }
     };
 
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
         final MenuItem menuItem = menu.findItem(R.id.action_notification);
         View actionview = MenuItemCompat.getActionView(menuItem);
         textcartitemcount = (TextView) actionview.findViewById(R.id.cart_badge);
+        notification = (ImageView) actionview.findViewById(R.id.img_notification_icon);
+
         setupBadge();
         actionview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,13 +130,17 @@ public class Home_fragment2 extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_notification:
-                //moving to notification activity
-                Intent intent = new Intent(getActivity(), NotificationActivity.class);
-                startActivity(intent);
+                //below code is for shaking the notification bell icon
+                final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+                notification.startAnimation(animShake);
+                /**************moving to notification activity**********/
+                /*Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);*/
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:background="@color/yellow"
+        android:background="#FFC000"
+        android:textAllCaps="false"
         android:text="SUBMIT" />
 
 </android.support.v7.widget.Toolbar>

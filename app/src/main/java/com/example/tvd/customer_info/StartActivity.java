@@ -119,10 +119,12 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         initialize();
         getSetValues = new GetSetValues();
+        //Full screen code
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
+        //End
         TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +220,7 @@ public class StartActivity extends AppCompatActivity {
         forgot_password = (TextView) findViewById(R.id.txt_forgot_password);
 
     }
+
     private void SavePreferences(String key, String value) {
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

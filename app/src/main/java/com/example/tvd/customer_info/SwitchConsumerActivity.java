@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -16,6 +19,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -73,6 +77,8 @@ public class SwitchConsumerActivity extends AppCompatActivity {
     SendingData sendingdata;
     ProgressDialog progressdialog;
     Context context;
+    ItemTouchHelper swipetodismisshelper;
+    Boolean cancel = false;
     private final Handler mHandler;
 
     {
@@ -132,18 +138,61 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         SendingData.See_consumer_Details see_consumer_details = sendingdata.new See_consumer_Details(mHandler, getSetValues, arrayList, consumerListAdapter);
         see_consumer_details.execute(login_id, TokenId);
         //below code is for loading different font
-        if (!language.equals(""))
-        {
-            if (language.equals("KN"))
-            {
+        if (!language.equals("")) {
+            if (language.equals("KN")) {
                 updateViews("KN");
-            }
-            else if (language.equals("en"))
-            {
+            } else if (language.equals("en")) {
                 updateViews("en");
             }
         }
 
+        /**********Below code is for swipe to delete item from RecyclerView**************/
+         swipetodismisshelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                show_deactivate_dialog(DEACTIVATE_ACCOUNT, position, arrayList);
+                arrayList.remove(viewHolder.getAdapterPosition());
+                consumerListAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+            /***********Below code is for setting different color on item swipe***********/
+             /*@Override
+             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                     // Get RecyclerView item from the ViewHolder
+                     View itemView = viewHolder.itemView;
+
+                     Paint p = new Paint();
+                     if (dX > 0) {
+                         *//* Set your color for positive displacement *//*
+                        // p.setARGB(255, 0, 0, 0);
+                         p.setColor(Color.parseColor("#F44336"));
+                         // Draw Rect with varying right side, equal to displacement dX
+                         c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
+                                 (float) itemView.getBottom(), p);
+                     } else {
+                         *//* Set your color for negative displacement *//*
+                         //p.setARGB(255, 0, 255, 0);
+                         //p.setColor(Color.parseColor("#E6EE9C"));
+                         p.setColor(Color.parseColor("#FAFAFA"));
+                         // Draw Rect with varying left side, equal to the item's right side plus negative displacement dX
+                         c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
+                                 (float) itemView.getRight(), (float) itemView.getBottom(), p);
+                     }
+
+                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                 }
+             }*/
+             /**************End of Code*************/
+         });
+        swipetodismisshelper.attachToRecyclerView(recyclerView);
+        /**************End of code***********/
     }
 
     public void initialize() {
@@ -166,10 +215,10 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         login_id = sharedPreferences.getString("ID", "");
         font_toolbar_text.setTypeface(typeface);
-       // font_toolbar_text.setText("ConsumerLists");
+        // font_toolbar_text.setText("ConsumerLists");
     }
 
-    public void show_deactivate_dialog(int id, int position, ArrayList<GetSetValues> arrayList) {
+    public void show_deactivate_dialog(int id, final int position, ArrayList<GetSetValues> arrayList) {
         final AlertDialog alertDialog;
         final GetSetValues getSetValues = arrayList.get(position);
         switch (id) {
@@ -202,6 +251,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         alertDialog.dismiss();
+                        finish();
                     }
                 });
                 alertDialog.show();
