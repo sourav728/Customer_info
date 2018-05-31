@@ -65,7 +65,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         initialize();
-
+        //For Hiding softkeys
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         // Check user login
         // If User is not logged in , This will redirect user to LoginActivity.
         /*******************I have to remove the comment line to activate session management ***************/

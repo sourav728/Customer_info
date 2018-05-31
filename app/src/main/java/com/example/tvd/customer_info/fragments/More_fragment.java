@@ -69,7 +69,7 @@ public class More_fragment extends Fragment {
     String LONGITUDE = "", LATITUDE = "",CSDNAME="";
     ArrayList<GetSetValues> arrayList;
     String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
-    TextView changelanguage,txt_location,txt_complaint,txt_change_pass;
+    TextView changelanguage,txt_location,txt_complaint,txt_change_pass,txt_feedback;
     Intent intent;
     public More_fragment() {
     }
@@ -96,6 +96,7 @@ public class More_fragment extends Fragment {
         txt_location = (TextView) view.findViewById(R.id.txt_location);
         txt_complaint = (TextView) view.findViewById(R.id.txt_complaint_registration);
         txt_change_pass = (TextView) view.findViewById(R.id.txt_change_pass);
+        txt_feedback = (TextView) view.findViewById(R.id.txt_feedback);
 
         language.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -336,6 +337,7 @@ public class More_fragment extends Fragment {
         txt_location.setText(resources.getString(R.string.hescom_offices));
         txt_complaint.setText(resources.getString(R.string.complaint_registration));
         txt_change_pass.setText(resources.getString(R.string.changepassword));
+        txt_feedback.setText(resources.getString(R.string.feedback));
     }
     private void SavePreferences(String key, String value) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);

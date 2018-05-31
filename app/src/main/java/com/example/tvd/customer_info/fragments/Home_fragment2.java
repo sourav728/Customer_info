@@ -45,6 +45,7 @@ public class Home_fragment2 extends Fragment {
     Typeface typeface;
     Toolbar toolbar;
     Animation shake;
+    private Menu menu;
     public Home_fragment2() {
     }
 
@@ -59,7 +60,6 @@ public class Home_fragment2 extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_fragment2, container, false);
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
-
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         String language = sharedPreferences.getString("LANGUAGE", "");
@@ -119,6 +119,8 @@ public class Home_fragment2 extends Fragment {
         View actionview = MenuItemCompat.getActionView(menuItem);
         textcartitemcount = (TextView) actionview.findViewById(R.id.cart_badge);
         notification = (ImageView) actionview.findViewById(R.id.img_notification_icon);
+        final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+        notification.startAnimation(animShake);
 
         setupBadge();
         actionview.setOnClickListener(new View.OnClickListener() {
@@ -130,17 +132,17 @@ public class Home_fragment2 extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            //below code is used to modify the value
             case R.id.action_notification:
                 //below code is for shaking the notification bell icon
-                final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
-                notification.startAnimation(animShake);
+               /* final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+                notification.startAnimation(animShake);*/
                 /**************moving to notification activity**********/
-                /*Intent intent = new Intent(getActivity(), NotificationActivity.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

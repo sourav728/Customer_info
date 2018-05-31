@@ -18,8 +18,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView.setWebViewClient(new CustomWebViewClient());
         WebSettings webSetting = webView.getSettings();
         webSetting.setJavaScriptEnabled(true);
-
-        webView.loadUrl("http://www.hescom.co.in/");
+        webView.loadUrl("https://www.hescom.co");
     }
     public class CustomWebViewClient extends WebViewClient
     {

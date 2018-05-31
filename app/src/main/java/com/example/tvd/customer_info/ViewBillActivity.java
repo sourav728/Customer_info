@@ -8,10 +8,12 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,7 +72,7 @@ public class ViewBillActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_bill);
+        setContentView(R.layout.view_bill_layout);
         //function to initialize all textviews
         initialize();
         toolbar.setNavigationIcon(R.drawable.back);
@@ -126,11 +128,10 @@ public class ViewBillActivity extends AppCompatActivity {
         typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         typeface2 = Typeface.createFromAsset(getAssets(), "CALIBRIB.TTF");
         pay = (Button) findViewById(R.id.btn_pay);
-
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         font_toolbar_title.setTypeface(typeface);
-       // font_toolbar_title.setText("Bill Details");
+        font_toolbar_title.setText("Bill Details");
         //All Textview Initialization for setting values
         billing_period = (TextView) findViewById(R.id.txt_billing_period);
         reading_date = (TextView) findViewById(R.id.txt_reading_date);
@@ -160,6 +161,7 @@ public class ViewBillActivity extends AppCompatActivity {
         gok_subsidy = (TextView) findViewById(R.id.txt_gok_subsidy);
 
         //All Textview initialization values for setting fonts to textview level
+
         font_cons_name = (TextView) findViewById(R.id.font_cons_address);
         font_cons_address = (TextView) findViewById(R.id.font_cons_address);
         font_fac = (TextView) findViewById(R.id.font_fac);
@@ -293,6 +295,6 @@ public class ViewBillActivity extends AppCompatActivity {
     private void updateViews(String languageCode) {
         Context context = LocaleHelper.setLocale(ViewBillActivity.this, languageCode);
         Resources resources = context.getResources();
-        font_toolbar_title.setText(resources.getString(R.string.account_registration));
+        font_toolbar_title.setText(resources.getString(R.string.view_bill));
     }
 }

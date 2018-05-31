@@ -110,6 +110,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //For Hiding softkeys
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         initialize();
         getSetValues = new GetSetValues();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
