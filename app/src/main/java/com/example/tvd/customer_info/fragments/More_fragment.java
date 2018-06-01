@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,12 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tvd.customer_info.ChangePassword;
-import com.example.tvd.customer_info.ComplaintRegistration;
+import com.example.tvd.customer_info.ComplaintRegistration_TabbedActivity;
 import com.example.tvd.customer_info.FeedbackActivity;
 import com.example.tvd.customer_info.Location;
 import com.example.tvd.customer_info.MainActivity;
 import com.example.tvd.customer_info.R;
-import com.example.tvd.customer_info.SwitchConsumerActivity;
 import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.values.GetSetValues;
 
@@ -47,7 +45,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -114,8 +111,11 @@ public class More_fragment extends Fragment {
         complaints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ComplaintRegistration.class);
-                startActivity(intent);
+               /* Intent intent = new Intent(getActivity(), ComplaintRegistration.class);
+                startActivity(intent);*/
+               Intent intent = new Intent(getActivity(), ComplaintRegistration_TabbedActivity.class);
+               startActivity(intent);
+
             }
         });
         change_pass.setOnClickListener(new View.OnClickListener() {

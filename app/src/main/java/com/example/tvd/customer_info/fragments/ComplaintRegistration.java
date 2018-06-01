@@ -1,21 +1,27 @@
-package com.example.tvd.customer_info;
+package com.example.tvd.customer_info.fragments;
+
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.hardware.input.InputManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.adapter.RoleAdapter;
 import com.example.tvd.customer_info.helper.LocaleHelper;
 import com.example.tvd.customer_info.values.FunctionCall;
@@ -23,7 +29,11 @@ import com.example.tvd.customer_info.values.GetSetValues;
 
 import java.util.ArrayList;
 
-public class ComplaintRegistration extends AppCompatActivity {
+import static android.content.Context.MODE_PRIVATE;
+
+
+public class ComplaintRegistration extends Fragment {
+
     private Toolbar toolbar;
     TextView font_toolbar_title;
     Typeface typeface;
@@ -34,55 +44,45 @@ public class ComplaintRegistration extends AppCompatActivity {
     String main_role = "";
     EditText customer_search;
     FunctionCall fcall;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
+    Button search;
+    View view;
+    public ComplaintRegistration() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.complain_registration_layout);
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
-        String language = sharedPreferences.getString("LANGUAGE", "");
-
-        initialize();
-        //For Hiding keyboard
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        //below code is for loading different font
-        if (!language.equals("")) {
-            if (language.equals("KN")) {
-                updateViews("KN");
-            } else if (language.equals("en")) {
-                updateViews("en");
-            }
-        }
     }
 
-    public void initialize() {
-        typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view =  inflater.inflate(R.layout.fragment_complaint_registration, container, false);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language = sharedPreferences.getString("LANGUAGE", "");
+
+
+        typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
+        toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         fcall = new FunctionCall();
-        font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
+
+       /* font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         toolbar.setNavigationIcon(R.drawable.back);
-        font_toolbar_title.setTypeface(typeface);
+        font_toolbar_title.setTypeface(typeface);*/
         //font_toolbar_title.setText("Complaint Registration");
 
-        first_spiner = (Spinner) findViewById(R.id.spinner1);
-        second_spiner = (Spinner) findViewById(R.id.spiner2);
+        first_spiner = (Spinner) view.findViewById(R.id.spinner1);
+        second_spiner = (Spinner) view.findViewById(R.id.spiner2);
+        radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
+        search = (Button) view.findViewById(R.id.btn_search);
 
         complaint_list = new ArrayList<>();
-        complaint_adapter = new RoleAdapter(complaint_list, this);
+        complaint_adapter = new RoleAdapter(complaint_list, getActivity());
         first_spiner.setAdapter(complaint_adapter);
 
         sub_category_list = new ArrayList<>();
-        sub_category_adapter = new RoleAdapter(sub_category_list, this);
+        sub_category_adapter = new RoleAdapter(sub_category_list, getActivity());
         second_spiner.setAdapter(sub_category_adapter);
 
-        customer_search = (EditText) findViewById(R.id.edit_search);
+        customer_search = (EditText) view.findViewById(R.id.edit_search);
         //Setting status spinner
         for (int i = 0; i < getResources().getStringArray(R.array.complaint_list).length; i++) {
             getSetValues = new GetSetValues();
@@ -223,11 +223,46 @@ public class ComplaintRegistration extends AppCompatActivity {
             }
         });
 
+
+        //For Hiding keyboard
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+       /* toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });*/
+        //below code is for loading different font
+        if (!language.equals("")) {
+            if (language.equals("KN")) {
+                updateViews("KN");
+            } else if (language.equals("en")) {
+                updateViews("en");
+            }
+        }
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                if (selectedId == -1)
+                {
+                    Toast.makeText(getActivity(), "Please select anyone option first!!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    radioButton = (RadioButton) view.findViewById(selectedId);
+                    Toast.makeText(getActivity(), radioButton.getText() + " Selected", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return view;
     }
 
     private void updateViews(String languageCode) {
-        Context context = LocaleHelper.setLocale(ComplaintRegistration.this, languageCode);
+        Context context = LocaleHelper.setLocale(getActivity(), languageCode);
         Resources resources = context.getResources();
-        font_toolbar_title.setText(resources.getString(R.string.complaint_registration));
+       // font_toolbar_title.setText(resources.getString(R.string.complaint_registration));
     }
+
 }

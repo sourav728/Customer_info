@@ -32,10 +32,10 @@ public class SendingData {
     private ReceivingData receivingData = new ReceivingData();
     private FunctionCall fcall = new FunctionCall();
     private Handler handler;
+
     //In below code try catch has been added to check the response timeout
     private String UrlPostConnection(String Post_Url, HashMap<String, String> datamap) throws IOException {
-        try
-        {
+        try {
             String response = "";
             URL url = new URL(Post_Url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -61,11 +61,9 @@ public class SendingData {
                 response = "";
             }
             return response;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            Log.d("Debug","SERVER TIME OUT");
+            Log.d("Debug", "SERVER TIME OUT");
             //handler.sendEmptyMessage(CONNECTION_TIME_OUT);
         }
         return null;
@@ -157,7 +155,8 @@ public class SendingData {
         String response = "";
         Handler handler;
         GetSetValues getSetValues;
-        public Customer_Search(Handler handler,GetSetValues getSetValues) {
+
+        public Customer_Search(Handler handler, GetSetValues getSetValues) {
             this.handler = handler;
             this.getSetValues = getSetValues;
         }
@@ -181,12 +180,14 @@ public class SendingData {
             receivingData.get_customersearch_info(result, handler, getSetValues);
         }
     }
+
     //For consumer data insert into web service
     public class Customer_Data_Insert extends AsyncTask<String, String, String> {
         String response = "";
         Handler handler;
         GetSetValues getSetValues;
-        public Customer_Data_Insert(Handler handler,GetSetValues getSetValues) {
+
+        public Customer_Data_Insert(Handler handler, GetSetValues getSetValues) {
             this.handler = handler;
             this.getSetValues = getSetValues;
         }
@@ -209,35 +210,33 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.get_consumerinsert_info(result, handler,getSetValues);
+            receivingData.get_consumerinsert_info(result, handler, getSetValues);
         }
     }
+
     //For sending Consumer id's related to one account
-    public class See_consumer_Details extends AsyncTask<String,String,String>
-    {
-        String response="";
+    public class See_consumer_Details extends AsyncTask<String, String, String> {
+        String response = "";
         Handler handler;
         GetSetValues getSetValues;
-        ArrayList<GetSetValues>arrayList;
+        ArrayList<GetSetValues> arrayList;
         ConsumerListAdapter consumerListAdapter;
-        public See_consumer_Details(Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues>arrayList, ConsumerListAdapter consumerListAdapter)
-        {
+
+        public See_consumer_Details(Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues> arrayList, ConsumerListAdapter consumerListAdapter) {
             this.handler = handler;
             this.getSetValues = getSetValues;
             this.arrayList = arrayList;
             this.consumerListAdapter = consumerListAdapter;
         }
+
         @Override
         protected String doInBackground(String... params) {
-            HashMap<String,String>datamap = new HashMap<>();
-            datamap.put("Userid",params[0]);
-            datamap.put("TokenId",params[1]);
-            try
-            {
-                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDetails",datamap);
-            }
-            catch (Exception e)
-            {
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("Userid", params[0]);
+            datamap.put("TokenId", params[1]);
+            try {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/CustomerDetails", datamap);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return response;
@@ -245,30 +244,28 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.get_consumer_list(result,handler,getSetValues,arrayList,consumerListAdapter);
+            receivingData.get_consumer_list(result, handler, getSetValues, arrayList, consumerListAdapter);
         }
     }
+
     //For Account Deactivation
-    public class Deactivate_ID extends AsyncTask<String,String,String>
-    {
-        String response="";
+    public class Deactivate_ID extends AsyncTask<String, String, String> {
+        String response = "";
         Handler handler;
-        public Deactivate_ID(Handler handler)
-        {
+
+        public Deactivate_ID(Handler handler) {
             this.handler = handler;
         }
+
         @Override
         protected String doInBackground(String... params) {
-            HashMap<String,String>datamap = new HashMap<>();
-            datamap.put("AccountId",params[0]);
-            datamap.put("userid",params[1]);
-            datamap.put("TokenId",params[2]);
-            try
-            {
-                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/AccountDisable",datamap);
-            }
-            catch (Exception e)
-            {
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("AccountId", params[0]);
+            datamap.put("userid", params[1]);
+            datamap.put("TokenId", params[2]);
+            try {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/AccountDisable", datamap);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return response;
@@ -276,31 +273,30 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.getDeactivate_Details(result,handler);
+            receivingData.getDeactivate_Details(result, handler);
             super.onPostExecute(result);
         }
     }
+
     //For Sending data to view bill
-    public class ViewBill extends AsyncTask<String,String,String>
-    {
-        String response="";
+    public class ViewBill extends AsyncTask<String, String, String> {
+        String response = "";
         Handler handler;
         GetSetValues getSetValues;
-        public ViewBill(Handler handler, GetSetValues getSetValues)
-        {
+
+        public ViewBill(Handler handler, GetSetValues getSetValues) {
             this.handler = handler;
             this.getSetValues = getSetValues;
         }
+
         @Override
         protected String doInBackground(String... params) {
-            HashMap<String,String>datamap = new HashMap<>();
-            datamap.put("AccountId",params[0]);
-            datamap.put("TokenId",params[1]);
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("AccountId", params[0]);
+            datamap.put("TokenId", params[1]);
             try {
-                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/BillDetails",datamap);
-            }
-            catch (Exception e)
-            {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/BillDetails", datamap);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return response;
@@ -308,33 +304,31 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.getBillDetails(result,handler,getSetValues);
+            receivingData.getBillDetails(result, handler, getSetValues);
             super.onPostExecute(result);
         }
     }
 
     //For Sending Password into mobile
-    public class SendSMS extends AsyncTask<String,String,String>
-    {
+    public class SendSMS extends AsyncTask<String, String, String> {
         String response = "";
         Handler handler;
-        public SendSMS(Handler handler)
-        {
+
+        public SendSMS(Handler handler) {
             this.handler = handler;
         }
+
         @Override
         protected String doInBackground(String... params) {
-            HashMap<String,String>datamap = new HashMap<>();
-            datamap.put("MobNo",params[0]);
-            Log.d("Debug","Mobile No"+params[0]);
-            datamap.put("TokenId",params[1]);
-            Log.d("Debug","Token Id"+params[1]);
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("MobNo", params[0]);
+            Log.d("Debug", "Mobile No" + params[0]);
+            datamap.put("TokenId", params[1]);
+            Log.d("Debug", "Token Id" + params[1]);
 
-            try
-            {
-                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/ForgotPassWord",datamap);
-            }catch (Exception e)
-            {
+            try {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/ForgotPassWord", datamap);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return response;
@@ -342,26 +336,82 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.getSMS_details(result,handler);
+            receivingData.getSMS_details(result, handler);
             super.onPostExecute(result);
         }
     }
+
     //For Sending Email
-    public class SendEmail extends AsyncTask<String,String,String>
+    public class SendEmail extends AsyncTask<String, String, String> {
+        String response = "";
+        Handler handler;
+
+        public SendEmail(Handler handler) {
+            this.handler = handler;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("Email", params[0]);
+            datamap.put("TokenId", params[1]);
+            try {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/SendEmail", datamap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.getEmail_Details(result, handler);
+            super.onPostExecute(result);
+        }
+    }
+
+    //For Password Reset
+    public class PasswordReset extends AsyncTask<String, String, String> {
+        String response = "";
+        Handler handler;
+
+        public PasswordReset(Handler handler) {
+            this.handler = handler;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String, String> datamap = new HashMap<>();
+            datamap.put("Userid", params[0]);
+            datamap.put("OldPassword", params[1]);
+            datamap.put("NewPassword", params[2]);
+            datamap.put("TokenId", params[3]);
+            try {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/ChangePassword", datamap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_Password_change_status(result, handler);
+            super.onPostExecute(result);
+        }
+    }
+    //For Complaint Registration
+    public class ComplaintRegister extends AsyncTask<String,String,String>
     {
         String response = "";
         Handler handler;
-        public SendEmail(Handler handler)
-        {
-            this.handler = handler;
-        }
         @Override
         protected String doInBackground(String... params) {
             HashMap<String,String>datamap = new HashMap<>();
-            datamap.put("Email",params[0]);
-            datamap.put("TokenId",params[1]);
+            datamap.put("",params[0]);
+            datamap.put("",params[1]);
             try {
-                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/SendEmail",datamap);
+                response = UrlPostConnection("",datamap);
             }
             catch (Exception e)
             {
@@ -372,42 +422,8 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            receivingData.getEmail_Details(result,handler);
+           // receivingData.getComplaintStatus(result, handler);
             super.onPostExecute(result);
         }
     }
-    //For Password Reset
-    public class PasswordReset extends AsyncTask<String,String,String>
-    {
-        String response = "";
-        Handler handler;
-        public PasswordReset(Handler handler)
-        {
-             this.handler = handler;
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            HashMap<String,String>datamap = new HashMap<>();
-            datamap.put("Userid",params[0]);
-            datamap.put("OldPassword",params[1]);
-            datamap.put("NewPassword",params[2]);
-            datamap.put("TokenId", params[3]);
-            try
-            {
-                response = UrlPostConnection("http://bc_service2.hescomtrm.com/CUSTINFOSERVICE.asmx/ChangePassword",datamap);
-            }catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            receivingData.get_Password_change_status(result,handler);
-            super.onPostExecute(result);
-        }
-    }
-
 }

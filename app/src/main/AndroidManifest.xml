@@ -45,7 +45,6 @@
             android:name=".Location"
             android:label="@string/title_activity_location" />
         <activity android:name=".SwitchConsumerActivity" />
-        <activity android:name=".ComplaintRegistration" />
 
         <receiver android:name=".receiver.NetworkChangeReceiver">
             <intent-filter>
@@ -57,7 +56,9 @@
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".ChangePassword" />
         <activity android:name=".WebViewActivity" />
-        <activity android:name=".FeedbackActivity"></activity>
+        <activity android:name=".FeedbackActivity" />
+        <activity android:name=".Dummy" />
+        <activity android:name=".ComplaintRegistration_TabbedActivity"></activity>
     </application>
 
 </manifest>

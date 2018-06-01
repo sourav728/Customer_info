@@ -34,4 +34,6 @@
         <item name="colorControlActivated">#FFCC00</item>
     </style>
 
+    <style name="seekbar" parent="Base.Widget.AppCompat.SeekBar.Discrete">
+    </style>
 </resources>

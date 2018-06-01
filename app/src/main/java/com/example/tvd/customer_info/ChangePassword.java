@@ -48,6 +48,8 @@ public class ChangePassword extends AppCompatActivity {
                     case PASSWORD_CHANGED_FAILURE:
                         progressdialog.dismiss();
                         Toast.makeText(ChangePassword.this, "Password Change Failure!!", Toast.LENGTH_SHORT).show();
+                        old_pass.setText("");
+                        new_pass.setText("");
                         break;
                 }
                 super.handleMessage(msg);

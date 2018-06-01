@@ -244,7 +244,6 @@ public class AccountRegistrationActivity extends AppCompatActivity {
             registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         }
     }
-
     protected void unregisterNetworkChanges() {
         try {
             unregisterReceiver(mNetworkReceiver);

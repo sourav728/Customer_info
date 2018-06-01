@@ -19,6 +19,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <RadioGroup
+                        android:id="@+id/radio_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <RadioButton
@@ -29,10 +30,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="RR No"/>
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Customer"/>
                     </RadioGroup>
                 </LinearLayout>
                 <EditText
