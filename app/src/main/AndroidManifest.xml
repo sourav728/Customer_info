@@ -58,7 +58,13 @@
         <activity android:name=".WebViewActivity" />
         <activity android:name=".FeedbackActivity" />
         <activity android:name=".Dummy" />
-        <activity android:name=".ComplaintRegistration_TabbedActivity"></activity>
+        <activity android:name=".ComplaintRegistration_TabbedActivity" />
+        <activity
+            android:name=".First"
+            android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".HelpActivity"
+            android:theme="@style/Theme.Transparent"></activity>
     </application>
 
 </manifest>

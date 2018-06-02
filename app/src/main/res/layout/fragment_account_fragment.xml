@@ -67,7 +67,7 @@
                         android:layout_marginTop="13dp"
                         android:background="@drawable/border_style"
                         android:text="View/Edit Profile"
-                        android:textColor="#42A5F5"
+                        android:textColor="@color/black2"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>

@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.example.tvd.customer_info.ChangePassword;
 import com.example.tvd.customer_info.ComplaintRegistration_TabbedActivity;
 import com.example.tvd.customer_info.FeedbackActivity;
+import com.example.tvd.customer_info.First;
+import com.example.tvd.customer_info.HelpActivity;
 import com.example.tvd.customer_info.Location;
 import com.example.tvd.customer_info.MainActivity;
 import com.example.tvd.customer_info.R;
@@ -59,7 +61,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class More_fragment extends Fragment {
     public static final String GETSET = "getset";
-    RelativeLayout language, location,complaints,change_pass, feedback;
+    RelativeLayout language, location,complaints,change_pass, feedback, help;
     AlertDialog alertDialog1;
     GetSetValues getSetValues;
     CharSequence[] values = {"English", "Kannada"};
@@ -87,6 +89,7 @@ public class More_fragment extends Fragment {
         complaints = (RelativeLayout) view.findViewById(R.id.relative_complaints);
         change_pass = (RelativeLayout) view.findViewById(R.id.relative_changepassword);
         feedback = (RelativeLayout) view.findViewById(R.id.relative_feedback);
+        help = (RelativeLayout) view.findViewById(R.id.relative_help);
         arrayList = new ArrayList<>();
 
         changelanguage = (TextView) view.findViewById(R.id.txt_language);
@@ -130,9 +133,19 @@ public class More_fragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FeedbackActivity.class);
                 startActivity(intent);
+                /*Intent intent = new Intent(getActivity(), Dummy.class);
+                startActivity(intent);*/
             }
         });
-
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               /* Intent intent = new Intent(getActivity(), First.class);
+                startActivity(intent);*/
+               Intent intent = new Intent(getActivity(), HelpActivity.class);
+               startActivity(intent);
+            }
+        });
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         String language = sharedPreferences.getString("LANGUAGE", "");
         //below code is for loading different font
@@ -176,7 +189,6 @@ public class More_fragment extends Fragment {
                         Toast.makeText(getActivity(), "English font applied", Toast.LENGTH_LONG).show();
                         SavePreferences("LANGUAGE","en");
                        // updateViews("en");
-
                         intent = new Intent(getActivity(), MainActivity.class);
                         //below code will remove all the other activites on top
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

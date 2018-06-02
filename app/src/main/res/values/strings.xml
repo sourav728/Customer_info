@@ -174,4 +174,5 @@
     <string name="Addconsumer">Add Consumer</string>
     <string name="changepassword">Change Password</string>
     <string name="feedback">Feedback</string>
+    <string name="help_add_consumer">You can add multiple Consumer Id</string>
 </resources>

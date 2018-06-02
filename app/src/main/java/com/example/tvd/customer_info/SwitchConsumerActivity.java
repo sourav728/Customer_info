@@ -21,6 +21,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -193,6 +195,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
          });
         swipetodismisshelper.attachToRecyclerView(recyclerView);
         /**************End of code***********/
+
     }
 
     public void initialize() {

@@ -2,16 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
     tools:context=".Dummy">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Complaint Description"
+            android:textStyle="bold"
+            android:textColor="@color/black2"
+            android:textSize="17sp"
+            android:gravity="center"/>
+        <View
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/sky_blue"
+            />
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Billing Issue"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:background="@drawable/bt_shape3"
+            android:ems="5"/>
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/seekbar"
+            android:max="2"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:thumbTint="@color/green"/>
 
-    <SeekBar
-        android:id="@+id/seekbar"
-        style="@style/seekbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:max="2"
-        android:progressTint="@color/green"
-        android:scrollbarSize="100dp"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#c62828"
+                android:text="Pending" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="In Progress" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Resolved"
+                android:textColor="#4CAF50"
+                android:textAlignment="viewEnd" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_marginTop="20dp"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/dlg_positive_btn"
+            android:text="Cancel"/>
 </LinearLayout>

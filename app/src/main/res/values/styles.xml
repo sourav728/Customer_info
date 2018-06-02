@@ -27,7 +27,7 @@
 
     <!--Style for Progress Dialog-->
     <style name="MyProgressDialogstyle" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/yellow</item>
+        <item name="colorAccent">@color/blue</item>
     </style>
     <style name="TextLabel" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
@@ -35,5 +35,15 @@
     </style>
 
     <style name="seekbar" parent="Base.Widget.AppCompat.SeekBar.Discrete">
+
+    </style>
+
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 </resources>
