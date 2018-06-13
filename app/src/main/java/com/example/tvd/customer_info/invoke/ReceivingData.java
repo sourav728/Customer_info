@@ -124,17 +124,14 @@ public class ReceivingData {
     }
 
     //For customer search
-    public void get_customersearch_info(String result, Handler handler,GetSetValues getSetValues) {
+    public void get_customersearch_info(String result, Handler handler, GetSetValues getSetValues) {
         String res = parseServerXML(result);
         Log.d("Debug", "Result is" + result);
         JSONArray jsonArray;
-        try
-        {
+        try {
             jsonArray = new JSONArray(res);
-            if (jsonArray.length()>0)
-            {
-                for (int i=0;i<jsonArray.length();i++)
-                {
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String CONSUMER_NAME = jsonObject.getString("CONSUMER_NAME");
                     String ADD1 = jsonObject.getString("ADD1");
@@ -145,7 +142,7 @@ public class ReceivingData {
                     String mobile_no = jsonObject.getString("mobile_no");
                     String email = jsonObject.getString("email_id");
                     String subdivision = jsonObject.getString("subdiv");
-                    Log.d("Consumer_Name","Name"+CONSUMER_NAME);
+                    Log.d("Consumer_Name", "Name" + CONSUMER_NAME);
                     if (!CONSUMER_NAME.equals(""))
                         getSetValues.setCons_name(CONSUMER_NAME);
                     else getSetValues.setCons_name("NA");
@@ -175,9 +172,8 @@ public class ReceivingData {
                     else getSetValues.setCons_subdivision("NA");
                 }
                 handler.sendEmptyMessage(SEARCH_FOUND);
-            }else handler.sendEmptyMessage(SEARCH_NOT_FOUND);
-        }catch (JSONException e)
-        {
+            } else handler.sendEmptyMessage(SEARCH_NOT_FOUND);
+        } catch (JSONException e) {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(SEARCH_NOT_FOUND);
@@ -185,7 +181,7 @@ public class ReceivingData {
 
     }
 
-    public void get_consumerinsert_info(String result, Handler handler,GetSetValues getSetValues) {
+    public void get_consumerinsert_info(String result, Handler handler, GetSetValues getSetValues) {
         String res = parseServerXML(result);
         Log.d("Debug", "Result is" + result);
         JSONObject jsonObject;
@@ -202,25 +198,23 @@ public class ReceivingData {
             handler.sendEmptyMessage(INSERTION_FAILURE);
         }
     }
+
     //For getting Consumer id's related to one account
-    public void get_consumer_list(String result, Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues>arrayList, ConsumerListAdapter consumerListAdapter)
-    {
+    public void get_consumer_list(String result, Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues> arrayList, ConsumerListAdapter consumerListAdapter) {
         String res = parseServerXML(result);
         JSONArray jsonArray;
         try {
             jsonArray = new JSONArray(res);
-            if (jsonArray.length()>0)
-            {
-                for (int i=0;i<jsonArray.length();i++)
-                {
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     getSetValues = new GetSetValues();
                     String Consumer_id = jsonObject.getString("ACCOUNT_ID");
                     String rrno = jsonObject.getString("RRNO");
                     String relationship = jsonObject.getString("RELATIONSHIP");
-                    Log.d("Debug","CONSUMERID"+Consumer_id);
-                    Log.d("Debug","RRNO"+rrno);
-                    Log.d("Debug","Relationship"+relationship);
+                    Log.d("Debug", "CONSUMERID" + Consumer_id);
+                    Log.d("Debug", "RRNO" + rrno);
+                    Log.d("Debug", "Relationship" + relationship);
                     if (!Consumer_id.equals(""))
                         getSetValues.setConsumer_id(Consumer_id);
                     else getSetValues.setConsumer_id("NA");
@@ -234,53 +228,44 @@ public class ReceivingData {
                     consumerListAdapter.notifyDataSetChanged();
                 }
                 handler.sendEmptyMessage(SWITCH_CONSUMER_SUCCESS);
-            }else
-            {
+            } else {
                 handler.sendEmptyMessage(SWITCH_CONSUMER_FAILURE);
             }
 
-        }
-        catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
             handler.sendEmptyMessage(SWITCH_CONSUMER_FAILURE);
         }
     }
+
     //For Deactivate Account
-    public void getDeactivate_Details(String result,Handler handler)
-    {
+    public void getDeactivate_Details(String result, Handler handler) {
         String res = parseServerXML(result);
-        Log.d("Debug","Deactivation Result"+res);
+        Log.d("Debug", "Deactivation Result" + res);
         JSONObject jsonObject;
-        try
-        {
+        try {
             jsonObject = new JSONObject(res);
             String message = jsonObject.getString("message");
             if (StringUtils.startsWithIgnoreCase(message, "success"))
-                 handler.sendEmptyMessage(ACCOUNT_DEACTIVATED_SUCCESSFULLY);
+                handler.sendEmptyMessage(ACCOUNT_DEACTIVATED_SUCCESSFULLY);
             else
                 handler.sendEmptyMessage(ACCOUNT_DEACTIVATION_FAILURE);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(ACCOUNT_DEACTIVATION_FAILURE);
         }
     }
+
     //For getting Bill details of customer
-    public void getBillDetails(String result, Handler handler, GetSetValues getSetValues)
-    {
+    public void getBillDetails(String result, Handler handler, GetSetValues getSetValues) {
         String res = parseServerXML(result);
-        Log.d("Debug","Bill Details Result"+ res);
+        Log.d("Debug", "Bill Details Result" + res);
         JSONArray jsonArray;
-        try
-        {
+        try {
             jsonArray = new JSONArray(res);
-            if (jsonArray.length()>0)
-            {
-                for (int i=0;i<jsonArray.length();i++)
-                {
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String date1 = jsonObject.getString("date1");
                     String DueDate = jsonObject.getString("DueDate");
@@ -397,81 +382,74 @@ public class ReceivingData {
                     else getSetValues.setView_bill_dg("NA");
                 }
                 handler.sendEmptyMessage(VIEW_BILL_SUCCESS);
-            }
-            else handler.sendEmptyMessage(VIEW_BILL_FAILURE);
-        }
-        catch (Exception e)
-        {
+            } else handler.sendEmptyMessage(VIEW_BILL_FAILURE);
+        } catch (Exception e) {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(VIEW_BILL_FAILURE);
         }
     }
+
     //For getting SMS details
-    public void getSMS_details(String result, Handler handler)
-    {
+    public void getSMS_details(String result, Handler handler) {
         String res = parseServerXML(result);
-        Log.d("Debug","SMS Result Result"+res);
+        Log.d("Debug", "SMS Result Result" + res);
         JSONObject jsonObject;
-        try
-        {
+        try {
             jsonObject = new JSONObject(res);
             String message = jsonObject.getString("message");
             if (StringUtils.startsWithIgnoreCase(message, "Success"))
                 handler.sendEmptyMessage(SMS_SEND_SUCCESS);
             else
                 handler.sendEmptyMessage(SMS_SEND_FAILURE);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(SMS_SEND_FAILURE);
         }
     }
+
     //For getting Email details
-    public void getEmail_Details(String result, Handler handler)
-    {
+    public void getEmail_Details(String result, Handler handler) {
         String res = parseServerXML(result);
-        Log.d("Debug","SMS Result Result"+res);
+        Log.d("Debug", "SMS Result Result" + res);
         JSONObject jsonObject;
-        try
-        {
+        try {
             jsonObject = new JSONObject(res);
             String message = jsonObject.getString("message");
             if (StringUtils.startsWithIgnoreCase(message, "Success"))
                 handler.sendEmptyMessage(EMAIL_SEND_SUCCESS);
             else
                 handler.sendEmptyMessage(EMAIL_SEND_FAILURE);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(EMAIL_SEND_FAILURE);
         }
     }
+
     //For Change password
-    public void get_Password_change_status(String result, Handler handler)
-    {
+    public void get_Password_change_status(String result, Handler handler) {
         String res = parseServerXML(result);
-        Log.d("Debug","Password Change Status"+ result);
+        Log.d("Debug", "Password Change Status" + result);
         JSONObject jsonObject;
-        try
-        {
+        try {
             jsonObject = new JSONObject(res);
             String message = jsonObject.getString("message");
             if (StringUtils.startsWithIgnoreCase(message, "Success"))
                 handler.sendEmptyMessage(PASSWORD_CHANGED_SUCCESS);
             else
                 handler.sendEmptyMessage(PASSWORD_CHANGED_FAILURE);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(PASSWORD_CHANGED_FAILURE);
         }
     }
 
+    //For getting complaint status
+    public void get_Complaint_status(String result, Handler handler) {
+        String res = parseServerXML(result);
+        Log.d("Debug", "Complaint status");
+    }
 }

@@ -2,41 +2,36 @@ package com.example.tvd.customer_info;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class HelpActivity extends Activity implements View.OnClickListener {
+public class HelpActivity extends Activity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private ViewPager viewPager;
-    private LinearLayout dotsLayout;
     private TextView[] dots;
     private int layouts[] = new int[]{R.layout.activity_first, R.layout.activity_second};
+    RadioGroup mPageGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setBtnClickListener(R.id.btn_got_it);
         setBtnClickListener(R.id.btn_next);
         setBtnClickListener(R.id.btn_skip);
 
-        // adding bottom dots
-        addBottomDots();
-        // By default, select dot in the first position
-        updateBottomDots(0, 0);
-
+        mPageGroup = (RadioGroup) findViewById(R.id.page_group);
+        mPageGroup.setOnCheckedChangeListener(this);
         viewPager.setAdapter(new MyViewPagerAdapter());
+
         viewPager.addOnPageChangeListener(pageChangeListener);
     }
 
@@ -59,33 +54,6 @@ public class HelpActivity extends Activity implements View.OnClickListener {
         finish();
     }
 
-    private void addBottomDots() {
-        if ((dotsLayout == null) || (layouts == null))
-            return;
-
-        int dotSize = layouts.length;
-        dotsLayout.removeAllViews();
-
-        dots = new TextView[dotSize];
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#8226;"));
-            dots[i].setTextSize(35);
-            dotsLayout.addView(dots[i]);
-        }
-    }
-
-    private void updateBottomDots(int prevPosition, int curPosition) {
-        if (dots == null)
-            return;
-
-        int dotLength = dots.length;
-        if ((dotLength > prevPosition) && (dotLength > curPosition)) {
-            dots[prevPosition].setTextColor(getResources().getColor(R.color.dot_inactive));
-            dots[curPosition].setTextColor(getResources().getColor(R.color.dot_active));
-        }
-    }
-
 
     ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
 
@@ -94,7 +62,10 @@ public class HelpActivity extends Activity implements View.OnClickListener {
         @Override
         public void onPageSelected(int position) {
 
-            updateBottomDots(prevPos, position);
+            //updateBottomDots(prevPos, position);
+            // when current page change -> update radio button state
+            int radioButtonId = mPageGroup.getChildAt(position).getId();
+            mPageGroup.check(radioButtonId);
 
             boolean isLastPage = (position == (layouts.length - 1));
             showHideView(R.id.btn_next, isLastPage ? View.GONE : View.VISIBLE);
@@ -134,6 +105,17 @@ public class HelpActivity extends Activity implements View.OnClickListener {
         if ((viewPager != null) && (nextIndex < layouts.length)) {
             viewPager.setCurrentItem(nextIndex);
         }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // when checked radio button -> update current page
+        RadioButton checkedRadioButton = (RadioButton) group.findViewById(checkedId);
+        // get index of checked radio button
+        int index = group.indexOfChild(checkedRadioButton);
+
+        // update current page
+        viewPager.setCurrentItem(index);
     }
 
     public class MyViewPagerAdapter extends PagerAdapter {

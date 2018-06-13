@@ -409,7 +409,6 @@ public class SendingData {
         protected String doInBackground(String... params) {
             HashMap<String,String>datamap = new HashMap<>();
             datamap.put("",params[0]);
-            datamap.put("",params[1]);
             try {
                 response = UrlPostConnection("",datamap);
             }
@@ -422,7 +421,7 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-           // receivingData.getComplaintStatus(result, handler);
+            //receivingData.getComplaintStatus(result, handler);
             super.onPostExecute(result);
         }
     }

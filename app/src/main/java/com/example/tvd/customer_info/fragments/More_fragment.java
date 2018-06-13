@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.example.tvd.customer_info.ChangePassword;
 import com.example.tvd.customer_info.ComplaintRegistration_TabbedActivity;
 import com.example.tvd.customer_info.FeedbackActivity;
-import com.example.tvd.customer_info.First;
 import com.example.tvd.customer_info.HelpActivity;
 import com.example.tvd.customer_info.Location;
 import com.example.tvd.customer_info.MainActivity;
