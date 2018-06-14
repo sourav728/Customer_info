@@ -21,6 +21,10 @@ import java.util.ArrayList;
 
 import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_DEACTIVATED_SUCCESSFULLY;
 import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_DEACTIVATION_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_ID_SEARCH_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_ID_SEARCH_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.COMPLAINT_REGISTER_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.COMPLAINT_REGISTER_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.CONNECTION_TIME_OUT;
 import static com.example.tvd.customer_info.values.ConstantValues.EMAIL_SEND_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.EMAIL_SEND_SUCCESS;
@@ -447,9 +451,149 @@ public class ReceivingData {
         }
     }
 
-    //For getting complaint status
-    public void get_Complaint_status(String result, Handler handler) {
+    //Get Customer Search details Based on CONSID
+    public void get_customer_search_details_CONSID(String result, Handler handler, GetSetValues getSetValues) {
         String res = parseServerXML(result);
-        Log.d("Debug", "Complaint status");
+        Log.d("Debug", "CustomerSearchDetails_CONSID" + result);
+        JSONArray jsonArray;
+        JSONObject jsonObject;
+        try {
+            jsonArray = new JSONArray(res);
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObject = jsonArray.getJSONObject(i);
+                    String CONSUMER_NAME = jsonObject.getString("CONSUMER_NAME");
+                    String MOBILE_NO = jsonObject.getString("MOBILE_NO");
+                    String CONSID = jsonObject.getString("CONSID");
+                    String RRNO = jsonObject.getString("RRNO");
+                    String FDRNAME = jsonObject.getString("FDRNAME");
+                    String TCCODE = jsonObject.getString("TCCODE");
+                    String SUBDIVCODE = jsonObject.getString("SUBDIVCODE");
+                    String POLE_NO = jsonObject.getString("POLE_NO");
+                    String TARIFF = jsonObject.getString("TARIFF");
+                    String ADD1 = jsonObject.getString("ADD1");
+
+                    if (!CONSUMER_NAME.equals(""))
+                        getSetValues.setComplaint_customer_name(CONSUMER_NAME);
+                    else getSetValues.setComplaint_customer_name("NA");
+                    if (!RRNO.equals(""))
+                        getSetValues.setComplaint_rrno(RRNO);
+                    else getSetValues.setComplaint_rrno("NA");
+                    if (!CONSID.equals(""))
+                        getSetValues.setComplaint_cons_no(CONSID);
+                    else getSetValues.setComplaint_cons_no("NA");
+                    if (!FDRNAME.equals(""))
+                        getSetValues.setComplaint_feeder_name(FDRNAME);
+                    else getSetValues.setComplaint_feeder_name("NA");
+                    if (!TCCODE.equals(""))
+                        getSetValues.setComplaint_tc_code(TCCODE);
+                    else getSetValues.setComplaint_tc_code("NA");
+                    if (!TARIFF.equals(""))
+                        getSetValues.setComplaint_tariff(TARIFF);
+                    else getSetValues.setComplaint_tariff("NA");
+                    if (!ADD1.equals(""))
+                        getSetValues.setComplaint_add(ADD1);
+                    else getSetValues.setComplaint_add("NA");
+                    if (!SUBDIVCODE.equals(""))
+                        getSetValues.setComplaint_subdivision_code(SUBDIVCODE);
+                    else getSetValues.setComplaint_subdivision_code("NA");
+                    if (!MOBILE_NO.equals(""))
+                        getSetValues.setComplaint_mobile_no(MOBILE_NO);
+                    else getSetValues.setComplaint_mobile_no("NA");
+                    if (!POLE_NO.equals(""))
+                        getSetValues.setComplaint_poleno(POLE_NO);
+                    else getSetValues.setComplaint_poleno("NA");
+                }
+                handler.sendEmptyMessage(ACCOUNT_ID_SEARCH_SUCCESS);
+            } else {
+                handler.sendEmptyMessage(ACCOUNT_ID_SEARCH_FAILURE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            handler.sendEmptyMessage(ACCOUNT_ID_SEARCH_FAILURE);
+        }
+    }
+
+    //Get Customer Search details Based on RRNO
+    public void get_customer_search_details_RRNO(String result, Handler handler, GetSetValues getSetValues) {
+        String res = parseServerXML(result);
+        Log.d("Debug", "CustomerSearchDetails_RRNO" + result);
+        JSONArray jsonArray;
+        JSONObject jsonObject;
+        try {
+            jsonArray = new JSONArray(res);
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObject = jsonArray.getJSONObject(i);
+                    String CONSUMER_NAME = jsonObject.getString("CONSUMER_NAME");
+                    String MOBILE_NO = jsonObject.getString("MOBILE_NO");
+                    String CONSID = jsonObject.getString("CONSID");
+                    String RRNO = jsonObject.getString("RRNO");
+                    String FDRNAME = jsonObject.getString("FDRNAME");
+                    String TCCODE = jsonObject.getString("TCCODE");
+                    String SUBDIVCODE = jsonObject.getString("SUBDIVCODE");
+                    String POLE_NO = jsonObject.getString("POLE_NO");
+                    String TARIFF = jsonObject.getString("TARIFF");
+                    String ADD1 = jsonObject.getString("ADD1");
+
+                    if (!CONSUMER_NAME.equals(""))
+                        getSetValues.setComplaint_customer_name(CONSUMER_NAME);
+                    else getSetValues.setComplaint_customer_name("NA");
+                    if (!RRNO.equals(""))
+                        getSetValues.setComplaint_rrno(RRNO);
+                    else getSetValues.setComplaint_rrno("NA");
+                    if (!CONSID.equals(""))
+                        getSetValues.setComplaint_cons_no(CONSID);
+                    else getSetValues.setComplaint_cons_no("NA");
+                    if (!FDRNAME.equals(""))
+                        getSetValues.setComplaint_feeder_name(FDRNAME);
+                    else getSetValues.setComplaint_feeder_name("NA");
+                    if (!TCCODE.equals(""))
+                        getSetValues.setComplaint_tc_code(TCCODE);
+                    else getSetValues.setComplaint_tc_code("NA");
+                    if (!TARIFF.equals(""))
+                        getSetValues.setComplaint_tariff(TARIFF);
+                    else getSetValues.setComplaint_tariff("NA");
+                    if (!ADD1.equals(""))
+                        getSetValues.setComplaint_add(ADD1);
+                    else getSetValues.setComplaint_add("NA");
+                    if (!SUBDIVCODE.equals(""))
+                        getSetValues.setComplaint_subdivision_code(SUBDIVCODE);
+                    else getSetValues.setComplaint_subdivision_code("NA");
+                    if (!MOBILE_NO.equals(""))
+                        getSetValues.setComplaint_mobile_no(MOBILE_NO);
+                    else getSetValues.setComplaint_mobile_no("NA");
+                    if (!POLE_NO.equals(""))
+                        getSetValues.setComplaint_poleno(POLE_NO);
+                    else getSetValues.setComplaint_poleno("NA");
+                }
+                handler.sendEmptyMessage(ACCOUNT_ID_SEARCH_SUCCESS);
+            } else {
+                handler.sendEmptyMessage(ACCOUNT_ID_SEARCH_FAILURE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            handler.sendEmptyMessage(ACCOUNT_ID_SEARCH_FAILURE);
+        }
+    }
+
+    //For Complaint Registration
+    //For Change password
+    public void getComplaint_registration_status(String result, Handler handler) {
+        String res = parseServerXML(result);
+        Log.d("Debug", "Complaint Registration" + result);
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(res);
+            String message = jsonObject.getString("message");
+            if (StringUtils.startsWithIgnoreCase(message, "Success"))
+                handler.sendEmptyMessage(COMPLAINT_REGISTER_SUCCESS);
+            else
+                handler.sendEmptyMessage(COMPLAINT_REGISTER_FAILURE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(COMPLAINT_REGISTER_FAILURE);
+        }
     }
 }

@@ -400,17 +400,24 @@ public class SendingData {
             super.onPostExecute(result);
         }
     }
-    //For Complaint Registration
-    public class ComplaintRegister extends AsyncTask<String,String,String>
+    //Customer Search Based on CONSID
+    public class CustomerSearch_CONSID extends AsyncTask<String,String,String>
     {
         String response = "";
         Handler handler;
+        GetSetValues getSetValues;
+        public CustomerSearch_CONSID(Handler handler, GetSetValues getSetValues)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+        }
         @Override
         protected String doInBackground(String... params) {
             HashMap<String,String>datamap = new HashMap<>();
-            datamap.put("",params[0]);
-            try {
-                response = UrlPostConnection("",datamap);
+            datamap.put("CONSID",params[0]);
+            try
+            {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/Service.asmx/CustomerSearch",datamap);
             }
             catch (Exception e)
             {
@@ -421,7 +428,87 @@ public class SendingData {
 
         @Override
         protected void onPostExecute(String result) {
-            //receivingData.getComplaintStatus(result, handler);
+            receivingData.get_customer_search_details_CONSID(result,handler, getSetValues);
+            super.onPostExecute(result);
+        }
+    }
+
+    //Customer Search Based on RRNO
+    public class CustomerSearch_RRNO extends AsyncTask<String,String,String>
+    {
+        String response = "";
+        Handler handler;
+        GetSetValues getSetValues;
+        public CustomerSearch_RRNO(Handler handler, GetSetValues getSetValues)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("RRNO",params[0]);
+            try
+            {
+                response = UrlPostConnection("http://bc_service.hescomtrm.com/Service.asmx/CustomerSearch2",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_customer_search_details_RRNO(result,handler, getSetValues);
+            super.onPostExecute(result);
+        }
+    }
+    //For Complaint Register
+    public class Complaint_Register extends AsyncTask<String,String,String>
+    {
+        String response = "";
+        Handler handler;
+        GetSetValues getSetValues;
+        public Complaint_Register(Handler handler, GetSetValues getSetValues)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("RRNO",params[0]);
+            datamap.put("CONSID",params[1]);
+            datamap.put("SUBDIVCODE",params[2]);
+            datamap.put("MOBILE_NO",params[3]);
+            datamap.put("COMP_TYPE",params[4]);
+            datamap.put("COMP_SUBCAT",params[5]);
+            datamap.put("LANDMARK",params[6]);
+            datamap.put("REMARKS",params[7]);
+            Log.d("Debug","RRNO"+params[0]);
+            Log.d("Debug","CONSID"+params[1]);
+            Log.d("Debug","SUBDIVCODE"+params[2]);
+            Log.d("Debug","MOBILE_NO"+params[3]);
+            Log.d("Debug","COMP_TYPE"+params[4]);
+            Log.d("Debug","COMP_SUBCAT"+params[5]);
+            Log.d("Debug","LANDMARK"+params[6]);
+            Log.d("Debug","REMARKS"+params[7]);
+            try
+            {
+                response = UrlPostConnection("http://bc_service.hescomtrm.com/Service.asmx/Customer_Complaint",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.getComplaint_registration_status(result,handler);
             super.onPostExecute(result);
         }
     }

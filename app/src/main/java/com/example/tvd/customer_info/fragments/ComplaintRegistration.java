@@ -1,11 +1,14 @@
 package com.example.tvd.customer_info.fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -22,14 +26,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tvd.customer_info.R;
+import com.example.tvd.customer_info.ViewBillActivity;
 import com.example.tvd.customer_info.adapter.RoleAdapter;
 import com.example.tvd.customer_info.helper.LocaleHelper;
+import com.example.tvd.customer_info.invoke.SendingData;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_ID_SEARCH_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_ID_SEARCH_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.COMPLAINT_REGISTER_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.COMPLAINT_REGISTER_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_SUCCESS;
 
 
 public class ComplaintRegistration extends Fragment {
@@ -41,13 +55,52 @@ public class ComplaintRegistration extends Fragment {
     RoleAdapter complaint_adapter, sub_category_adapter;
     Spinner first_spiner, second_spiner;
     GetSetValues getSetValues;
-    String main_role = "";
+    String main_role = "", complaint_issue = "", sub_complaint_issue = "";
     EditText customer_search;
     FunctionCall fcall;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     Button search;
     View view;
+    ProgressDialog progressDialog;
+    SendingData sendingData;
+    TextView con_name, con_rrno, con_acc_id, con_feeder_name, con_tc_code, con_tariff_code, con_address, con_subdivision, con_mobile_no,
+            con_pole_no;
+    LinearLayout show_hide;
+    EditText landmark, remark;
+    Button submit;
+    private final Handler mHandler;
+
+    {
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case ACCOUNT_ID_SEARCH_SUCCESS:
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Success..", Toast.LENGTH_SHORT).show();
+                        show_hide.setVisibility(View.VISIBLE);
+                        submit.setVisibility(View.VISIBLE);
+                        setTextViewValues();
+                        break;
+                    case ACCOUNT_ID_SEARCH_FAILURE:
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Failure!!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case COMPLAINT_REGISTER_SUCCESS:
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                        break;
+                    case COMPLAINT_REGISTER_FAILURE:
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Failure!!", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
+    }
+
     public ComplaintRegistration() {
 
     }
@@ -55,34 +108,10 @@ public class ComplaintRegistration extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_complaint_registration, container, false);
+        view = inflater.inflate(R.layout.fragment_complaint_registration, container, false);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         String language = sharedPreferences.getString("LANGUAGE", "");
-
-
-        typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
-        toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
-        fcall = new FunctionCall();
-
-       /* font_toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        toolbar.setNavigationIcon(R.drawable.back);
-        font_toolbar_title.setTypeface(typeface);*/
-        //font_toolbar_title.setText("Complaint Registration");
-
-        first_spiner = (Spinner) view.findViewById(R.id.spinner1);
-        second_spiner = (Spinner) view.findViewById(R.id.spiner2);
-        radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
-        search = (Button) view.findViewById(R.id.btn_search);
-
-        complaint_list = new ArrayList<>();
-        complaint_adapter = new RoleAdapter(complaint_list, getActivity());
-        first_spiner.setAdapter(complaint_adapter);
-
-        sub_category_list = new ArrayList<>();
-        sub_category_adapter = new RoleAdapter(sub_category_list, getActivity());
-        second_spiner.setAdapter(sub_category_adapter);
-
-        customer_search = (EditText) view.findViewById(R.id.edit_search);
+        initialize();
         //Setting status spinner
         for (int i = 0; i < getResources().getStringArray(R.array.complaint_list).length; i++) {
             getSetValues = new GetSetValues();
@@ -99,6 +128,8 @@ public class ComplaintRegistration extends Fragment {
                 String selected_role = role.getText().toString();
                 if (!selected_role.equals("--SELECT--")) {
                     main_role = selected_role;
+                    GetSetValues complaint = complaint_list.get(position);
+                    complaint_issue = complaint.getSpiner_item();
                 }
                 if (selected_role.equals("BILLING ISSUES")) {
                     sub_category_list.clear();
@@ -223,16 +254,23 @@ public class ComplaintRegistration extends Fragment {
             }
         });
 
+        second_spiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView role = (TextView) view.findViewById(R.id.spinner_txt);
+                GetSetValues complaint_subtype = sub_category_list.get(position);
+                sub_complaint_issue = complaint_subtype.getSpiner_item();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //For Hiding keyboard
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-       /* toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });*/
         //below code is for loading different font
         if (!language.equals("")) {
             if (language.equals("KN")) {
@@ -246,23 +284,100 @@ public class ComplaintRegistration extends Fragment {
             @Override
             public void onClick(View v) {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
-                if (selectedId == -1)
-                {
+                if (selectedId == -1) {
                     Toast.makeText(getActivity(), "Please select anyone option first!!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     radioButton = (RadioButton) view.findViewById(selectedId);
-                    Toast.makeText(getActivity(), radioButton.getText() + " Selected", Toast.LENGTH_SHORT).show();
+                    if (StringUtils.startsWithIgnoreCase(radioButton.getText().toString(), "Account Id")) {
+                        progressDialog = new ProgressDialog(getActivity(), R.style.MyProgressDialogstyle);
+                        progressDialog.setTitle("Connecting To Server");
+                        progressDialog.setMessage("Please Wait..");
+                        progressDialog.show();
+                        Toast.makeText(getActivity(), "Call First Service", Toast.LENGTH_SHORT).show();
+                        SendingData.CustomerSearch_CONSID customerSearch_consid = sendingData.new CustomerSearch_CONSID(mHandler, getSetValues);
+                        customerSearch_consid.execute(customer_search.getText().toString());
+                    } else {
+                        Toast.makeText(getActivity(), "Call Second Service", Toast.LENGTH_SHORT).show();
+                        progressDialog = new ProgressDialog(getActivity(), R.style.MyProgressDialogstyle);
+                        progressDialog.setTitle("Connecting To Server");
+                        progressDialog.setMessage("Please Wait..");
+                        progressDialog.show();
+                        SendingData.CustomerSearch_RRNO customerSearch_rrno = sendingData.new CustomerSearch_RRNO(mHandler, getSetValues);
+                        customerSearch_rrno.execute(customer_search.getText().toString());
+                    }
                 }
             }
         });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(getActivity(), R.style.MyProgressDialogstyle);
+                progressDialog.setTitle("Registering Your Complaint..");
+                progressDialog.setMessage("Please Wait..");
+                progressDialog.show();
+                SendingData.Complaint_Register complaint_register = sendingData.new Complaint_Register(mHandler, getSetValues);
+                complaint_register.execute(con_rrno.getText().toString(), con_acc_id.getText().toString(), con_subdivision.getText().toString(), con_mobile_no.getText().toString(),
+                        complaint_issue, sub_complaint_issue, landmark.getText().toString(), remark.getText().toString());
+            }
+        });
+
         return view;
     }
 
     private void updateViews(String languageCode) {
         Context context = LocaleHelper.setLocale(getActivity(), languageCode);
         Resources resources = context.getResources();
-       // font_toolbar_title.setText(resources.getString(R.string.complaint_registration));
+    }
+
+    public void initialize() {
+        sendingData = new SendingData();
+        getSetValues = new GetSetValues();
+        typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
+        toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
+        fcall = new FunctionCall();
+        show_hide = (LinearLayout) view.findViewById(R.id.lin_show_hide);
+        first_spiner = (Spinner) view.findViewById(R.id.spinner1);
+        second_spiner = (Spinner) view.findViewById(R.id.spiner2);
+        radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
+        search = (Button) view.findViewById(R.id.btn_search);
+
+        complaint_list = new ArrayList<>();
+        complaint_adapter = new RoleAdapter(complaint_list, getActivity());
+        first_spiner.setAdapter(complaint_adapter);
+
+        sub_category_list = new ArrayList<>();
+        sub_category_adapter = new RoleAdapter(sub_category_list, getActivity());
+        second_spiner.setAdapter(sub_category_adapter);
+
+        customer_search = (EditText) view.findViewById(R.id.edit_search);
+        landmark = (EditText) view.findViewById(R.id.edit_land_mark);
+        remark = (EditText) view.findViewById(R.id.edit_remark);
+        con_name = (TextView) view.findViewById(R.id.txt_name);
+        con_rrno = (TextView) view.findViewById(R.id.txt_rrno);
+        con_acc_id = (TextView) view.findViewById(R.id.txt_acc_id);
+        con_feeder_name = (TextView) view.findViewById(R.id.txt_feeder_name);
+        con_tc_code = (TextView) view.findViewById(R.id.txt_tc_code);
+        con_tariff_code = (TextView) view.findViewById(R.id.txt_tariff_code);
+        con_address = (TextView) view.findViewById(R.id.txt_address);
+        con_subdivision = (TextView) view.findViewById(R.id.txt_subdivision);
+        con_mobile_no = (TextView) view.findViewById(R.id.txt_mobileno);
+        con_pole_no = (TextView) view.findViewById(R.id.txt_pole_no);
+
+        submit = (Button) view.findViewById(R.id.btn_submit);
+    }
+
+    public void setTextViewValues() {
+        con_name.setText(getSetValues.getComplaint_customer_name());
+        con_rrno.setText(getSetValues.getComplaint_rrno());
+        con_acc_id.setText(getSetValues.getComplaint_cons_no());
+        con_feeder_name.setText(getSetValues.getComplaint_feeder_name());
+        con_tc_code.setText(getSetValues.getComplaint_tc_code());
+        con_tariff_code.setText(getSetValues.getComplaint_tariff());
+        con_address.setText(getSetValues.getComplaint_add());
+        con_subdivision.setText(getSetValues.getComplaint_subdivision_code());
+        con_mobile_no.setText(getSetValues.getComplaint_mobile_no());
+        con_pole_no.setText(getSetValues.getComplaint_poleno());
     }
 
 }

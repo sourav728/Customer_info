@@ -121,7 +121,7 @@
     </string-array>
 
     <string-array name="feedbacktype">
-        <item>--Select Feedback Type--</item>
+        <item>--Select Subcategory--</item>
         <item>Power supply Reliability</item>
         <item>Complaint handling</item>
         <item>Billing/payment system</item>
@@ -175,4 +175,5 @@
     <string name="changepassword">Change Password</string>
     <string name="feedback">Feedback</string>
     <string name="help_add_consumer">You can add multiple Consumer Id</string>
+    <string name="help">Help</string>
 </resources>

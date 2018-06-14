@@ -12,12 +12,96 @@ public class GetSetValues {
                    view_bill_curr_read,view_bill_con,view_bill_avgcon,view_bill_fc,view_bill_ec,view_bill_fac,view_bill_rbtamt,
                    view_bill_pfpanelty,view_bill_bmdpanelty,view_bill_di,view_bill_do,view_bill_dt,view_bill_netpayable,
                    view_bill_arrears,view_bill_adjamt,view_bill_dg;
+    private String complaint_customer_name,complaint_rrno,complaint_feeder_name,complaint_tc_code,
+                   complaint_subdivision_code,complaint_poleno,complaint_tariff, complaint_cons_no, complaint_mobile_no, complaint_add;
+
     public String getLatitude() {
         return latitude;
     }
 
     public String getView_bill_date1() {
         return view_bill_date1;
+    }
+
+    public String getComplaint_customer_name() {
+        return complaint_customer_name;
+    }
+
+    public String getComplaint_cons_no() {
+        return complaint_cons_no;
+    }
+
+    public String getComplaint_add() {
+        return complaint_add;
+    }
+
+    public void setComplaint_add(String complaint_add) {
+        this.complaint_add = complaint_add;
+    }
+
+    public void setComplaint_cons_no(String complaint_cons_no) {
+        this.complaint_cons_no = complaint_cons_no;
+    }
+
+    public String getComplaint_mobile_no() {
+        return complaint_mobile_no;
+    }
+
+    public void setComplaint_mobile_no(String complaint_mobile_no) {
+        this.complaint_mobile_no = complaint_mobile_no;
+    }
+
+    public void setComplaint_customer_name(String complaint_customer_name) {
+        this.complaint_customer_name = complaint_customer_name;
+    }
+
+    public String getComplaint_rrno() {
+        return complaint_rrno;
+    }
+
+    public void setComplaint_rrno(String complaint_rrno) {
+        this.complaint_rrno = complaint_rrno;
+    }
+
+
+    public String getComplaint_feeder_name() {
+        return complaint_feeder_name;
+    }
+
+    public void setComplaint_feeder_name(String complaint_feeder_name) {
+        this.complaint_feeder_name = complaint_feeder_name;
+    }
+
+    public String getComplaint_tc_code() {
+        return complaint_tc_code;
+    }
+
+    public void setComplaint_tc_code(String complaint_tc_code) {
+        this.complaint_tc_code = complaint_tc_code;
+    }
+
+    public String getComplaint_subdivision_code() {
+        return complaint_subdivision_code;
+    }
+
+    public void setComplaint_subdivision_code(String complaint_subdivision_code) {
+        this.complaint_subdivision_code = complaint_subdivision_code;
+    }
+
+    public String getComplaint_poleno() {
+        return complaint_poleno;
+    }
+
+    public void setComplaint_poleno(String complaint_poleno) {
+        this.complaint_poleno = complaint_poleno;
+    }
+
+    public String getComplaint_tariff() {
+        return complaint_tariff;
+    }
+
+    public void setComplaint_tariff(String complaint_tariff) {
+        this.complaint_tariff = complaint_tariff;
     }
 
     public void setView_bill_date1(String view_bill_date1) {

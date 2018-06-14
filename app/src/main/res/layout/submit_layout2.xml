@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/yellow"
         android:textAllCaps="false"
-        android:text="SUBMIT" />
+        android:text="SUBMIT"
+        android:visibility="gone"/>
 
 </android.support.v7.widget.Toolbar>

@@ -23,4 +23,9 @@ public class ConstantValues {
     public static final int EMAIL_SEND_FAILURE = 20;
     public static final int PASSWORD_CHANGED_SUCCESS =21;
     public static final int PASSWORD_CHANGED_FAILURE =22;
+    public static final int ACCOUNT_ID_SEARCH_SUCCESS = 23;
+    public static final int ACCOUNT_ID_SEARCH_FAILURE = 24;
+    public static final int COMPLAINT_REGISTER_SUCCESS = 25;
+    public static final int COMPLAINT_REGISTER_FAILURE = 26;
+
 }

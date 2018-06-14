@@ -55,10 +55,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/lin_show_hide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="gone"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_marginTop="5dp"
@@ -77,6 +79,7 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_name"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -99,11 +102,10 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_rrno"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="RSBA1234"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -123,11 +125,10 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_acc_id"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="02456789"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -148,11 +149,10 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_feeder_name"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="Harish"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -172,11 +172,10 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_tc_code"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="76575"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -196,11 +195,10 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_tariff_code"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="5LT2A"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -220,6 +218,7 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_address"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -242,10 +241,8 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_subdivision"
                         android:layout_weight="1"
-                        android:enabled="false"
-                        android:text="CSD2"
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="17sp"/>
@@ -267,6 +264,7 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_mobileno"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -289,11 +287,10 @@
                         android:textStyle="bold"
                         android:text=":"/>
                     <TextView
+                        android:id="@+id/txt_pole_no"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="54678"
                         android:textSize="17sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -361,11 +358,14 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:text=":"/>
-                    <TextView
+                    <EditText
+                        android:id="@+id/edit_land_mark"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"/>
+                        android:padding="7dp"
+                        android:singleLine="true"
+                        android:background="@drawable/rectangle_edittext"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="5dp"
@@ -384,11 +384,14 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:text=":"/>
-                    <TextView
+                    <EditText
+                        android:id="@+id/edit_remark"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"/>
+                        android:padding="7dp"
+                        android:singleLine="true"
+                        android:background="@drawable/rectangle_edittext"/>
                 </LinearLayout>
             </LinearLayout>
 
