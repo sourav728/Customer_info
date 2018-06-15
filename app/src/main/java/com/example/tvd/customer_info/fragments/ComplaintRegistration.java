@@ -10,8 +10,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,12 +24,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tvd.customer_info.ComplaintRegistration_TabbedActivity;
 import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.ViewBillActivity;
 import com.example.tvd.customer_info.adapter.RoleAdapter;
@@ -69,6 +76,7 @@ public class ComplaintRegistration extends Fragment {
     LinearLayout show_hide;
     EditText landmark, remark;
     Button submit;
+    private ProgressBar progressBar;
     private final Handler mHandler;
 
     {
@@ -77,14 +85,16 @@ public class ComplaintRegistration extends Fragment {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case ACCOUNT_ID_SEARCH_SUCCESS:
-                        progressDialog.dismiss();
+                        progressBar.setVisibility(ProgressBar.GONE);
+                        //progressDialog.dismiss();
                         Toast.makeText(getActivity(), "Success..", Toast.LENGTH_SHORT).show();
                         show_hide.setVisibility(View.VISIBLE);
                         submit.setVisibility(View.VISIBLE);
                         setTextViewValues();
                         break;
                     case ACCOUNT_ID_SEARCH_FAILURE:
-                        progressDialog.dismiss();
+                        progressBar.setVisibility(ProgressBar.GONE);
+                        //progressDialog.dismiss();
                         Toast.makeText(getActivity(), "Failure!!", Toast.LENGTH_SHORT).show();
                         break;
                     case COMPLAINT_REGISTER_SUCCESS:
@@ -289,19 +299,21 @@ public class ComplaintRegistration extends Fragment {
                 } else {
                     radioButton = (RadioButton) view.findViewById(selectedId);
                     if (StringUtils.startsWithIgnoreCase(radioButton.getText().toString(), "Account Id")) {
-                        progressDialog = new ProgressDialog(getActivity(), R.style.MyProgressDialogstyle);
+                        /*progressDialog = new ProgressDialog(getActivity(), R.style.MyProgressDialogstyle);
                         progressDialog.setTitle("Connecting To Server");
                         progressDialog.setMessage("Please Wait..");
-                        progressDialog.show();
-                        Toast.makeText(getActivity(), "Call First Service", Toast.LENGTH_SHORT).show();
+                        progressDialog.show();*/
+                        progressBar.setVisibility(ProgressBar.VISIBLE);
+                        Toast.makeText(getActivity(), "Searching Based on Account ID..", Toast.LENGTH_SHORT).show();
                         SendingData.CustomerSearch_CONSID customerSearch_consid = sendingData.new CustomerSearch_CONSID(mHandler, getSetValues);
                         customerSearch_consid.execute(customer_search.getText().toString());
                     } else {
-                        Toast.makeText(getActivity(), "Call Second Service", Toast.LENGTH_SHORT).show();
-                        progressDialog = new ProgressDialog(getActivity(), R.style.MyProgressDialogstyle);
+                        Toast.makeText(getActivity(), "Searching Based on RRNO..", Toast.LENGTH_SHORT).show();
+                        /*progressDialog = new ProgressDialog(getActivity(), R.style.MyProgressDialogstyle);
                         progressDialog.setTitle("Connecting To Server");
                         progressDialog.setMessage("Please Wait..");
-                        progressDialog.show();
+                        progressDialog.show();*/
+                        progressBar.setVisibility(ProgressBar.VISIBLE);
                         SendingData.CustomerSearch_RRNO customerSearch_rrno = sendingData.new CustomerSearch_RRNO(mHandler, getSetValues);
                         customerSearch_rrno.execute(customer_search.getText().toString());
                     }
@@ -316,6 +328,7 @@ public class ComplaintRegistration extends Fragment {
                 progressDialog.setTitle("Registering Your Complaint..");
                 progressDialog.setMessage("Please Wait..");
                 progressDialog.show();
+                progressBar.setVisibility(ProgressBar.VISIBLE);
                 SendingData.Complaint_Register complaint_register = sendingData.new Complaint_Register(mHandler, getSetValues);
                 complaint_register.execute(con_rrno.getText().toString(), con_acc_id.getText().toString(), con_subdivision.getText().toString(), con_mobile_no.getText().toString(),
                         complaint_issue, sub_complaint_issue, landmark.getText().toString(), remark.getText().toString());
@@ -331,6 +344,7 @@ public class ComplaintRegistration extends Fragment {
     }
 
     public void initialize() {
+        progressBar = (ProgressBar) view.findViewById(R.id.progress);
         sendingData = new SendingData();
         getSetValues = new GetSetValues();
         typeface = Typeface.createFromAsset(getActivity().getAssets(), "calibri.ttf");
@@ -379,5 +393,6 @@ public class ComplaintRegistration extends Fragment {
         con_mobile_no.setText(getSetValues.getComplaint_mobile_no());
         con_pole_no.setText(getSetValues.getComplaint_poleno());
     }
+
 
 }

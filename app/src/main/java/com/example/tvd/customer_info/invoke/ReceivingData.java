@@ -3,6 +3,7 @@ package com.example.tvd.customer_info.invoke;
 import android.os.Handler;
 import android.util.Log;
 
+import com.example.tvd.customer_info.adapter.ComplaintHistoryAdapter;
 import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
@@ -23,6 +24,7 @@ import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_DEACTI
 import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_DEACTIVATION_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_ID_SEARCH_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.ACCOUNT_ID_SEARCH_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.COMPLAINT_HISTORY_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.COMPLAINT_REGISTER_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.COMPLAINT_REGISTER_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.CONNECTION_TIME_OUT;
@@ -593,6 +595,41 @@ public class ReceivingData {
         } catch (Exception e) {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(COMPLAINT_REGISTER_FAILURE);
+        }
+    }
+
+    //For Complaint Search
+    public void getComplaintSearch_status(String result, Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues> arrayList, ComplaintHistoryAdapter complaintHistoryAdapter) {
+        String res = parseServerXML(result);
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(res);
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    getSetValues = new GetSetValues();
+
+                    String COMP_TYPE = jsonObject.getString("COMP_TYPE");
+                    String COMP_SUBCAT = jsonObject.getString("COMP_SUBCAT");
+                    Log.d("Debug", "COMP_TYPE" + COMP_TYPE);
+                    Log.d("Debug", "COMP_SUBCAT" + COMP_SUBCAT);
+                    if (!COMP_TYPE.equals(""))
+                        getSetValues.setComplaint_type(COMP_TYPE);
+                    else getSetValues.setComplaint_type("NA");
+                    if (!COMP_SUBCAT.equals(""))
+                        getSetValues.setComplaint_sub_type(COMP_TYPE);
+                    else getSetValues.setComplaint_sub_type("NA");
+                    arrayList.add(getSetValues);
+                    complaintHistoryAdapter.notifyDataSetChanged();
+                }
+                handler.sendEmptyMessage(COMPLAINT_HISTORY_SUCCESS);
+            } else {
+                handler.sendEmptyMessage(COMPLAINT_REGISTER_FAILURE);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
             handler.sendEmptyMessage(COMPLAINT_REGISTER_FAILURE);
         }
     }

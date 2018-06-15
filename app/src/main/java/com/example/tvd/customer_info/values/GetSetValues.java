@@ -14,13 +14,29 @@ public class GetSetValues {
                    view_bill_arrears,view_bill_adjamt,view_bill_dg;
     private String complaint_customer_name,complaint_rrno,complaint_feeder_name,complaint_tc_code,
                    complaint_subdivision_code,complaint_poleno,complaint_tariff, complaint_cons_no, complaint_mobile_no, complaint_add;
-
+    private String complaint_type,complaint_sub_type;
     public String getLatitude() {
         return latitude;
     }
 
     public String getView_bill_date1() {
         return view_bill_date1;
+    }
+
+    public String getComplaint_type() {
+        return complaint_type;
+    }
+
+    public void setComplaint_type(String complaint_type) {
+        this.complaint_type = complaint_type;
+    }
+
+    public String getComplaint_sub_type() {
+        return complaint_sub_type;
+    }
+
+    public void setComplaint_sub_type(String complaint_sub_type) {
+        this.complaint_sub_type = complaint_sub_type;
     }
 
     public String getComplaint_customer_name() {

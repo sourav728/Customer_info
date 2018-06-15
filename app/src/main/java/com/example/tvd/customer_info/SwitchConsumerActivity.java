@@ -73,6 +73,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
     GetSetValues getSetValues;
     private ConsumerListAdapter consumerListAdapter;
     String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
+
     String Consumer_id = "", rrno = "", relationship = "", login_id = "";
     TextView font_toolbar_text;
     Typeface typeface;

@@ -1,10 +1,8 @@
 package com.example.tvd.customer_info.adapter;
 
 
-import android.app.Activity;
 import android.content.Context;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 
@@ -13,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.tvd.customer_info.MainActivity;
 import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.SwitchConsumerActivity;
 import com.example.tvd.customer_info.values.GetSetValues;

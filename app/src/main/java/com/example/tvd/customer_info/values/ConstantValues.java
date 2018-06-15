@@ -27,5 +27,6 @@ public class ConstantValues {
     public static final int ACCOUNT_ID_SEARCH_FAILURE = 24;
     public static final int COMPLAINT_REGISTER_SUCCESS = 25;
     public static final int COMPLAINT_REGISTER_FAILURE = 26;
-
+    public static final int COMPLAINT_HISTORY_SUCCESS = 27;
+    public static final int COMPLAINT_HISTORY_FAILURE = 28;
 }

@@ -16,7 +16,7 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black2"
+                android:textColor="@color/white"
                 android:text="Complaint Registration"
                 android:layout_gravity="center"
                 android:textSize="18sp" />

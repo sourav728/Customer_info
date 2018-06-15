@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 
 
+import com.example.tvd.customer_info.adapter.ComplaintHistoryAdapter;
 import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
@@ -509,6 +510,42 @@ public class SendingData {
         @Override
         protected void onPostExecute(String result) {
             receivingData.getComplaint_registration_status(result,handler);
+            super.onPostExecute(result);
+        }
+    }
+    //For Complaint Search
+    public class ComplaintSearch extends AsyncTask<String,String,String>
+    {
+        String response ="";
+        Handler handler;
+        GetSetValues getSetValues;
+        ArrayList<GetSetValues>arrayList;
+        ComplaintHistoryAdapter complaintHistoryAdapter;
+        public ComplaintSearch(Handler handler,GetSetValues getSetValues, ArrayList<GetSetValues>arrayList, ComplaintHistoryAdapter complaintHistoryAdapter)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+            this.arrayList = arrayList;
+            this.complaintHistoryAdapter = complaintHistoryAdapter;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("CONSID",params[0]);
+            try
+            {
+                response = UrlPostConnection("http://bc_service.hescomtrm.com/Service.asmx/Complaint_Search",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.getComplaintSearch_status(result, handler, getSetValues,arrayList,complaintHistoryAdapter);
             super.onPostExecute(result);
         }
     }
