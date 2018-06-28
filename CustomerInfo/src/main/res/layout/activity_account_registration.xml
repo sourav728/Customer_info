@@ -47,6 +47,7 @@
                     android:layout_weight="2.5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:layout_marginLeft="5dp"
                     android:textSize="17sp"
                     android:text="Account ID:"
@@ -56,6 +57,7 @@
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:padding="9dp"
                     android:singleLine="true"
                     android:background="@drawable/rectangle_edittext"/>

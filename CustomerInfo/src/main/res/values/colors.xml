@@ -28,4 +28,5 @@
 
     <!-- dots active colors -->
     <color name="dot_active">#e5e5e5</color>
+    <color name="colorTransBg">#26000000</color>
 </resources>

@@ -4,6 +4,7 @@ package com.example.tvd.customer_info.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -75,7 +76,7 @@ public class ComplaintHistory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_complaint_history, container, false);
-
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         sendingData = new SendingData();
         getSetValues = new GetSetValues();
         account_id = (EditText) view.findViewById(R.id.edit_search2);
@@ -87,7 +88,6 @@ public class ComplaintHistory extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        complaintHistoryAdapter = new ComplaintHistoryAdapter(arrayList, getActivity(), getSetValues);
         complaintHistoryAdapter = new ComplaintHistoryAdapter(arrayList, getActivity(), getSetValues);
         recyclerView.setAdapter(complaintHistoryAdapter);
         /*cardView = (CardView) view.findViewById(R.id.card_view);

@@ -110,5 +110,4 @@ public class ComplaintRegistration_TabbedActivity extends AppCompatActivity {
         font_toolbar_text.setText(resources.getString(R.string.complaint_registration));
     }
 
-
 }

@@ -22,7 +22,7 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#212121"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:layout_gravity="center" />
         </android.support.v7.widget.Toolbar>

@@ -38,19 +38,19 @@ public class AccountRegistrationActivity extends AppCompatActivity {
     private Toolbar toolbar;
     Typeface typeface;
     TextView font_toolbar_title, font_acount, font_rrno;
-    Button search,add;
+    Button search, add;
     EditText account_id, rrno;
     SendingData sendingData;
     ProgressDialog progressDialog;
-    String TokenId = "", get_account_id = "", get_rrno = "",login_id="";
+    String TokenId = "", get_account_id = "", get_rrno = "", login_id = "";
     LinearLayout show_hide;
     FrameLayout frame_show_hide;
     GetSetValues getsetvalues;
     static TextView tv_check_connection;
     private BroadcastReceiver mNetworkReceiver;
-    private TextView connection_load,connection_type,type_of_supply,tariff_plan,installed_date,address,email,subdivision,cons_name;
-    private TextView font_personal_details,font_dubdiv_details,font_connection_details,font_connection_load,font_connection_type,
-                     font_type_of_supply,font_tariff_plan,font_installed_date;
+    private TextView connection_load, connection_type, type_of_supply, tariff_plan, installed_date, address, email, subdivision, cons_name;
+    private TextView font_personal_details, font_dubdiv_details, font_connection_details, font_connection_load, font_connection_type,
+            font_type_of_supply, font_tariff_plan, font_installed_date;
     private final Handler mHandler;
 
     {
@@ -97,11 +97,11 @@ public class AccountRegistrationActivity extends AppCompatActivity {
         mNetworkReceiver = new NetworkChangeReceiver();
         getsetvalues = new GetSetValues();
         registerNetworkBroadcastForNougat();
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF",MODE_PRIVATE);
-        login_id = sharedPreferences.getString("ID","");
+        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        login_id = sharedPreferences.getString("ID", "");
         String language = sharedPreferences.getString("LANGUAGE", "");
 
-        Log.d("Debug","Login ID"+login_id);
+        Log.d("Debug", "Login ID" + login_id);
         TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
         typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         initialize();
@@ -117,16 +117,29 @@ public class AccountRegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 get_account_id = account_id.getText().toString();
                 get_rrno = rrno.getText().toString();
-               /* progressDialog = ProgressDialog.show(AccountRegistrationActivity.this, "Searching..",
-                        "Fetching details please wait..", true);*/
-                progressDialog = new ProgressDialog(AccountRegistrationActivity.this, R.style.MyProgressDialogstyle);
-                progressDialog.setTitle("Connecting To Server");
-                progressDialog.setMessage("Please Wait..");
-                progressDialog.show();
+                if (get_account_id.length() > 10)
+                    account_id.setError("Account ID length exceeds!!");
+                else if (get_rrno.length() > 14)
+                    rrno.setError("RRno length exceeds!!");
+                else {
+                    if (!get_account_id.equals("")) {
+                        if (!get_rrno.equals("")) {
+                            progressDialog = new ProgressDialog(AccountRegistrationActivity.this, R.style.MyProgressDialogstyle);
+                            progressDialog.setTitle("Connecting To Server");
+                            progressDialog.setMessage("Please Wait..");
+                            progressDialog.show();
 
-                SendingData.Customer_Search customer_search = sendingData.new Customer_Search(mHandler,getsetvalues);
-                customer_search.execute(get_account_id, get_rrno, TokenId);
-               // setTextView_values();
+                            SendingData.Customer_Search customer_search = sendingData.new Customer_Search(mHandler, getsetvalues);
+                            customer_search.execute(get_account_id, get_rrno, TokenId);
+
+                        } else
+                            Toast.makeText(AccountRegistrationActivity.this, "Please Enter RRNo!!", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(AccountRegistrationActivity.this, "Please Enter Account ID!!", Toast.LENGTH_SHORT).show();
+
+                }
+
+                // setTextView_values();
             }
         });
         //setting values into textviews
@@ -134,20 +147,16 @@ public class AccountRegistrationActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendingData.Customer_Data_Insert customer_data_insert = sendingData.new Customer_Data_Insert(mHandler,getsetvalues);
-                customer_data_insert.execute(login_id,get_account_id,get_rrno,"",TokenId);
+                SendingData.Customer_Data_Insert customer_data_insert = sendingData.new Customer_Data_Insert(mHandler, getsetvalues);
+                customer_data_insert.execute(login_id, get_account_id, get_rrno, "", TokenId);
             }
         });
 
         //below code is for loading different font
-        if (!language.equals(""))
-        {
-            if (language.equals("KN"))
-            {
+        if (!language.equals("")) {
+            if (language.equals("KN")) {
                 updateViews("KN");
-            }
-            else if (language.equals("en"))
-            {
+            } else if (language.equals("en")) {
                 updateViews("en");
             }
         }
@@ -166,7 +175,7 @@ public class AccountRegistrationActivity extends AppCompatActivity {
         rrno = (EditText) findViewById(R.id.edit_rrno);
         show_hide = (LinearLayout) findViewById(R.id.lin_search_details);
         frame_show_hide = (FrameLayout) findViewById(R.id.frame_layout_show_hide);
-      //  tv_check_connection = (TextView) findViewById(R.id.tv_check_connection);
+        //  tv_check_connection = (TextView) findViewById(R.id.tv_check_connection);
 
         font_acount.setTypeface(typeface);
         font_rrno.setTypeface(typeface);
@@ -203,12 +212,12 @@ public class AccountRegistrationActivity extends AppCompatActivity {
         font_tariff_plan.setTypeface(typeface);
         font_installed_date.setTypeface(typeface);
     }
-    public void setTextView_values()
-    {
+
+    public void setTextView_values() {
         cons_name.setText(getsetvalues.getCons_name());
-        Log.d("Debug","Cons_name"+cons_name);
+        Log.d("Debug", "Cons_name" + cons_name);
         connection_load.setText(getsetvalues.getCons_kwhp());
-        Log.d("Debug","connection load"+connection_load);
+        Log.d("Debug", "connection load" + connection_load);
         address.setText(getsetvalues.getCons_address());
         email.setText(getsetvalues.getCons_email());
         subdivision.setText(getsetvalues.getCons_subdivision());
@@ -244,6 +253,7 @@ public class AccountRegistrationActivity extends AppCompatActivity {
             registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         }
     }
+
     protected void unregisterNetworkChanges() {
         try {
             unregisterReceiver(mNetworkReceiver);

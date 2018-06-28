@@ -15,12 +15,49 @@ public class GetSetValues {
     private String complaint_customer_name,complaint_rrno,complaint_feeder_name,complaint_tc_code,
                    complaint_subdivision_code,complaint_poleno,complaint_tariff, complaint_cons_no, complaint_mobile_no, complaint_add;
     private String complaint_type,complaint_sub_type;
+
+    private String ltbill_date="",ltbill_con="",ltbill_arrears="",ltbill_demand="";
+    private String lt_receiptdate="",lt_collection_amt="",lt_receiptno="",lt_collection_counter="";
+    private String lt_consumer_id="",lt_consumer_name="",lt_tariff="",lt_mobile_no="";
+    private String lt_billing_consumer_id="",lt_billing_consumer_name="",lt_billing_tariff="",lt_billing_mobile_no="";
     public String getLatitude() {
         return latitude;
     }
 
     public String getView_bill_date1() {
         return view_bill_date1;
+    }
+
+    public String getLt_billing_consumer_id() {
+        return lt_billing_consumer_id;
+    }
+
+    public void setLt_billing_consumer_id(String lt_billing_consumer_id) {
+        this.lt_billing_consumer_id = lt_billing_consumer_id;
+    }
+
+    public String getLt_billing_consumer_name() {
+        return lt_billing_consumer_name;
+    }
+
+    public void setLt_billing_consumer_name(String lt_billing_consumer_name) {
+        this.lt_billing_consumer_name = lt_billing_consumer_name;
+    }
+
+    public String getLt_billing_tariff() {
+        return lt_billing_tariff;
+    }
+
+    public void setLt_billing_tariff(String lt_billing_tariff) {
+        this.lt_billing_tariff = lt_billing_tariff;
+    }
+
+    public String getLt_billing_mobile_no() {
+        return lt_billing_mobile_no;
+    }
+
+    public void setLt_billing_mobile_no(String lt_billing_mobile_no) {
+        this.lt_billing_mobile_no = lt_billing_mobile_no;
     }
 
     public String getComplaint_type() {
@@ -55,8 +92,105 @@ public class GetSetValues {
         this.complaint_add = complaint_add;
     }
 
+    public String getLtbill_date() {
+        return ltbill_date;
+    }
+
+    public void setLtbill_date(String ltbill_date) {
+        this.ltbill_date = ltbill_date;
+    }
+
+    public String getLtbill_con() {
+        return ltbill_con;
+    }
+
+    public void setLtbill_con(String ltbill_con) {
+        this.ltbill_con = ltbill_con;
+    }
+
+    public String getLtbill_arrears() {
+        return ltbill_arrears;
+    }
+
+    public void setLtbill_arrears(String ltbill_arrears) {
+        this.ltbill_arrears = ltbill_arrears;
+    }
+
+    public String getLtbill_demand() {
+        return ltbill_demand;
+    }
+
+    public void setLtbill_demand(String ltbill_demand) {
+        this.ltbill_demand = ltbill_demand;
+    }
+
+    public String getLt_receiptdate() {
+        return lt_receiptdate;
+    }
+
+    public void setLt_receiptdate(String lt_receiptdate) {
+        this.lt_receiptdate = lt_receiptdate;
+    }
+
+    public String getLt_collection_amt() {
+        return lt_collection_amt;
+    }
+
+    public void setLt_collection_amt(String lt_collection_amt) {
+        this.lt_collection_amt = lt_collection_amt;
+    }
+
+    public String getLt_receiptno() {
+        return lt_receiptno;
+    }
+
+    public void setLt_receiptno(String lt_receiptno) {
+        this.lt_receiptno = lt_receiptno;
+    }
+
+    public String getLt_collection_counter() {
+        return lt_collection_counter;
+    }
+
+    public void setLt_collection_counter(String lt_collection_counter) {
+        this.lt_collection_counter = lt_collection_counter;
+    }
+
+    public String getLt_consumer_id() {
+        return lt_consumer_id;
+    }
+
+    public void setLt_consumer_id(String lt_consumer_id) {
+        this.lt_consumer_id = lt_consumer_id;
+    }
+
+    public String getLt_consumer_name() {
+        return lt_consumer_name;
+    }
+
+    public void setLt_consumer_name(String lt_consumer_name) {
+        this.lt_consumer_name = lt_consumer_name;
+    }
+
+    public String getLt_tariff() {
+        return lt_tariff;
+    }
+
+    public void setLt_tariff(String lt_tariff) {
+        this.lt_tariff = lt_tariff;
+    }
+
+    public String getLt_mobile_no() {
+        return lt_mobile_no;
+    }
+
+    public void setLt_mobile_no(String lt_mobile_no) {
+        this.lt_mobile_no = lt_mobile_no;
+    }
+
     public void setComplaint_cons_no(String complaint_cons_no) {
         this.complaint_cons_no = complaint_cons_no;
+
     }
 
     public String getComplaint_mobile_no() {

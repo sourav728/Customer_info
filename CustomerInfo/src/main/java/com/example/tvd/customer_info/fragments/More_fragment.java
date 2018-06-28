@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tvd.customer_info.Billing_Collection_Tabbed_Activity;
 import com.example.tvd.customer_info.ChangePassword;
 import com.example.tvd.customer_info.ComplaintRegistration_TabbedActivity;
 import com.example.tvd.customer_info.FeedbackActivity;
@@ -60,7 +62,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class More_fragment extends Fragment {
     public static final String GETSET = "getset";
-    RelativeLayout language, location,complaints,change_pass, feedback, help;
+    RelativeLayout language, location,complaints,change_pass, feedback, help, billing_collection;
     AlertDialog alertDialog1;
     GetSetValues getSetValues;
     CharSequence[] values = {"English", "Kannada"};
@@ -69,6 +71,7 @@ public class More_fragment extends Fragment {
     String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
     TextView changelanguage,txt_location,txt_complaint,txt_change_pass,txt_feedback,txt_help;
     Intent intent;
+    String current_con_id="";
     public More_fragment() {
     }
 
@@ -83,12 +86,21 @@ public class More_fragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_more_fragment, container, false);
 
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        String language2 = sharedPreferences.getString("LANGUAGE", "");
+
+        SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
+        current_con_id = sharedPreferences1.getString("Curr_Cons_ID", "");
+
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         language = (RelativeLayout) view.findViewById(R.id.relative_language);
         location = (RelativeLayout) view.findViewById(R.id.relative_location);
         complaints = (RelativeLayout) view.findViewById(R.id.relative_complaints);
         change_pass = (RelativeLayout) view.findViewById(R.id.relative_changepassword);
         feedback = (RelativeLayout) view.findViewById(R.id.relative_feedback);
         help = (RelativeLayout) view.findViewById(R.id.relative_help);
+        billing_collection = (RelativeLayout) view.findViewById(R.id.relative_billing_collection);
+
         arrayList = new ArrayList<>();
 
         changelanguage = (TextView) view.findViewById(R.id.txt_language);
@@ -113,8 +125,6 @@ public class More_fragment extends Fragment {
         complaints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(getActivity(), ComplaintRegistration.class);
-                startActivity(intent);*/
                Intent intent = new Intent(getActivity(), ComplaintRegistration_TabbedActivity.class);
                startActivity(intent);
 
@@ -132,33 +142,39 @@ public class More_fragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FeedbackActivity.class);
                 startActivity(intent);
-                /*Intent intent = new Intent(getActivity(), Dummy.class);
-                startActivity(intent);*/
             }
         });
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(getActivity(), First.class);
-                startActivity(intent);*/
                Intent intent = new Intent(getActivity(), HelpActivity.class);
                startActivity(intent);
             }
         });
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
-        String language = sharedPreferences.getString("LANGUAGE", "");
+        billing_collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!current_con_id.equals(""))
+                {
+                    Intent intent = new Intent(getActivity(), Billing_Collection_Tabbed_Activity.class);
+                    startActivity(intent);
+                }else Toast.makeText(getActivity(), "Please Select Consumer ID!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         //below code is for loading different font
-        if (!language.equals(""))
+        if (!language2.equals(""))
         {
-            if (language.equals("KN"))
+            if (language2.equals("KN"))
             {
                 updateViews("KN");
             }
-            else if (language.equals("en"))
+            else if (language2.equals("en"))
             {
                 updateViews("en");
             }
-            else if (language.equals(""))
+            else if (language2.equals(""))
             {
                 updateViews("NA");
             }

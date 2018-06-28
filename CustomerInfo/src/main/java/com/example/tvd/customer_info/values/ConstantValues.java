@@ -29,4 +29,10 @@ public class ConstantValues {
     public static final int COMPLAINT_REGISTER_FAILURE = 26;
     public static final int COMPLAINT_HISTORY_SUCCESS = 27;
     public static final int COMPLAINT_HISTORY_FAILURE = 28;
+    public static final int LT_BILLING_SUMMARY_SUCCESS = 29;
+    public static final int LT_BILLING_SUMMARY_FAILURE = 30;
+    public static final int BILLING_FRAGMENT_SUCCESS = 31;
+    public static final int BILLING_FRAGMENT_fAILURE = 32;
+    public static final int COLLECTION_FRAGMENT_SUCCESS = 33;
+    public static final int COLLECTION_FRAGMENT_FAILURE = 34;
 }

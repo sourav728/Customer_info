@@ -1,10 +1,14 @@
 package com.example.tvd.customer_info.invoke;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.tvd.customer_info.adapter.ComplaintHistoryAdapter;
 import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
+import com.example.tvd.customer_info.adapter.LTBilling_Adapter;
+import com.example.tvd.customer_info.adapter.LTCollectionAdapter;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
 
@@ -34,6 +38,8 @@ import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_FAIL
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_SUCCESSFULL;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.LT_BILLING_SUMMARY_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.LT_BILLING_SUMMARY_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.PASSWORD_CHANGED_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.PASSWORD_CHANGED_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.REGISTRATION_FAILURE;
@@ -631,6 +637,99 @@ public class ReceivingData {
         } catch (JSONException e) {
             e.printStackTrace();
             handler.sendEmptyMessage(COMPLAINT_REGISTER_FAILURE);
+        }
+    }
+
+    //For LT Summary
+    public void get_LT_Summary (String result, Handler handler, GetSetValues getSetValues)
+    {
+        String res = parseServerXML(result);
+        JSONArray jsonarray;
+        try
+        {
+            jsonarray = new JSONArray(res);
+            if (jsonarray.length()>0)
+            {
+                for (int i=0; i<jsonarray.length();i++)
+                {
+                    JSONObject jsonObject = jsonarray.getJSONObject(i);
+                    getSetValues.setLt_billing_consumer_id(jsonObject.getString("consid"));
+                    getSetValues.setLt_billing_consumer_name(jsonObject.getString("consumer_name"));
+                    getSetValues.setLt_billing_tariff(jsonObject.getString("tariff"));
+                    getSetValues.setLt_billing_mobile_no(jsonObject.getString("mobile_no"));
+                }
+                handler.sendEmptyMessage(LT_BILLING_SUMMARY_SUCCESS);
+            }else handler.sendEmptyMessage(LT_BILLING_SUMMARY_FAILURE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            handler.sendEmptyMessage(LT_BILLING_SUMMARY_FAILURE);
+        }
+    }
+    //For Billing Fragment
+    public void get_Bill_fragment_status(String result, Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues>arrayList, LTBilling_Adapter ltBilling_adapter)
+    {
+        String res = parseServerXML(result);
+        JSONArray jsonArray;
+        try
+        {
+            jsonArray = new JSONArray(res);
+            for (int i=0;i<jsonArray.length();i++)
+            {
+                getSetValues = new GetSetValues();
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                getSetValues.setLtbill_date(jsonObject.getString("date1"));
+                Log.d("debug","LTBillingdate"+jsonObject.getString("date1"));
+                getSetValues.setLtbill_con(jsonObject.getString("con"));
+                Log.d("debug","LTBillingcon"+jsonObject.getString("con"));
+                getSetValues.setLtbill_arrears(jsonObject.getString("Arrears"));
+                Log.d("debug","LTBillingArrears"+jsonObject.getString("Arrears"));
+                getSetValues.setLtbill_demand(jsonObject.getString("Demand"));
+                Log.d("debug","LTBillingDemand"+jsonObject.getString("Demand"));
+
+                arrayList.add(getSetValues);
+                ltBilling_adapter.notifyDataSetChanged();
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void get_Collection_fragment_status(String result, Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues>arrayList, LTCollectionAdapter ltCollectionAdapter)
+    {
+        String res = parseServerXML(result);
+        JSONArray jsonArray;
+        try
+        {
+            jsonArray = new JSONArray(res);
+            for (int i=0;i<jsonArray.length();i++)
+            {
+                getSetValues = new GetSetValues();
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                getSetValues.setLt_receiptdate(jsonObject.getString("recptdate"));
+                Log.d("debug","LTCollectiondate"+jsonObject.getString("recptdate"));
+
+
+                getSetValues.setLt_collection_amt(jsonObject.getString("amt"));
+                Log.d("debug","LTCollectionamount"+jsonObject.getString("amt"));
+
+                getSetValues.setLt_receiptno(jsonObject.getString("recptno"));
+                Log.d("debug","LTCollectioncounter"+jsonObject.getString("recptno"));
+
+                getSetValues.setLt_collection_counter(jsonObject.getString("counter"));
+                Log.d("debug","LTCollection"+jsonObject.getString("counter"));
+
+                arrayList.add(getSetValues);
+                ltCollectionAdapter.notifyDataSetChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }

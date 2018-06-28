@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.example.tvd.customer_info.adapter.ComplaintHistoryAdapter;
 import com.example.tvd.customer_info.adapter.ConsumerListAdapter;
+import com.example.tvd.customer_info.adapter.LTBilling_Adapter;
+import com.example.tvd.customer_info.adapter.LTCollectionAdapter;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
 
@@ -546,6 +548,107 @@ public class SendingData {
         @Override
         protected void onPostExecute(String result) {
             receivingData.getComplaintSearch_status(result, handler, getSetValues,arrayList,complaintHistoryAdapter);
+            super.onPostExecute(result);
+        }
+    }
+    //LT Billing Summary
+    public class LTBilling_Summary extends AsyncTask<String,String,String>
+    {
+        String response ="";
+        Handler handler;
+        GetSetValues getSetValues;
+        public LTBilling_Summary(Handler handler, GetSetValues getSetValues)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("accuntid",params[0]);
+            try
+            {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/Service.asmx/Lt_Consumer_Details",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_LT_Summary(result, handler, getSetValues);
+            super.onPostExecute(result);
+        }
+    }
+    //Billing Fragment
+    public class BillingFragment extends AsyncTask<String,String,String>{
+        String response = "";
+        Handler handler;
+        GetSetValues getSetValues;
+        ArrayList<GetSetValues>arrayList;
+        LTBilling_Adapter ltBilling_adapter;
+        public BillingFragment(Handler handler, GetSetValues getSetValues,ArrayList<GetSetValues>arrayList, LTBilling_Adapter ltBilling_adapter)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+            this.arrayList = arrayList;
+            this.ltBilling_adapter = ltBilling_adapter;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("Accountid",params[0]);
+            try
+            {
+                response =UrlPostConnection("http://bc_service2.hescomtrm.com/Service.asmx/Lt_Billing_Details", datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_Bill_fragment_status(result, handler, getSetValues, arrayList, ltBilling_adapter);
+            super.onPostExecute(result);
+        }
+    }
+    //Collection Fragment
+    public class CollectionFragment extends AsyncTask<String,String,String>
+    {
+        String response = "";
+        Handler handler;
+        GetSetValues getSetValues;
+        ArrayList<GetSetValues>arrayList;
+        LTCollectionAdapter ltCollectionAdapter;
+        public CollectionFragment(Handler handler, GetSetValues getSetValues, ArrayList<GetSetValues>arrayList, LTCollectionAdapter ltCollectionAdapter)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+            this.arrayList = arrayList;
+            this.ltCollectionAdapter = ltCollectionAdapter;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("Accountid",params[0]);
+            try {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/Service.asmx/Lt_Collection_Details", datamap);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_Collection_fragment_status(result, handler, getSetValues, arrayList, ltCollectionAdapter);
             super.onPostExecute(result);
         }
     }
