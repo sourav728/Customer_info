@@ -500,7 +500,7 @@ public class SendingData {
             Log.d("Debug","REMARKS"+params[7]);
             try
             {
-                response = UrlPostConnection("http://bc_service.hescomtrm.com/Service.asmx/Customer_Complaint",datamap);
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/Service.asmx/Customer_Complaint",datamap);
             }
             catch (Exception e)
             {
@@ -652,4 +652,38 @@ public class SendingData {
             super.onPostExecute(result);
         }
     }
+
+    //For getting Customer's last payment amt and date
+    public class Send_customer_last_payment_details extends AsyncTask<String,String,String>
+    {
+        String response = "";
+        Handler handler;
+        GetSetValues getSetValues;
+        public Send_customer_last_payment_details(Handler handler,GetSetValues getSetValues)
+        {
+            this.handler = handler;
+            this.getSetValues = getSetValues;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("Acount_id",params[0]);
+            try
+            {
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/ReadFile.asmx/COLLTEMP", datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            receivingData.get_customer_last_payment_details(response, handler, getSetValues);
+            super.onPostExecute(s);
+        }
+    }
+
 }

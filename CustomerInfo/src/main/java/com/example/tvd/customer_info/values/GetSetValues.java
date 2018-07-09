@@ -20,6 +20,7 @@ public class GetSetValues {
     private String lt_receiptdate="",lt_collection_amt="",lt_receiptno="",lt_collection_counter="";
     private String lt_consumer_id="",lt_consumer_name="",lt_tariff="",lt_mobile_no="";
     private String lt_billing_consumer_id="",lt_billing_consumer_name="",lt_billing_tariff="",lt_billing_mobile_no="";
+    private String last_receipt_date="",last_payment_amt="";
     public String getLatitude() {
         return latitude;
     }
@@ -30,6 +31,22 @@ public class GetSetValues {
 
     public String getLt_billing_consumer_id() {
         return lt_billing_consumer_id;
+    }
+
+    public String getLast_receipt_date() {
+        return last_receipt_date;
+    }
+
+    public void setLast_receipt_date(String last_receipt_date) {
+        this.last_receipt_date = last_receipt_date;
+    }
+
+    public String getLast_payment_amt() {
+        return last_payment_amt;
+    }
+
+    public void setLast_payment_amt(String last_payment_amt) {
+        this.last_payment_amt = last_payment_amt;
     }
 
     public void setLt_billing_consumer_id(String lt_billing_consumer_id) {

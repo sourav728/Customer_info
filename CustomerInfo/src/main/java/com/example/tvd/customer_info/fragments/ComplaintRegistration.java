@@ -100,10 +100,12 @@ public class ComplaintRegistration extends Fragment {
                         break;
                     case COMPLAINT_REGISTER_SUCCESS:
                         progressDialog.dismiss();
+                        progressBar.setVisibility(ProgressBar.GONE);
                         Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
                         break;
                     case COMPLAINT_REGISTER_FAILURE:
                         progressDialog.dismiss();
+                        progressBar.setVisibility(ProgressBar.GONE);
                         Toast.makeText(getActivity(), "Failure!!", Toast.LENGTH_SHORT).show();
                         break;
                 }

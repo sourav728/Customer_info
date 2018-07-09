@@ -35,4 +35,6 @@ public class ConstantValues {
     public static final int BILLING_FRAGMENT_fAILURE = 32;
     public static final int COLLECTION_FRAGMENT_SUCCESS = 33;
     public static final int COLLECTION_FRAGMENT_FAILURE = 34;
+    public static final int LAST_PAYMENT_DATE_SUCCESS = 35;
+    public static final int LAST_PAYMENT_DATE_FAILURE = 36;
 }

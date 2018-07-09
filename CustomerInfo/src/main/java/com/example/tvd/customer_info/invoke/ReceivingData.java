@@ -36,6 +36,8 @@ import static com.example.tvd.customer_info.values.ConstantValues.EMAIL_SEND_FAI
 import static com.example.tvd.customer_info.values.ConstantValues.EMAIL_SEND_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_SUCCESSFULL;
+import static com.example.tvd.customer_info.values.ConstantValues.LAST_PAYMENT_DATE_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.LAST_PAYMENT_DATE_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.LT_BILLING_SUMMARY_FAILURE;
@@ -730,6 +732,36 @@ public class ReceivingData {
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+    }
+    public void get_customer_last_payment_details(String result, Handler handler, GetSetValues getSetValues)
+    {
+        String res = parseServerXML(result);
+        JSONArray jsonarray;
+        try
+        {
+            jsonarray = new JSONArray(res);
+            if (jsonarray.length()>0)
+            {
+                for (int i=0; i<jsonarray.length();i++)
+                {
+                    JSONObject jsonObject = jsonarray.getJSONObject(i);
+                    String last_receipt_date = jsonObject.getString("RECPTDATE");
+                    String last_payment_amt = jsonObject.getString("AMT");
+                    if (!last_receipt_date.equals(""))
+                    getSetValues.setLast_receipt_date(last_receipt_date);
+                    else getSetValues.setLast_receipt_date("NA");
+                    if (!last_payment_amt.equals(""))
+                    getSetValues.setLast_payment_amt(last_payment_amt);
+                    else getSetValues.setLast_payment_amt("NA");
+                }
+                handler.sendEmptyMessage(LAST_PAYMENT_DATE_SUCCESS);
+            }else handler.sendEmptyMessage(LAST_PAYMENT_DATE_FAILURE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            handler.sendEmptyMessage(LAST_PAYMENT_DATE_FAILURE);
         }
     }
 }
