@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:text="Complaint Description"
             android:textStyle="bold"
-            android:textColor="@color/black2"
+            android:textColor="@color/white"
             android:textSize="17sp"
             android:gravity="center"/>
         <View

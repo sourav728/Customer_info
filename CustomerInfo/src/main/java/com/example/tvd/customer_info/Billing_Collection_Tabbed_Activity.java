@@ -150,7 +150,7 @@ public class Billing_Collection_Tabbed_Activity extends AppCompatActivity {
     private void updateViews(String languageCode) {
         Context context = LocaleHelper.setLocale(Billing_Collection_Tabbed_Activity.this, languageCode);
         Resources resources = context.getResources();
-        font_toolbar_text.setText("Billing Collection");
+        font_toolbar_text.setText(R.string.billingcollection);
     }
     public void setValuesin_Shared_Preferences()
     {

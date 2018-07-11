@@ -37,4 +37,6 @@ public class ConstantValues {
     public static final int COLLECTION_FRAGMENT_FAILURE = 34;
     public static final int LAST_PAYMENT_DATE_SUCCESS = 35;
     public static final int LAST_PAYMENT_DATE_FAILURE = 36;
+    public static final int FEEDBACK_STATUS_SUCCESS = 37;
+    public static final int FEEDBACK_STATUS_FAILURE = 38;
 }

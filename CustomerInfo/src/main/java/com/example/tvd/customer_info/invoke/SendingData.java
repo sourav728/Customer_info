@@ -680,9 +680,41 @@ public class SendingData {
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            receivingData.get_customer_last_payment_details(response, handler, getSetValues);
-            super.onPostExecute(s);
+        protected void onPostExecute(String result) {
+            receivingData.get_customer_last_payment_details(result, handler, getSetValues);
+            super.onPostExecute(result);
+        }
+    }
+
+    //Feedback part
+    public class Send_feedback extends AsyncTask<String,String,String>
+    {
+        String response="";
+        Handler handler;
+        public Send_feedback(Handler handler)
+        {
+            this.handler = handler;
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("CONSID",params[0]);
+            datamap.put("FEEDBACK_TYPE", params[1]);
+            datamap.put("FEEDBACK_DESCRIPTION",params[2]);
+            try{
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/Service.asmx/FEEDBACK",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_feedback_status(result, handler);
+            super.onPostExecute(result);
         }
     }
 

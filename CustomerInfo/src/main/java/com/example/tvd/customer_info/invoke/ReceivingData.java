@@ -34,6 +34,8 @@ import static com.example.tvd.customer_info.values.ConstantValues.COMPLAINT_REGI
 import static com.example.tvd.customer_info.values.ConstantValues.CONNECTION_TIME_OUT;
 import static com.example.tvd.customer_info.values.ConstantValues.EMAIL_SEND_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.EMAIL_SEND_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.FEEDBACK_STATUS_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.FEEDBACK_STATUS_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.INSERTION_SUCCESSFULL;
 import static com.example.tvd.customer_info.values.ConstantValues.LAST_PAYMENT_DATE_FAILURE;
@@ -762,6 +764,23 @@ public class ReceivingData {
         {
             e.printStackTrace();
             handler.sendEmptyMessage(LAST_PAYMENT_DATE_FAILURE);
+        }
+    }
+    public void get_feedback_status(String result, Handler handler) {
+        String res = parseServerXML(result);
+        Log.d("Debug", "Feedback Status" + result);
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(res);
+            String message = jsonObject.getString("message");
+            if (StringUtils.startsWithIgnoreCase(message, "Success"))
+                handler.sendEmptyMessage(FEEDBACK_STATUS_SUCCESS);
+            else
+                handler.sendEmptyMessage(FEEDBACK_STATUS_FAILURE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(FEEDBACK_STATUS_FAILURE);
         }
     }
 }

@@ -69,7 +69,7 @@ public class More_fragment extends Fragment {
     String LONGITUDE = "", LATITUDE = "",CSDNAME="";
     ArrayList<GetSetValues> arrayList;
     String TokenId = "0x9851FFA7317D3E4F191A969454138816104173F9";
-    TextView changelanguage,txt_location,txt_complaint,txt_change_pass,txt_feedback,txt_help;
+    TextView changelanguage,txt_location,txt_complaint,txt_change_pass,txt_feedback,txt_help,txt_bill_coll;
     Intent intent;
     String current_con_id="";
     public More_fragment() {
@@ -109,6 +109,8 @@ public class More_fragment extends Fragment {
         txt_change_pass = (TextView) view.findViewById(R.id.txt_change_pass);
         txt_feedback = (TextView) view.findViewById(R.id.txt_feedback);
         txt_help = (TextView) view.findViewById(R.id.txt_help);
+        txt_bill_coll = (TextView) view.findViewById(R.id.txt_billing_collection);
+
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -366,6 +368,7 @@ public class More_fragment extends Fragment {
         txt_change_pass.setText(resources.getString(R.string.changepassword));
         txt_feedback.setText(resources.getString(R.string.feedback));
         txt_help.setText(resources.getString(R.string.help));
+        txt_bill_coll.setText(resources.getString(R.string.billingcollectionsummary));
     }
     private void SavePreferences(String key, String value) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);

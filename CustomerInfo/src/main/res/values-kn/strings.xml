@@ -20,4 +20,6 @@
     <string name="changepassword">ಗುಪ್ತಪದವನ್ನು ಬದಲಿಸಿ</string>
     <string name="feedback">ಪ್ರತಿಕ್ರಿಯೆ</string>
     <string name="help">ಸಹಾಯ</string>
+    <string name="billingcollection">ಬಿಲ್ಲಿಂಗ್ ಕಲೆಕ್ಷನ್</string>
+    <string name="billingcollectionsummary">ಬಿಲ್ಲಿಂಗ್ ಸಂಗ್ರಹ ಸಾರಾಂಶ</string>
 </resources>
