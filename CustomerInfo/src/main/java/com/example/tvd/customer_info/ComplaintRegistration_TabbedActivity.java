@@ -54,7 +54,7 @@ public class ComplaintRegistration_TabbedActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationIcon(R.drawable.white_back);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

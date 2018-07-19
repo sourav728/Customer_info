@@ -75,7 +75,7 @@ public class ViewBillActivity extends AppCompatActivity {
         setContentView(R.layout.view_bill_layout);
         //function to initialize all textviews
         initialize();
-        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationIcon(R.drawable.white_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

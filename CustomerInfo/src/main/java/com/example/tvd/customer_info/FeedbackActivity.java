@@ -86,7 +86,7 @@ public class FeedbackActivity extends AppCompatActivity {
         typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         sendingData = new SendingData();
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationIcon(R.drawable.white_back);
         font_toolbar_text = (TextView) toolbar.findViewById(R.id.toolbar_title);
         font_toolbar_text.setTypeface(typeface);
 

@@ -203,7 +203,7 @@ public class SwitchConsumerActivity extends AppCompatActivity {
         sendingdata = new SendingData();
         typeface = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationIcon(R.drawable.white_back);
         font_toolbar_text = (TextView) toolbar.findViewById(R.id.toolbar_title);
         getSetValues = new GetSetValues();
 

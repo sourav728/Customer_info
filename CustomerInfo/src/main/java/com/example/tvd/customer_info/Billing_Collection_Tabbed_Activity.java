@@ -77,6 +77,13 @@ public class Billing_Collection_Tabbed_Activity extends AppCompatActivity {
         SharedPreferences sharedPreferences1 = getSharedPreferences("SWITCH_CONSUMER_ID", MODE_PRIVATE);
         current_con_id = sharedPreferences1.getString("Curr_Cons_ID", "");
 
+        progressdialog = new ProgressDialog(this, R.style.MyProgressDialogstyle);
+        progressdialog.setTitle("Connecting To Server");
+        progressdialog.setMessage("Please Wait..");
+        progressdialog.show();
+        SendingData.LTBilling_Summary ltBilling_summary = sendingData.new LTBilling_Summary(mHandler, getSetValues);
+        ltBilling_summary.execute(current_con_id);
+
         font_toolbar_text = (TextView) findViewById(R.id.toolbar_title);
         //below code is for loading different font
         if (!language.equals("")) {
@@ -89,7 +96,7 @@ public class Billing_Collection_Tabbed_Activity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationIcon(R.drawable.white_back);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -98,14 +105,6 @@ public class Billing_Collection_Tabbed_Activity extends AppCompatActivity {
                 finish();
             }
         });
-
-        progressdialog = new ProgressDialog(this, R.style.MyProgressDialogstyle);
-        progressdialog.setTitle("Connecting To Server");
-        progressdialog.setMessage("Please Wait..");
-        progressdialog.show();
-        SendingData.LTBilling_Summary ltBilling_summary = sendingData.new LTBilling_Summary(mHandler, getSetValues);
-        /*************Below Acc ID is hardcoaded********************/
-        ltBilling_summary.execute(current_con_id);
     }
 
     private void setupViewPager(ViewPager viewPager)

@@ -66,7 +66,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         };
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

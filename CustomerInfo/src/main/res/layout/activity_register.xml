@@ -10,7 +10,7 @@
         android:layout_height="420dp">
         <android.support.v7.widget.CardView
             android:id="@+id/cv_add"
-            app:cardBackgroundColor="#2ea67f"
+            app:cardBackgroundColor="#29B6F6"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
                 <Button
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/signup_btn"
                     android:background="@drawable/bt_shape_2"

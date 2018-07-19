@@ -14,12 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +33,10 @@ import com.example.tvd.customer_info.invoke.SendingData;
 import com.example.tvd.customer_info.values.FunctionCall;
 import com.example.tvd.customer_info.values.GetSetValues;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.example.tvd.customer_info.values.ConstantValues.CONNECTION_TIME_OUT;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.LOGIN_SUCCESS;
@@ -38,8 +45,9 @@ public class StartActivity extends AppCompatActivity {
     CardView cv;
     FloatingActionButton fab;
     Button login;
-    EditText email, password;
-    String get_email = "", get_password = "", TokenId = "";
+    EditText password;
+    AutoCompleteTextView email;
+    String get_email = "", get_password = "", TokenId = "", emaidId = "";
     ProgressDialog progressdialog;
     SendingData sendingdata;
     FunctionCall fcall;
@@ -102,6 +110,7 @@ public class StartActivity extends AppCompatActivity {
                         email.setText("");
                         password.setText("");
                         email.requestFocus();
+
                         break;
                     case CONNECTION_TIME_OUT:
                         progressdialog.dismiss();
@@ -117,7 +126,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        //For Hiding softkeys
+        //todo For Handling Softkeys
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initialize();
         getSetValues = new GetSetValues();
@@ -134,6 +143,17 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (fcall.isInternetOn(StartActivity.this)) {
+                    //todo Below code is for storing userid in shared preferences
+                    emaidId = email.getText().toString().trim();
+                    SharedPreferences ss = getSharedPreferences("loginSession_key", 0);
+                    Set<String> hs = ss.getStringSet("set", new HashSet<String>());
+                    hs.add(emaidId);
+                    SharedPreferences.Editor edit = ss.edit();
+                    edit.clear();
+                    edit.putStringSet("set", hs);
+                    edit.commit();
+                    //todo End of this
+
                     get_email = email.getText().toString();
                     get_password = password.getText().toString();
                     if (TextUtils.isEmpty(email.getText())) {
@@ -168,24 +188,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void setListener() {
-      /*  login.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View view) {
-                Explode explode = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    explode = new Explode();
-                }
-                explode.setDuration(500);
 
-                getWindow().setExitTransition(explode);
-                getWindow().setEnterTransition(explode);
-                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(StartActivity.this);
-                Intent i2 = new Intent(StartActivity.this,MainActivity.class);
-                startActivity(i2, oc2.toBundle());
-            }
-        });*/
         fab.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -208,6 +211,22 @@ public class StartActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         fab.setVisibility(View.VISIBLE);
+
+        // todo get Session cache value in login box
+        SharedPreferences sss = getSharedPreferences("loginSession_key", 0);
+        Log.d("debug", "2.set = " + sss.getStringSet("set", new HashSet<String>()));
+
+        Log.d("debug", "LoginSession ->" + sss.getStringSet("set", new HashSet<String>()));
+
+        ArrayList<String> al = new ArrayList<>();
+        al.addAll(sss.getStringSet("set", new HashSet<String>()));
+
+        //Creating the instance of ArrayAdapter containing list of language names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.select_dialog_item, al);
+        //Getting the instance of AutoCompleteTextView
+        email.setThreshold(1);//will start working from first character
+        email.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
     }
 
     public void initialize() {
@@ -217,7 +236,7 @@ public class StartActivity extends AppCompatActivity {
         sendingdata = new SendingData();
         fcall = new FunctionCall();
         login = (Button) findViewById(R.id.login_btn);
-        email = (EditText) findViewById(R.id.edit_email);
+        email = (AutoCompleteTextView) findViewById(R.id.edit_email);
         password = (EditText) findViewById(R.id.edit_password);
         forgot_password = (TextView) findViewById(R.id.txt_forgot_password);
 
@@ -229,4 +248,6 @@ public class StartActivity extends AppCompatActivity {
         editor.putString(key, value);
         editor.commit();
     }
+
+
 }
