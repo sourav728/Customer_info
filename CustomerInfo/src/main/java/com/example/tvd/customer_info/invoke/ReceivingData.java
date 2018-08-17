@@ -54,6 +54,8 @@ import static com.example.tvd.customer_info.values.ConstantValues.SMS_SEND_FAILU
 import static com.example.tvd.customer_info.values.ConstantValues.SMS_SEND_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.SWITCH_CONSUMER_SUCCESS;
+import static com.example.tvd.customer_info.values.ConstantValues.USER_DETAILS_UPDATE_FAILURE;
+import static com.example.tvd.customer_info.values.ConstantValues.USER_DETAILS_UPDATE_SUCCESS;
 import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_FAILURE;
 import static com.example.tvd.customer_info.values.ConstantValues.VIEW_BILL_SUCCESS;
 
@@ -781,6 +783,24 @@ public class ReceivingData {
             e.printStackTrace();
             functionCall.logStatus("JSON Exception Failure!!");
             handler.sendEmptyMessage(FEEDBACK_STATUS_FAILURE);
+        }
+    }
+    public void get_update_details_status(String result, Handler handler)
+    {
+        String res = parseServerXML(result);
+        Log.d("Debug","Update Status"+ result);
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(res);
+            String message = jsonObject.getString("message");
+            if (StringUtils.startsWithIgnoreCase(message,"Success"))
+                handler.sendEmptyMessage(USER_DETAILS_UPDATE_SUCCESS);
+            else handler.sendEmptyMessage(USER_DETAILS_UPDATE_FAILURE);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            functionCall.logStatus("JSON Exception Failure!!");
+            handler.sendEmptyMessage(USER_DETAILS_UPDATE_FAILURE);
         }
     }
 }

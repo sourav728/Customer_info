@@ -261,6 +261,7 @@ public class More_fragment extends Fragment {
                         Log.d("Debugg", "LATITUDE" + LATITUDE);
                         Log.d("Debugg", "LONGITUDE" + LONGITUDE);
                         Log.d("Debug", "CSDNAME"+ CSDNAME);
+
                     }
                     Intent intent = new Intent(getActivity(), Location.class);
                     intent.putExtra("LATITUDE", LATITUDE);
@@ -268,6 +269,7 @@ public class More_fragment extends Fragment {
                     intent.putExtra("CSDNAME", CSDNAME);
                     startActivity(intent);
                     Toast.makeText(getActivity(), "Success..", Toast.LENGTH_SHORT).show();
+
                 }
             } catch (Exception e) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();

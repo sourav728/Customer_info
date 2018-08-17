@@ -1,6 +1,11 @@
 package com.example.tvd.customer_info.values;
 
 public class ConstantValues {
+
+    public static String TRM_URL = "http://bc_service2.hescomtrm.com/";
+    public static String SERVICE = "Service.asmx/";
+    public static String CUSTSERVICE = "CUSTINFOSERVICE.asmx/";
+
     public static final int REGISTRATION_SUCCESS = 1;
     public static final int REGISTRATION_FAILURE = 2;
     public static final int LOGIN_SUCCESS = 3;
@@ -39,4 +44,8 @@ public class ConstantValues {
     public static final int LAST_PAYMENT_DATE_FAILURE = 36;
     public static final int FEEDBACK_STATUS_SUCCESS = 37;
     public static final int FEEDBACK_STATUS_FAILURE = 38;
+    public static final int USER_DETAILS_UPDATE_SUCCESS = 39;
+    public static final int USER_DETAILS_UPDATE_FAILURE = 40;
+
+    public static final String SHOWCASE_ID1 = "AS123DRT12345";
 }

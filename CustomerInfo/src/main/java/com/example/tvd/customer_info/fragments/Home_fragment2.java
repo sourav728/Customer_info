@@ -29,10 +29,15 @@ import com.example.tvd.customer_info.NotificationActivity;
 import com.example.tvd.customer_info.R;
 import com.example.tvd.customer_info.SwitchConsumerActivity;
 import com.example.tvd.customer_info.helper.LocaleHelper;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.tvd.customer_info.values.ConstantValues.SHOWCASE_ID1;
 
 public class Home_fragment2 extends Fragment {
 
@@ -47,6 +52,7 @@ public class Home_fragment2 extends Fragment {
     Toolbar toolbar;
     Animation shake;
     private Menu menu;
+
     public Home_fragment2() {
     }
 
@@ -91,17 +97,32 @@ public class Home_fragment2 extends Fragment {
         txt_add_consumer.setTypeface(typeface);
         txt_switch_consumer_account = (TextView) view.findViewById(R.id.txt_switch_consumer);
         txt_switch_consumer_account.setTypeface(typeface);
-        if (!language.equals(""))
-        {
-            if (language.equals("KN"))
-            {
+        if (!language.equals("")) {
+            if (language.equals("KN")) {
                 updateViews("KN");
-            }
-            else if (language.equals("en"))
-            {
+            } else if (language.equals("en")) {
                 updateViews("en");
             }
         }
+
+        //todo below line codes is for showcaseView
+      /*  ViewTarget target = new ViewTarget(txt_add_consumer);
+        new ShowcaseView.Builder(getActivity())
+                .setContentTitle("You can Add New Consumer and Switch to Another Consumer")
+                .setContentText("Click here")
+                .useDecorViewAsParent() //this is the difference
+                .setTarget(target)
+                .build();*/
+
+        new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(txt_add_consumer)
+                .setDismissText("GOT IT")
+                .setContentText("You can Add New Consumer and Switch to Another Consumer")
+                .setDelay(3000) // optional but starting animations immediately in onCreate can make them choppy
+                .singleUse(SHOWCASE_ID1) // provide a unique ID used to ensure it is only shown once
+                .show();
+
+        //todo end of showcaseView Part
         return view;
     }
 
@@ -111,7 +132,6 @@ public class Home_fragment2 extends Fragment {
             imageView.setImageResource(sampleImages[position]);
         }
     };
-
 
 
     @Override
@@ -137,12 +157,7 @@ public class Home_fragment2 extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            //below code is used to modify the value
             case R.id.action_notification:
-                //below code is for shaking the notification bell icon
-               /* final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
-                notification.startAnimation(animShake);*/
-                /**************moving to notification activity**********/
                 Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);
                 return true;

@@ -74,8 +74,7 @@ public class StartActivity extends AppCompatActivity {
                         finish();
                         //Below code is for custom toast message
                         inflater = getLayoutInflater();
-                        layout = inflater.inflate(R.layout.toast1,
-                                (ViewGroup) findViewById(R.id.toast_layout));
+                        layout = inflater.inflate(R.layout.toast1, (ViewGroup) findViewById(R.id.toast_layout));
                         ImageView imageView = (ImageView) layout.findViewById(R.id.image);
                         imageView.setImageResource(R.drawable.tick);
                         TextView textView = (TextView) layout.findViewById(R.id.text);

@@ -20,13 +20,21 @@ public class GetSetValues {
     private String lt_receiptdate="",lt_collection_amt="",lt_receiptno="",lt_collection_counter="";
     private String lt_consumer_id="",lt_consumer_name="",lt_tariff="",lt_mobile_no="";
     private String lt_billing_consumer_id="",lt_billing_consumer_name="",lt_billing_tariff="",lt_billing_mobile_no="";
-    private String last_receipt_date="",last_payment_amt="";
+    private String last_receipt_date="",last_payment_amt="",subdivision_name="";
     public String getLatitude() {
         return latitude;
     }
 
     public String getView_bill_date1() {
         return view_bill_date1;
+    }
+
+    public String getSubdivision_name() {
+        return subdivision_name;
+    }
+
+    public void setSubdivision_name(String subdivision_name) {
+        this.subdivision_name = subdivision_name;
     }
 
     public String getLt_billing_consumer_id() {

@@ -718,4 +718,32 @@ public class SendingData {
         }
     }
 
+    //Customer info update
+    public class Cust_info_update extends AsyncTask<String,String,String>
+    {
+        String response="";
+        Handler handler;
+        @Override
+        protected String doInBackground(String... params) {
+            HashMap<String,String>datamap = new HashMap<>();
+            datamap.put("USERID",params[0]);
+            datamap.put("EMAIL",params[1]);
+            datamap.put("PHONE",params[2]);
+            try{
+                response = UrlPostConnection("http://bc_service2.hescomtrm.com/Service.asmx/CustInfoUpdate",datamap);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            receivingData.get_update_details_status(result, handler);
+            super.onPostExecute(result);
+        }
+    }
+
 }
